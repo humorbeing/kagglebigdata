@@ -84,31 +84,31 @@ artist_count                 int64
 liked_artist_count           int64
 disliked_artist_count        int64
 '''
-# working_on = [
-#     'city',
-#     'registered_via',
-#     'membership_days_range',
-#     'sex',
-#     'sex_guess',
-#     'length_range',
-#     'length_bin_range',
-#     'length_chunk_range',
-#     'song_year_bin_range',
-#     'song_year_chunk_range',
-# ]
-
 working_on = [
-    'age',
-    'membership_days',
+    'city',
+    'registered_via',
     'membership_days_range',
-    'registration_year',
-    'registration_month',
-    'registration_date',
-    'expiration_year',
-    'expiration_month',
-    'expiration_date',
-    'song_length',
+    'sex',
+    'sex_guess',
+    'length_range',
+    'length_bin_range',
+    'length_chunk_range',
+    'song_year_bin_range',
+    'song_year_chunk_range',
 ]
+
+# working_on = [
+#     'age',
+#     'membership_days',
+#     'membership_days_range',
+#     'registration_year',
+#     'registration_month',
+#     'registration_date',
+#     'expiration_year',
+#     'expiration_month',
+#     'expiration_date',
+#     'song_length',
+# ]
 for w in working_on:
     dt = pickle.load(open(save_dir + load_name + '_dict.save', "rb"))
     df = pd.read_csv(save_dir + load_name + ".csv", dtype=dt)
@@ -116,7 +116,7 @@ for w in working_on:
     del dt
     print('working on:', w)
     df = df[['msno', 'song_id', w, 'target']]
-    # df[w] = df[w].astype('category')
+    df[w] = df[w].astype('category')
     # df = df[['city', 'age', 'target']]
     print("Train test and validation sets")
 
