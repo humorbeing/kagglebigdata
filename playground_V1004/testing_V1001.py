@@ -12,17 +12,23 @@ since = time.time()
 
 data_dir = '../data/'
 save_dir = '../saves/'
-load_name = 'test_fillna3'
+load_name = 'test_set'
 dt = pickle.load(open(save_dir+load_name+'_dict.save', "rb"))
 df = pd.read_csv(save_dir+load_name+".csv", dtype=dt)
 
 del dt
 
-df = df.drop(['song_count', 'liked_song_count',
-              'disliked_song_count', 'artist_count',
-              'liked_artist_count', 'disliked_artist_count'], axis=1)
-
-
+# df = df[['msno', 'song_id', 'id']]
+df = df[['msno',
+         'song_id',
+         'id',
+         'source_system_tab',
+         'source_screen_name',
+         'source_type',
+         'language',
+         'artist_name',
+         'liked_song_count'
+         ]]
 # print("Train test and validation sets")
 
 for col in df.columns:
@@ -36,7 +42,9 @@ ids = df['id'].values
 
 del df
 print('loading.')
-model = pickle.load(open(save_dir+'model_V1002.save', "rb"))
+model_name = 'model_V1001'
+
+model = pickle.load(open(save_dir+model_name+'.save', "rb"))
 print('done.')
 print('Making predictions')
 p_test_1 = model.predict(X_test)
@@ -46,16 +54,18 @@ del model
 
 
 print('Done making predictions')
-print ('Saving predictions Model model of gbdt')
+# print ('Saving predictions Model model of gbdt')
+
 
 subm = pd.DataFrame()
 subm['id'] = ids
 del ids
 subm['target'] = p_test_1
 del p_test_1
-subm.to_csv(save_dir + '611_submission_lgbm_avg.csv.gz',
+test_time = str(int(time.time()))
+subm.to_csv(save_dir + 'submission_'+model_name+'_'+test_time+'.csv.gz',
             compression='gzip', index=False, float_format='%.5f')
-
+print('submission name:', 'submission_'+model_name+'_'+test_time+'.csv.gz')
 print('Done!')
 # pickle.dump(model_f1, open(save_dir+'model_V1001.save', "wb"))
 print()

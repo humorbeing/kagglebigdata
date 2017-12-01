@@ -239,3 +239,59 @@ print('[timer]: complete in {:.0f}m {:.0f}s'.format(
     time_elapsed // 60, time_elapsed % 60))
 
 
+'''/usr/bin/python3.5 /media/ray/SSD/workspace/python/projects/kaggle_song_git/playground_V1006/training_V1201.py
+working on: nothing
+Train test and validation sets
+
+
+After selection:
+msno                  category
+song_id               category
+target                   uint8
+source_system_tab     category
+source_screen_name    category
+source_type           category
+dtype: object
+number of columns: 6
+
+
+train size: 5606837 number of 1: 2994894 number of 0: 2611943
+train: 1 in all: 0.534150359641 0 in all: 0.465849640359 1/0: 1.14661537407
+val size: 1770581 number of 1: 719762 number of 0: 1050819
+val: 1 in all: 0.406511760829 0 in all: 0.593488239171 1/0: 0.68495335543
+
+
+Training...
+/usr/local/lib/python3.5/dist-packages/lightgbm/basic.py:662: UserWarning: categorical_feature in param dict is overrided.
+  warnings.warn('categorical_feature in param dict is overrided.')
+Training until validation scores don't improve for 50 rounds.
+[10]	valid_0's auc: 0.641244
+[20]	valid_0's auc: 0.647739
+[30]	valid_0's auc: 0.652945
+[40]	valid_0's auc: 0.657673
+[50]	valid_0's auc: 0.660324
+[60]	valid_0's auc: 0.662295
+[70]	valid_0's auc: 0.663624
+[80]	valid_0's auc: 0.664643
+[90]	valid_0's auc: 0.665348
+[100]	valid_0's auc: 0.665728
+[110]	valid_0's auc: 0.666049
+[120]	valid_0's auc: 0.666461
+[130]	valid_0's auc: 0.666698
+[140]	valid_0's auc: 0.66681
+[150]	valid_0's auc: 0.666805
+[160]	valid_0's auc: 0.666964
+[170]	valid_0's auc: 0.667006
+[180]	valid_0's auc: 0.666984
+[190]	valid_0's auc: 0.666942
+[200]	valid_0's auc: 0.666952
+[210]	valid_0's auc: 0.666945
+[220]	valid_0's auc: 0.666913
+Early stopping, best iteration is:
+[177]	valid_0's auc: 0.667012
+complete on: nothing
+
+[timer]: complete in 6m 30s
+
+Process finished with exit code 0
+'''

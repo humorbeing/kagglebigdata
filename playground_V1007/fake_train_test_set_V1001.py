@@ -21,7 +21,7 @@ df = pd.read_csv(data_path + 'train.csv',
                        'song_id': 'category'
                        }
                 )
-train_size = 0.71
+train_size = 0.76
 length = len(df)
 
 df = df.head(length * train_size)

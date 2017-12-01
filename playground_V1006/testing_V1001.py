@@ -18,7 +18,17 @@ df = pd.read_csv(save_dir+load_name+".csv", dtype=dt)
 
 del dt
 
-df = df[['msno', 'song_id', 'id']]
+# df = df[['msno', 'song_id', 'id']]
+df = df[['msno',
+         'song_id',
+         'id',
+         'source_system_tab',
+         'source_screen_name',
+         'source_type',
+         'language',
+         'artist_name',
+         'liked_song_count'
+         ]]
 # print("Train test and validation sets")
 
 for col in df.columns:

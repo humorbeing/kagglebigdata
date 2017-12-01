@@ -14,8 +14,8 @@ save_dir = '../saves/'
 
 load_name = 'custom_members_fixed.csv'
 load_name = 'custom_song_fixed.csv'
-load_name = 'train_set.csv'
-load_name = 'test_set.csv'
+# load_name = 'train_set.csv'
+# load_name = 'test_set.csv'
 load_name = load_name[:-4]
 # print(load_name)
 dt = pickle.load(open(save_dir+load_name+'_dict.save', "rb"))
@@ -28,7 +28,7 @@ del dt
 # df = df_songs_extra
 # on = 'song_length'
 # on = 'source_system_tab'
-on = 'source_screen_name'
+on = 'song_count'
 # on = 'source_type'
 # on = 'artist_name'
 # on = 'composer'
@@ -38,7 +38,7 @@ on = 'source_screen_name'
 # on = 'isrc'
 # on = 'song_year'
 # new_on = 'source_system_tab_guess'
-new_on = 'source_screen_name_guess'
+new_on = 'liked_song_count'
 # new_on = 'source_type_guess'
 
 print('dtypes of df:')
@@ -59,7 +59,7 @@ l = df[on]
 s = set(l)
 print('list len:', len(l))
 print('set len:', len(s))
-print(s)
+# print(s)
 # dff = df[df['source_system_tab' == 'unknown']]
 # print('---===', len(dff))
 # print('<'*20)
@@ -107,7 +107,7 @@ if isit:
     print('after, df len:', len(df))
     print('list len:', len(li))
     print('set len:', len(s))
-    print(s)
+    # print(s)
     # plot = True
     plot = False
     if plot:
@@ -119,6 +119,17 @@ if isit:
         sns.countplot(df[new_on])
 
         plt.show()
+
+df = df[['song_count',
+         'liked_song_count',
+         'like_song_chance',
+         # 'song_count',
+         # 'song_count',
+         # 'song_count',
+         # 'song_count',
+         # 'song_count',
+         ]]
+print(df.head(50))
 
 print()
 time_elapsed = time.time() - since

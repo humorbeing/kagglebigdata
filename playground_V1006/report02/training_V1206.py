@@ -201,11 +201,11 @@ if True:
               'verbose': -1,
               'num_leaves': 100,
 
-              # 'bagging_fraction': 0.8,
-              # 'bagging_freq': 2,
-              # 'bagging_seed': 1,
-              # 'feature_fraction': 0.8,
-              # 'feature_fraction_seed': 1,
+              'bagging_fraction': 0.8,
+              'bagging_freq': 2,
+              'bagging_seed': 1,
+              'feature_fraction': 0.8,
+              'feature_fraction_seed': 1,
               'max_bin': 63,
               'max_depth': -1,
               # 'min_data': 500,
@@ -224,7 +224,7 @@ if True:
     model = lgb.train(params,
                       train_set,
                       num_boost_round=50000,
-                      early_stopping_rounds=50,
+                      early_stopping_rounds=200,
                       valid_sets=val_set,
                       verbose_eval=10,
                       )
@@ -239,3 +239,4 @@ print('[timer]: complete in {:.0f}m {:.0f}s'.format(
     time_elapsed // 60, time_elapsed % 60))
 
 
+# at 204, 0.6654
