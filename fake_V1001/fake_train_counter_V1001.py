@@ -11,16 +11,28 @@ since = time.time()
 
 data_dir = '../data/'
 save_dir = '../saves/'
-load_name = 'train_fillna3'
+save_dir = '../fake/'
+if 'fake' in save_dir:
+    print('-' * 45)
+    print()
+    print(' !' * 22)
+    print()
+    print('  this is fake world  ' * 2)
+    print()
+    print(' !' * 22)
+    print()
+    print('-' * 45)
+
+load_name = 'train_set'
 dt = pickle.load(open(save_dir+load_name+'_dict.save', "rb"))
 df = pd.read_csv(save_dir+load_name+".csv", dtype=dt)
 del dt
-# df['source_system_tab'] = df['source_system_tab'].astype(object)
-# df['source_system_tab'].fillna('my library', inplace=True)
-# df['source_screen_name'] = df['source_screen_name'].astype(object)
-# df['source_screen_name'].fillna('Local playlist more', inplace=True)
-# df['source_type'] = df['source_type'].astype(object)
-# df['source_type'].fillna('local-library', inplace=True)
+
+print('dtypes of df:')
+print('>'*20)
+print(df.dtypes)
+print('number of columns:', len(df.columns))
+print('<'*20)
 
 # df = df[df['target'] == 1]
 df = df[df['target'] == 0]
@@ -30,45 +42,17 @@ song_count = {k: v for k, v in df['song_id'].value_counts().iteritems()}
 # pickle.dump(song_count, open(save_dir+'liked_song_count_dict.save', "wb"))
 pickle.dump(song_count, open(save_dir+'disliked_song_count_dict.save', "wb"))
 del song_count
-# def count_song_played(x):
-#     try:
-#         return _dict_count_song_played_train[x]
-#     except KeyError:
-#         try:
-#             return _dict_count_song_played_test[x]
-#         except KeyError:
-#             return 0
-
-
-# def count_song_played(x):
-#     try:
-#         return song_count[x]
-#     except KeyError:
-#         return 0
-#
-#
-# # def count_song_played(x):
-# #     return song_count[x]
-#
-#
-# load_name = 'train_fillna3'
-# dt = pickle.load(open(save_dir+load_name+'_dict.save', "rb"))
-# df = pd.read_csv(save_dir+load_name+".csv", dtype=dt)
-# del dt
-# df['unliked_count_song_played'] = df['song_id'].apply(count_song_played).astype(np.int64)
-
 artist_count = {k: v for k, v in df['artist_name'].value_counts().iteritems()}
 # pickle.dump(artist_count, open(save_dir+'artist_count_dict.save', "wb"))
 # pickle.dump(artist_count, open(save_dir+'liked_artist_count_dict.save', "wb"))
 pickle.dump(artist_count, open(save_dir+'disliked_artist_count_dict.save', "wb"))
 del artist_count
-# def count_artist_played(x):
-#     return count_artist[x]
-#
-#
-# df['count_song_played'] = df['song_id'].apply(count_song_played).astype(np.int64)
-# df['count_artist_played'] = df['artist_name'].apply(count_artist_played).astype(np.int64)
-
+member_count = {k: v for k, v in df['msno'].value_counts().iteritems()}
+# pickle.dump(member_count, open(save_dir+'member_count_dict.save', "wb"))
+# pickle.dump(member_count, open(save_dir+'liked_member_count_dict.save', "wb"))
+pickle.dump(member_count, open(save_dir+'disliked_member_count_dict.save', "wb"))
+del member_count
+'''
 
 on = False
 # on = 'target'
@@ -128,6 +112,18 @@ if plot:
 #     print(i, ':', _dict_count_song_played_train[i])
 
 plt.show()
+'''
+if 'fake' in save_dir:
+    print('-' * 45)
+    print()
+    print(' !' * 22)
+    print()
+    print('  this is fake world  ' * 2)
+    print()
+    print(' !' * 22)
+    print()
+    print('-' * 45)
+
 print()
 time_elapsed = time.time() - since
 print('[timer]: complete in {:.0f}m {:.0f}s'.format(

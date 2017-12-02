@@ -420,7 +420,7 @@ if isit:
     df['artist_count'] = df['artist_name'].apply(get_count).astype(np.int64)
     count = pickle.load(open(save_dir + 'liked_artist_count_dict.save', "rb"))
     df['liked_artist_count'] = df['artist_name'].apply(get_count).astype(np.int64)
-    count = pickle.load(open(save_dir + 'disliked_artist_countt_dict.save', "rb"))
+    count = pickle.load(open(save_dir + 'disliked_artist_count_dict.save', "rb"))
     df['disliked_artist_countt'] = df['artist_name'].apply(get_count).astype(np.int64)
     del count
     # df['artist_composer'] = (df['artist_name'] == df['composer']).astype(np.int8)

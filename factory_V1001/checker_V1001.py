@@ -28,7 +28,7 @@ del dt
 # df = df_songs_extra
 # on = 'song_length'
 # on = 'source_system_tab'
-on = 'song_count'
+on = 'fake_song_count'
 # on = 'source_type'
 # on = 'artist_name'
 # on = 'composer'
@@ -38,7 +38,7 @@ on = 'song_count'
 # on = 'isrc'
 # on = 'song_year'
 # new_on = 'source_system_tab_guess'
-new_on = 'liked_song_count'
+new_on = 'fake_liked_song_count'
 # new_on = 'source_type_guess'
 
 print('dtypes of df:')
@@ -120,9 +120,9 @@ if isit:
 
         plt.show()
 
-df = df[['song_count',
-         'liked_song_count',
-         'like_song_chance',
+df = df[['fake_song_count',
+         'fake_liked_song_count',
+         # 'fake_like_song_chance',
          # 'song_count',
          # 'song_count',
          # 'song_count',

@@ -11,7 +11,6 @@ since = time.time()
 
 data_dir = '../data/'
 save_dir = '../saves/'
-# df_train = pd.read_csv(data_dir+"train.csv")
 
 df = pd.read_csv(data_dir+"members.csv",
                  dtype={'city': np.uint8,
@@ -23,12 +22,9 @@ df = pd.read_csv(data_dir+"members.csv",
                  parse_dates=['registration_init_time',
                               'expiration_date']
                  )
-# df_test = pd.read_csv(data_dir+"test.csv")
 
 
 def fix_bd_in_members(x):
-    # print(type(x))
-    # print(x<200)
     lower = 14
     upper = 60
     if x < lower or x > upper:
@@ -84,7 +80,6 @@ def gender_fix(x):
     elif x == 'male':
         return 2
     else:
-        # print('hh')
         return 0
 
 
@@ -137,12 +132,10 @@ print(df.dtypes)
 print('number of columns:', len(df.columns))
 print('number of data:', len(df))
 print('<'*20)
-# print(df.head())
 df.to_csv(save_dir+'custom_members_fixed.csv', index=False)
-#
-# # print(d)
+
 pickle.dump(d, open(save_dir+"custom_members_fixed_dict.save", "wb"))
-# xxxx = pickle.load(open("xxx.save", "rb"))
+
 print('done.')
 print()
 time_elapsed = time.time() - since

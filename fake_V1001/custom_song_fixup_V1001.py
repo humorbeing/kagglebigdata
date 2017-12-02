@@ -11,7 +11,17 @@ since = time.time()
 
 data_dir = '../data/'
 save_dir = '../saves/'
-
+# save_dir = '../fake/'
+if 'fake' in save_dir:
+    print('-' * 45)
+    print()
+    print(' !' * 22)
+    print()
+    print('  this is fake world  ' * 2)
+    print()
+    print(' !' * 22)
+    print()
+    print('-' * 45)
 
 df = pd.read_csv(save_dir+"custom_song_data.csv",
                  dtype={'song_id': 'category',
@@ -26,7 +36,17 @@ df = pd.read_csv(save_dir+"custom_song_data.csv",
                         }
                  )
 
-
+save_dir = '../fake/'
+if 'fake' in save_dir:
+    print('-' * 45)
+    print()
+    print(' !' * 22)
+    print()
+    print('  this is fake world  ' * 2)
+    print()
+    print(' !' * 22)
+    print()
+    print('-' * 45)
 def fix_language(x):
     if x == -1.0:
         return 1
@@ -223,22 +243,21 @@ def get_count(x):
         return 0
 
 
-storage = 'storage/'
-count = pickle.load(open(save_dir + storage + 'song_count_dict.save', "rb"))
-df['song_count'] = df['song_id'].apply(get_count).astype(np.int64)
-count = pickle.load(open(save_dir + storage + 'liked_song_count_dict.save', "rb"))
-df['liked_song_count'] = df['song_id'].apply(get_count).astype(np.int64)
-count = pickle.load(open(save_dir + storage + 'disliked_song_count_dict.save', "rb"))
-df['disliked_song_count'] = df['song_id'].apply(get_count).astype(np.int64)
-
-count = pickle.load(open(save_dir + storage + 'artist_count_dict.save', "rb"))
-df['artist_count'] = df['artist_name'].apply(get_count).astype(np.int64)
-count = pickle.load(open(save_dir + storage + 'liked_artist_count_dict.save', "rb"))
-df['liked_artist_count'] = df['artist_name'].apply(get_count).astype(np.int64)
-count = pickle.load(open(save_dir + storage + 'disliked_artist_countt_dict.save', "rb"))
-df['disliked_artist_count'] = df['artist_name'].apply(get_count).astype(np.int64)
-del count
-
+# storage = 'storage/'
+# count = pickle.load(open(save_dir + storage + 'song_count_dict.save', "rb"))
+# df['song_count'] = df['song_id'].apply(get_count).astype(np.int64)
+# count = pickle.load(open(save_dir + storage + 'liked_song_count_dict.save', "rb"))
+# df['liked_song_count'] = df['song_id'].apply(get_count).astype(np.int64)
+# count = pickle.load(open(save_dir + storage + 'disliked_song_count_dict.save', "rb"))
+# df['disliked_song_count'] = df['song_id'].apply(get_count).astype(np.int64)
+#
+# count = pickle.load(open(save_dir + storage + 'artist_count_dict.save', "rb"))
+# df['artist_count'] = df['artist_name'].apply(get_count).astype(np.int64)
+# count = pickle.load(open(save_dir + storage + 'liked_artist_count_dict.save', "rb"))
+# df['liked_artist_count'] = df['artist_name'].apply(get_count).astype(np.int64)
+# count = pickle.load(open(save_dir + storage + 'disliked_artist_countt_dict.save', "rb"))
+# df['disliked_artist_count'] = df['artist_name'].apply(get_count).astype(np.int64)
+# del count
 df.drop(['isrc', 'name'], axis=1, inplace=True)
 df.drop(['lyricist',
          'composer',
@@ -263,7 +282,16 @@ df.to_csv(save_dir+save_name+vers+'.csv', index=False)
 pickle.dump(d, open(save_dir+save_name+vers+'_dict.save', "wb"))
 
 print('done.')
-
+if 'fake' in save_dir:
+    print('-' * 45)
+    print()
+    print(' !' * 22)
+    print()
+    print('  this is fake world  ' * 2)
+    print()
+    print(' !' * 22)
+    print()
+    print('-' * 45)
 print()
 time_elapsed = time.time() - since
 print('[timer]: complete in {:.0f}m {:.0f}s'.format(
