@@ -11,7 +11,7 @@ since = time.time()
 
 data_dir = '../data/'
 save_dir = '../saves/'
-# save_dir = '../fake/'
+save_dir = '../fake/'
 if 'fake' in save_dir:
     print('-' * 45)
     print()
@@ -52,14 +52,67 @@ member_count = {k: v for k, v in df['msno'].value_counts().iteritems()}
 # pickle.dump(member_count, open(save_dir+'liked_member_count_dict.save', "wb"))
 pickle.dump(member_count, open(save_dir+'disliked_member_count_dict.save', "wb"))
 del member_count
+'''
 
-language_count = {k: v for k, v in df['language'].value_counts().iteritems()}
-# pickle.dump(language_count, open(save_dir+'language_count_dict.save', "wb"))
-# pickle.dump(language_count, open(save_dir+'liked_language_count_dict.save', "wb"))
-pickle.dump(language_count, open(save_dir+'disliked_language_count_dict.save', "wb"))
-del language_count
+on = False
+# on = 'target'
+# on = 'source_system_tab'
+# on = 'source_screen_name'
+# on = 'source_type'
+# on = 'count_song_played'
+# on = 'count_artist_played'
+# on = 'unliked_count_song_played'
 
 
+print('dtypes of df:')
+print('>'*20)
+print(df.dtypes)
+print('number of columns:', len(df.columns))
+print('<'*20)
+if on:
+    print('inspecting:', on)
+    print('>'*20)
+    print('any null:', df[on].isnull().values.any())
+    print('null number:', df[on].isnull().values.sum())
+    print(on, 'dtype:', df[on].dtypes)
+    print('describing', on, ':')
+    print(df[on].describe())
+    print('<'*20)
+    l = df[on]
+    s = set(l)
+    print('list len:', len(l))
+    print('set len:', len(s))
+    # # print(s)
+    print('<'*20)
+# check_all = True
+check_all = False
+if check_all:
+    ddd = df.dtypes.to_dict()
+    for i in ddd:
+        on = i
+        print('inspecting:', on)
+        print('>' * 20)
+        print('any null:', df[on].isnull().values.any())
+        print('null number:', df[on].isnull().values.sum())
+        print('<'*20)
+        print()
+
+# plot = True
+plot = False
+if plot:
+    plt.figure(figsize=(15, 12))
+    # dff = pd.DataFrame()
+    # dff[on] = df[on].dropna()
+    # del df
+    sns.distplot(df[on])
+    # sns.countplot(df[on])
+    plt.show()
+# _dict_count_song_played_train = {k: v for k, v in df['song_id'].value_counts().iteritems()}
+# for i in _dict_count_song_played_train:
+#     print(i, ':', _dict_count_song_played_train[i])
+
+plt.show()
+'''
 if 'fake' in save_dir:
     print('-' * 45)
     print()

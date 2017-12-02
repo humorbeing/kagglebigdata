@@ -27,17 +27,19 @@ print('number of columns:', len(df.columns))
 # df = df[['mn', 'sn', 'target']]
 # df = df[['msno', 'song_id', 'language', 'target']]
 # df['language'] = df['language'].astype('category')
-df = df[['msno',
-         'song_id',
+df = df[['member_count',
+         # 'sn',
+
+         'fake_member_count',
+         'fake_song_count',
+         'fake_artist_count',
+         'fake_language_count',
+         # 'artist_name',
          'target',
-         'source_system_tab',
-         'source_screen_name',
-         'source_type',
-         'language',
-         'artist_name',
          ]]
 # df['age_range'] = df['age_range'].astype('category')
 # df = df[['city', 'age', 'target']]
+max_bin = 255
 print("Train test and validation sets")
 
 for col in df.columns:
@@ -89,8 +91,12 @@ print()
 print()
 # del X_train, Y_train
 
-train_set = lgb.Dataset(X_tr, Y_tr)
-val_set = lgb.Dataset(X_val, Y_val)
+# train_set = lgb.Dataset(X_tr, Y_tr, categorical_feature=[0, 1])#, max_bin=max_bin)
+# val_set = lgb.Dataset(X_val, Y_val, categorical_feature=[0, 1])#, max_bin=max_bin)
+train_set = lgb.Dataset(X_tr, Y_tr, categorical_feature=[0, 1, 2, 3])#, max_bin=max_bin)
+train_set.max_bin = max_bin
+val_set = lgb.Dataset(X_val, Y_val, categorical_feature=[0, 1, 2, 3])#, max_bin=max_bin)
+val_set.max_bin = max_bin
 del X_tr, Y_tr, X_val, Y_val
 
 # train_set = lgb.Dataset(X_train, Y_train,
@@ -111,7 +117,7 @@ params = {'objective': 'binary',
           # 'bagging_seed': 1,
           # 'feature_fraction': 0.8,
           # 'feature_fraction_seed': 1,
-          'max_bin': 255,
+          'max_bin': max_bin,
           'max_depth': -1,
           # 'min_data': 500,
           # 'min_hessian': 0.05,
@@ -132,6 +138,7 @@ model = lgb.train(params,
                   early_stopping_rounds=200,
                   valid_sets=val_set,
                   verbose_eval=10,
+                  # max_bin=max_bin,
                   )
 model_name = 'model_V1001'
 pickle.dump(model, open(save_dir+model_name+'.save', "wb"))
