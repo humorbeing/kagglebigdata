@@ -31,32 +31,33 @@ del dt
 print('dtypes of df:')
 print('>'*20)
 print(df.dtypes)
+print('number of rows:', len(df))
 print('number of columns:', len(df.columns))
 print('<'*20)
-
+save_dir = '../fake/'
 # df = df[df['target'] == 1]
-df = df[df['target'] == 0]
+# df = df[df['target'] == 0]
 
 song_count = {k: v for k, v in df['song_id'].value_counts().iteritems()}
-# pickle.dump(song_count, open(save_dir+'song_count_dict.save', "wb"))
+pickle.dump(song_count, open(save_dir+'total_song_count_dict.save', "wb"))
 # pickle.dump(song_count, open(save_dir+'liked_song_count_dict.save', "wb"))
-pickle.dump(song_count, open(save_dir+'disliked_song_count_dict.save', "wb"))
+# pickle.dump(song_count, open(save_dir+'disliked_song_count_dict.save', "wb"))
 del song_count
 artist_count = {k: v for k, v in df['artist_name'].value_counts().iteritems()}
-# pickle.dump(artist_count, open(save_dir+'artist_count_dict.save', "wb"))
+pickle.dump(artist_count, open(save_dir+'total_artist_count_dict.save', "wb"))
 # pickle.dump(artist_count, open(save_dir+'liked_artist_count_dict.save', "wb"))
-pickle.dump(artist_count, open(save_dir+'disliked_artist_count_dict.save', "wb"))
+# pickle.dump(artist_count, open(save_dir+'disliked_artist_count_dict.save', "wb"))
 del artist_count
 member_count = {k: v for k, v in df['msno'].value_counts().iteritems()}
-# pickle.dump(member_count, open(save_dir+'member_count_dict.save', "wb"))
+pickle.dump(member_count, open(save_dir+'total_member_count_dict.save', "wb"))
 # pickle.dump(member_count, open(save_dir+'liked_member_count_dict.save', "wb"))
-pickle.dump(member_count, open(save_dir+'disliked_member_count_dict.save', "wb"))
+# pickle.dump(member_count, open(save_dir+'disliked_member_count_dict.save', "wb"))
 del member_count
 
 language_count = {k: v for k, v in df['language'].value_counts().iteritems()}
-# pickle.dump(language_count, open(save_dir+'language_count_dict.save', "wb"))
+pickle.dump(language_count, open(save_dir+'total_language_count_dict.save', "wb"))
 # pickle.dump(language_count, open(save_dir+'liked_language_count_dict.save', "wb"))
-pickle.dump(language_count, open(save_dir+'disliked_language_count_dict.save', "wb"))
+# pickle.dump(language_count, open(save_dir+'disliked_language_count_dict.save', "wb"))
 del language_count
 
 

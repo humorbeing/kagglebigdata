@@ -24,6 +24,7 @@ print('number of columns:', len(df.columns))
 #               'disliked_song_count', 'artist_count',
 #               'liked_artist_count', 'disliked_artist_count'], axis=1)
 # df = df[['mn', 'sn', 'target']]
+# max_bin
 df = df[['msno',
          'song_id',
          'target',

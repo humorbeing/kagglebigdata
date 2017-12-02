@@ -114,6 +114,27 @@ def sex_guess(x):
 # df = df.drop(['expiration_time'], axis=1)
 # df = df.drop(['registration_init_time'], axis=1)
 # df['registered_via'] = df['registered_via'].astype('category')
+count = {}
+# count1 = {}
+# count2 = {}
+
+
+def get_count1(x):
+    try:
+        return count[x]
+    except KeyError:
+        return 1
+
+
+# Fake!!!!!!!!!!!!!!!!!!!!!!!!!
+storage = '../fake/'
+count = pickle.load(open(storage + 'total_member_count_dict.save', "rb"))
+df['fake_member_count'] = df['msno'].apply(get_count1).astype(np.int64)
+# Real!!!!!!!!!!!!!!!!!!!!!!!!!
+count = pickle.load(open(save_dir + 'total_member_count_dict.save', "rb"))
+df['member_count'] = df['msno'].apply(get_count1).astype(np.int64)
+
+
 df.drop(['city',
          'bd',
          'gender',
