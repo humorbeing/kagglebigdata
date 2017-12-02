@@ -19,8 +19,26 @@ del dt
 print('What we got:')
 print(df.dtypes)
 print('number of columns:', len(df.columns))
-print()
 
+num_boost_round = 500000
+early_stopping_rounds = 50
+verbose_eval = 10
+params = {
+    'objective': 'binary',
+    'metric': 'auc',
+    'boosting': 'gbdt',
+    'learning_rate': 0.02,
+    'verbose': -1,
+    'num_leaves': 300,
+
+    # 'bagging_fraction': 0.8,
+    # 'bagging_freq': 2,
+    # 'bagging_seed': 1,
+    # 'feature_fraction': 0.8,
+    # 'feature_fraction_seed': 1,
+    'max_bin': 255,
+    'max_depth': -1,
+}
 fixed = ['msno',
          'song_id',
          'target',
@@ -28,26 +46,13 @@ fixed = ['msno',
          'source_screen_name',
          'source_type',
          'language',
-         # 'artist_name',
+         'artist_name',
          ]
-
-boosting = 'gbdt'
-learning_rate = 0.1
-num_leaves = 100
-# bagging_fraction = 0
-# bagging_freq = 0
-# bagging_seed = 0
-# feature_fraction = 0
-# feature_fraction_seed = 0
-max_depth = -1
-lambda_l2 = 0
-lambda_l1 = 0
 
 for w in df.columns:
     if w in fixed:
         pass
     else:
-        print()
         print('working on:', w)
         toto = [i for i in fixed]
         toto.append(w)
@@ -58,11 +63,12 @@ for w in df.columns:
                 df[col] = df[col].astype('category')
 
         print()
-        print('This rounds guests:')
+        print()
+        print('After selection:')
         print(df.dtypes)
         print('number of columns:', len(df.columns))
         print()
-
+        print()
         length = len(df)
         train_size = 0.76
         train_set = df.head(int(length*train_size))
@@ -78,56 +84,41 @@ for w in df.columns:
 
         del train_set, val_set
 
+        t = len(Y_tr)
+        t1 = sum(Y_tr)
+        t0 = t - t1
+        print('train size:', t, 'number of 1:', t1, 'number of 0:', t0)
+        print('train: 1 in all:', t1/t, '0 in all:', t0/t, '1/0:', t1/t0)
+        t = len(Y_val)
+        t1 = sum(Y_val)
+        t0 = t - t1
+        print('val size:', t, 'number of 1:', t1, 'number of 0:', t0)
+        print('val: 1 in all:', t1/t, '0 in all:', t0/t, '1/0:', t1/t0)
+        print()
+        print()
+
         train_set = lgb.Dataset(X_tr, Y_tr)
         val_set = lgb.Dataset(X_val, Y_val)
         del X_tr, Y_tr, X_val, Y_val
 
         print('Training...')
-        print()
-        params = {'objective': 'binary',
-                  'metric': 'auc',
-                  'boosting': boosting,
-                  'learning_rate': learning_rate,
-                  'verbose': -1,
-                  'num_leaves': num_leaves,
 
-                  # 'bagging_fraction': bagging_fraction,
-                  # 'bagging_freq': bagging_freq,
-                  # 'bagging_seed': bagging_seed,
-                  # 'feature_fraction': feature_fraction,
-                  # 'feature_fraction_seed': feature_fraction_seed,
-                  'max_bin': 255,
-                  'max_depth': max_depth,
-                  # 'min_data': 500,
-                  # 'min_hessian': 0.05,
-                  # 'num_rounds': 500,
-                  # "min_data_in_leaf": 1,
-                  # 'min_data': 1,
-                  # 'min_data_in_bin': 1,
-                  'lambda_l2': lambda_l2,
-                  'lambda_l1': lambda_l1
-
-                  }
         model = lgb.train(params,
                           train_set,
-                          num_boost_round=2,
-                          early_stopping_rounds=1,
+                          num_boost_round=num_boost_round,
+                          early_stopping_rounds=early_stopping_rounds,
                           valid_sets=val_set,
-                          verbose_eval=1,
+                          verbose_eval=verbose_eval,
                           )
-        print(model.best_score['valid_0']['auc'])
-        # print(type(model.best_iteration))
-        # print(model.best_iteration)
-        # print(model.attr('learning_rate'))
-        # li = model.eval_valid()
-        # print('len list:', len(li))
-        # print('max list:', max(li))
+        print('best score:', model.best_score['valid_0']['auc'])
+        print('best iteration:', model.best_iteration)
         del train_set, val_set
-        print()
         print('complete on:', w)
+        print()
         dt = pickle.load(open(save_dir + load_name + '_dict.save', "rb"))
         df = pd.read_csv(save_dir + load_name + ".csv", dtype=dt)
         del dt
+
 
 print()
 time_elapsed = time.time() - since

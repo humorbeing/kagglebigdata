@@ -109,7 +109,7 @@ print('[timer]: complete in {:.0f}m {:.0f}s'.format(
 
 
 '''
-/usr/bin/python3.5 "/media/ray/SSD/workspace/python/projects/big data kaggle/playground_V1006/training_V1001.py"
+/usr/bin/python3.5 "/media/ray/SSD/workspace/python/projects/big data kaggle/playground_V1006/gbdt_random_V1001.py"
 msno                        object
 song_id                     object
 source_system_tab           object

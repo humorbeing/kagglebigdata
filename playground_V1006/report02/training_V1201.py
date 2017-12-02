@@ -150,7 +150,7 @@ print('[timer]: complete in {:.0f}m {:.0f}s'.format(
     time_elapsed // 60, time_elapsed % 60))
 
 
-'''/usr/bin/python3.5 "/media/ray/SSD/workspace/python/projects/big data kaggle/playground_V1006/training_V1102.py"
+'''/usr/bin/python3.5 "/media/ray/SSD/workspace/python/projects/big data kaggle/playground_V1006/one_round_train_V1001.py"
 What we got:
 msno                        object
 song_id                     object
@@ -261,7 +261,7 @@ Early stopping, best iteration is:
 complete on: source_system_tab
 working on: source_screen_name
 Traceback (most recent call last):
-  File "/media/ray/SSD/workspace/python/projects/big data kaggle/playground_V1006/training_V1102.py", line 40, in <module>
+  File "/media/ray/SSD/workspace/python/projects/big data kaggle/playground_V1006/one_round_train_V1001.py", line 40, in <module>
     df = df[['msno', 'song_id', w, 'target']]
 NameError: name 'df' is not defined
 
