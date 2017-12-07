@@ -1,6 +1,7 @@
 /data
 /saves
 /fake
+/saves01
 *.csv
 *.save
 *.gz

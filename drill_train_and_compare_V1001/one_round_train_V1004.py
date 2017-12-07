@@ -26,16 +26,16 @@ params = {
     'objective': 'binary',
     'metric': 'auc',
     'boosting': 'gbdt',
-    'learning_rate': 0.3,
+    'learning_rate': 0.1,
     'verbose': -1,
-    'num_leaves': 127,
+    'num_leaves': 511,
 
-    # 'bagging_fraction': 0.8,
-    # 'bagging_freq': 2,
-    # 'bagging_seed': 1,
-    # 'feature_fraction': 0.8,
-    # 'feature_fraction_seed': 1,
-    'max_bin': 15,
+    'bagging_fraction': 0.8,
+    'bagging_freq': 5,
+    'bagging_seed': 1,
+    'feature_fraction': 0.9,
+    'feature_fraction_seed': 1,
+    'max_bin': 255,
     'max_depth': -1,
 }
 df = df[[
@@ -47,8 +47,14 @@ df = df[[
          'source_type',
          'language',
          'artist_name',
-         'fake_song_count'
-         'fake_member_count'
+         'fake_song_count',
+         'fake_member_count',
+         'fake_artist_count',
+         # 'fake_language_count',
+         # 'fake_genre_ids_count',
+         # 'fake_source_system_tab_count',
+         # 'fake_source_screen_name_count',
+         # 'fake_source_type_count'
          ]]
 
 for col in df.columns:

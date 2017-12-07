@@ -26,6 +26,8 @@ df = df[['msno',
          'language',
          'artist_name',
          'song_count',
+         'member_count',
+         'song_year',
          ]]
 
 for col in df.columns:

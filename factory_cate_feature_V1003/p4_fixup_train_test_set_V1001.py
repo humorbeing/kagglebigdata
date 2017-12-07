@@ -51,11 +51,11 @@ df['source_type'] = df['source_type'].astype(object)
 df['source_type'].fillna('unknown', inplace=True)
 df['source_type_guess'] = df['source_type'].apply(fix_source_type).astype(object)
 
-df.drop(['source_system_tab_guess',
-         'source_screen_name_guess',
-         'source_type_guess',
-         ],
-        axis=1, inplace=True)
+# df.drop(['source_system_tab_guess',
+#          'source_screen_name_guess',
+#          'source_type_guess',
+#          ],
+#         axis=1, inplace=True)
 print('creating train set.')
 save_name = 'train_'
 vers = 'set'
@@ -100,11 +100,11 @@ df['source_type'] = df['source_type'].astype(object)
 df['source_type'].fillna('unknown', inplace=True)
 df['source_type_guess'] = df['source_type'].apply(fix_source_type).astype(object)
 
-df.drop(['source_system_tab_guess',
-         'source_screen_name_guess',
-         'source_type_guess',
-         ],
-        axis=1, inplace=True)
+# df.drop(['source_system_tab_guess',
+#          'source_screen_name_guess',
+#          'source_type_guess',
+#          ],
+#         axis=1, inplace=True)
 
 print('creating test set.')
 save_name = 'test_'

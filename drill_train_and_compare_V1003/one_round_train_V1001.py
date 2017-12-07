@@ -26,17 +26,17 @@ params = {
     'objective': 'binary',
     'metric': 'auc',
     'boosting': 'gbdt',
-    'learning_rate': 0.3,
+    'learning_rate': 0.01,
     'verbose': -1,
-    'num_leaves': 127,
+    'num_leaves': 2**10-1,
 
     # 'bagging_fraction': 0.8,
     # 'bagging_freq': 2,
     # 'bagging_seed': 1,
     # 'feature_fraction': 0.8,
     # 'feature_fraction_seed': 1,
-    'max_bin': 15,
-    'max_depth': -1,
+    'max_bin': 511,
+    'max_depth': 20,
 }
 df = df[[
          'msno',
@@ -47,8 +47,9 @@ df = df[[
          'source_type',
          'language',
          'artist_name',
-         'fake_song_count'
-         'fake_member_count'
+         # 'fake_song_count',
+         # 'fake_member_count',
+         # 'song_year',
          ]]
 
 for col in df.columns:

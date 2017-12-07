@@ -26,7 +26,7 @@ params = {
     'objective': 'binary',
     'metric': 'auc',
     'boosting': 'gbdt',
-    'learning_rate': 0.3,
+    'learning_rate': 0.1,
     'verbose': -1,
     'num_leaves': 127,
 
@@ -47,8 +47,9 @@ df = df[[
          'source_type',
          'language',
          'artist_name',
-         'fake_song_count'
-         'fake_member_count'
+         'fake_song_count',
+         'fake_member_count',
+         'song_year',
          ]]
 
 for col in df.columns:

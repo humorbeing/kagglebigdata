@@ -13,7 +13,7 @@ data_dir = '../data/'
 save_dir = '../saves/'
 
 
-df = pd.read_csv(save_dir+"custom_song_data.csv",
+df = pd.read_csv(save_dir+"song.csv",
                  dtype={'song_id': 'category',
                         'song_length': np.float64,
                         'genre_ids': 'category',
@@ -22,9 +22,48 @@ df = pd.read_csv(save_dir+"custom_song_data.csv",
                         'lyricist': 'category',
                         'language': np.float32,
                         'name': 'category',
-                        # 'isrc': 'category'
+                        'isrc': 'category'
                         }
                  )
+df = df[[
+    'song_id',
+    'genre_ids',
+    'artist_name',
+    'composer',
+    'lyricist',
+    'language',
+    'name',
+    'isrc',
+]]
+print()
+print('>'*20)
+print('>'*20)
+print('dtypes of df:')
+
+print(df.dtypes)
+print('number of rows:', len(df))
+print('number of columns:', len(df.columns))
+# print('<'*20)
+
+
+for on in df.columns:
+    print()
+    print('inspecting:', on)
+    # print('>'*20)
+    print('any null:', df[on].isnull().values.any())
+    print('null number:', df[on].isnull().values.sum())
+    print(on, 'dtype:', df[on].dtypes)
+    print('describing', on, ':')
+    print(df[on].describe())
+    print('<'*20)
+    l = df[on]
+    s = set(l)
+    print('list len:', len(l))
+    print('set len:', len(s))
+    print()
+print('<'*20)
+print('<'*20)
+print('<'*20)
 
 
 def fix_language(x):
@@ -102,36 +141,38 @@ def length_chunk_range(x):
 #             a = int(np.random.uniform(1918, 2017))
 #         return a
 
-
-def isrc_to_year(isrc):
-    if type(isrc) == str:
-        if int(isrc[5:7]) > 17:
-            return 1900 + int(isrc[5:7])
+def isrc_to_year_fre(x):
+    if x == 'MISSING':
+        return 2016
+    else:
+        if int(x[5:7]) > 17:
+            return 1900 + int(x[5:7])
         else:
-            return 2000 + int(isrc[5:7])
-    else:
-        return 0
+            return 2000 + int(x[5:7])
 
 
-def song_year_bin_range(x):
-    if x < 1980:
+def isrc_to_year(x):
+    if x == 'MISSING':
         return 0
     else:
-        return 1
+        if int(x[5:7]) > 17:
+            return 1900 + int(x[5:7])
+        else:
+            return 2000 + int(x[5:7])
 
 
-def song_year_chunk_range(x):
-    if x < 1999:
-        return 0
+def isrc_to_c_fre(x):
+    if x == 'MISSING':
+        return 'US'
     else:
-        return x
+        return x[0:2]
 
 
-def isrc_to_c(isrc):
-    if type(isrc) == str:
-        return isrc[0:2]
+def isrc_to_c(x):
+    if x == 'MISSING':
+        return 'MISSING'
     else:
-        return '0'
+        return x[0:2]
 
 
 def lyricist_count(x):
@@ -165,25 +206,39 @@ def genre_id_count(x):
         return a
 
 
-def isrc_to_rc(isrc):
-    if type(isrc) == str:
-        return isrc[2:5]
+def isrc_to_rc(x):
+    if x == 'MISSING':
+        return 'MISSING'
     else:
-        return 'no_rc'
-
+        return x[2:5]
 
 # df['sn'] = df.index
 
-# df['lyricist'] = df['lyricist'].astype(object)
-# df['lyricist'].fillna('no_lyricist', inplace=True)
-# df['composer'] = df['composer'].astype(object)
-# df['composer'].fillna('no_composer', inplace=True)
+
+def genre_ids_fre(x):
+    if x == 'unknown':
+        return '465'
+    else:
+        return x
+
+
+df['name'] = df['name'].astype(object)
+df['name'].fillna('MISSING', inplace=True)
+
+df['lyricist'] = df['lyricist'].astype(object)
+df['lyricist'].fillna('MISSING', inplace=True)
+
+df['composer'] = df['composer'].astype(object)
+df['composer'].fillna('MISSING', inplace=True)
+
 df['genre_ids'] = df['genre_ids'].astype(object)
 df['genre_ids'].fillna('unknown', inplace=True)
-df['artist_name'] = df['artist_name'].astype(object)
-df['artist_name'].fillna('no_artist_name', inplace=True)
+df['genre_ids_fre_song'] = df['genre_ids'].apply(genre_ids_fre).astype('category')
 
-df['fake_genre_type_count'] = df['genre_ids'].apply(genre_id_count).astype(np.int64)
+df['artist_name'] = df['artist_name'].astype(object)
+df['artist_name'].fillna('MISSING', inplace=True)
+
+# df['fake_genre_type_count'] = df['genre_ids'].apply(genre_id_count).astype(np.int64)
 
 # df['lyricists_count'] = df['lyricist'].apply(lyricist_count).astype(np.int8)
 # df['composer_count'] = df['composer'].apply(composer_count).astype(np.int8)
@@ -200,11 +255,21 @@ df['language'] = df['language'].astype('category')
 # df['length_bin_range'] = df['length_bin_range'].astype('category')
 # df['length_chunk_range'] = df['song_length'].apply(length_chunk_range).astype(np.int64)
 # df['length_chunk_range'] = df['length_chunk_range'].astype('category')
+df['isrc'] = df['isrc'].astype(object)
+df['isrc'].fillna('MISSING', inplace=True)
+
+df['song_year_fre_song'] = df['isrc'].apply(isrc_to_year_fre).astype(np.int64)
+df['song_year_fre_song'] = df['song_year_fre_song'].astype('category')
+
 df['song_year'] = df['isrc'].apply(isrc_to_year).astype(np.int64)
+df['song_year'] = df['song_year'].astype('category')
+
 # df['song_year_bin_range'] = df['song_year'].apply(song_year_bin_range).astype(np.int64)
 # df['song_year_chunk_range'] = df['song_year'].apply(song_year_chunk_range).astype(np.int64)
-df['song_country'] = df['isrc'].apply(isrc_to_c).astype(object)
-# df['rc'] = df['isrc'].apply(isrc_to_rc).astype(object)
+df['song_country_fre_song'] = df['isrc'].apply(isrc_to_c_fre).astype('category')
+df['song_country'] = df['isrc'].apply(isrc_to_c).astype('category')
+
+df['rc'] = df['isrc'].apply(isrc_to_rc).astype('category')
 
 
 
@@ -238,13 +303,47 @@ def get_count(x):
 # count = pickle.load(open(save_dir + storage + 'disliked_artist_countt_dict.save', "rb"))
 # df['disliked_artist_count'] = df['artist_name'].apply(get_count).astype(np.int64)
 # del count
-df.drop(['isrc', 'name'], axis=1, inplace=True)
-df.drop(['lyricist',
-         'composer',
-         # 'genre_ids',
-         'song_length',
-         ],
-        axis=1, inplace=True)
+
+
+print()
+print('>'*20)
+print('>'*20)
+print('dtypes of df:')
+
+print(df.dtypes)
+print('number of rows:', len(df))
+print('number of columns:', len(df.columns))
+# print('<'*20)
+
+
+for on in df.columns:
+    print()
+    print('inspecting:', on)
+    # print('>'*20)
+    print('any null:', df[on].isnull().values.any())
+    print('null number:', df[on].isnull().values.sum())
+    print()
+    print(on, 'dtype:', df[on].dtypes)
+    print('describing', on, ':')
+    print(df[on].describe())
+    print('<'*20)
+    l = df[on]
+    s = set(l)
+    print('list len:', len(l))
+    print('set len:', len(s))
+    print()
+print('<'*20)
+print('<'*20)
+print('<'*20)
+
+df.drop('isrc', axis=1, inplace=True)
+# df.drop(['isrc', 'name'], axis=1, inplace=True)
+# df.drop(['lyricist',
+#          'composer',
+#          # 'genre_ids',
+#          'song_length',
+#          ],
+#         axis=1, inplace=True)
 
 
 print('creating custom member.')

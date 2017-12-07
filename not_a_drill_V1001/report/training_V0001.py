@@ -21,21 +21,21 @@ print(df.dtypes)
 print('number of columns:', len(df.columns))
 
 
-num_boost_round = 300
+num_boost_round = 112
 params = {
     'objective': 'binary',
     'metric': 'auc',
     'boosting': 'gbdt',
     'learning_rate': 0.1,
     'verbose': -1,
-    'num_leaves': 127,
+    'num_leaves': 511,
 
-    # 'bagging_fraction': 0.8,
-    # 'bagging_freq': 5,
-    # 'bagging_seed': 1,
-    # 'feature_fraction': 0.9,
-    # 'feature_fraction_seed': 1,
-    'max_bin': 15,
+    'bagging_fraction': 0.8,
+    'bagging_freq': 5,
+    'bagging_seed': 1,
+    'feature_fraction': 0.9,
+    'feature_fraction_seed': 1,
+    'max_bin': 255,
     'max_depth': -1,
 }
 df = df[['msno',
@@ -48,7 +48,6 @@ df = df[['msno',
          'artist_name',
          'song_count',
          'member_count',
-         'song_year'
          ]]
 
 for col in df.columns:
@@ -86,3 +85,4 @@ print('[timer]: complete in {:.0f}m {:.0f}s'.format(
     time_elapsed // 60, time_elapsed % 60))
 
 
+# 68641
