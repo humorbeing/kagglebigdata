@@ -30,7 +30,7 @@ params = {
     'boosting': 'gbdt',
     'learning_rate': 0.1,
     'verbose': -1,
-    'num_leaves': 2**5-1,
+    'num_leaves': 2**6-1,
 
     # 'bagging_fraction': 0.8,
     # 'bagging_freq': 2,
@@ -38,7 +38,7 @@ params = {
     # 'feature_fraction': 0.8,
     # 'feature_fraction_seed': 1,
     'max_bin': 15,
-    'max_depth': 6,
+    'max_depth': 5,
 }
 # df['song_year'] = df['song_year'].astype('category')
 # on = ['msno',
