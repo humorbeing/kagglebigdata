@@ -99,15 +99,17 @@ for i in range(5):
     lambda_l1 = l1_s[i]
     lambda_l2 = l2_s[i]
     max_bin = mb_s[i]
+    train_set.max_bin = max_bin
+    val_set.max_bin = max_bin
     params = {
               'boosting': boosting,
               'learning_rate': learning_rate,
               'num_leaves': num_leaves,
-              # 'bagging_fraction': bagging_fraction,
-              # 'bagging_freq': bagging_freq,
-              # 'bagging_seed': bagging_seed,
-              # 'feature_fraction': feature_fraction,
-              # 'feature_fraction_seed': feature_fraction_seed,
+              'bagging_fraction': bagging_fraction,
+              'bagging_freq': bagging_freq,
+              'bagging_seed': bagging_seed,
+              'feature_fraction': feature_fraction,
+              'feature_fraction_seed': feature_fraction_seed,
               'max_bin': max_bin,
               'max_depth': max_depth,
               'lambda_l2': lambda_l2,
