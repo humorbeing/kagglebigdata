@@ -11,12 +11,11 @@ from sklearn.model_selection import train_test_split
 since = time.time()
 
 data_dir = '../data/'
-save_dir = '../saves01/'
+save_dir = '../saves/'
 load_name = 'train_set'
 dt = pickle.load(open(save_dir+load_name+'_dict.save', "rb"))
 df = pd.read_csv(save_dir+load_name+".csv", dtype=dt)
 del dt
-# df.drop('gender', axis=1, inplace=True)
 print('What we got:')
 print(df.dtypes)
 print('number of columns:', len(df.columns))
@@ -30,7 +29,7 @@ params = {
     'boosting': 'gbdt',
     'learning_rate': 0.1,
     'verbose': -1,
-    'num_leaves': 2**6-1,
+    'num_leaves': 127,
 
     # 'bagging_fraction': 0.8,
     # 'bagging_freq': 2,
@@ -38,25 +37,19 @@ params = {
     # 'feature_fraction': 0.8,
     # 'feature_fraction_seed': 1,
     'max_bin': 15,
-    'max_depth': 5,
+    'max_depth': -1,
 }
 # df['song_year'] = df['song_year'].astype('category')
-on = [
-
+on = ['msno',
+      'song_id',
       'target',
-      'isrc_rest',
-      'top1_in_song',
-    'top2_in_song',
-    'top3_in_song'
-      # 'msno',
-      # 'song_id',
-      # 'source_system_tab',
-      # 'source_screen_name',
-      # 'source_type',
-      # 'language',
-      # 'artist_name',
-      # 'fake_song_count',
-      # 'fake_member_count',
+      'source_system_tab',
+      'source_screen_name',
+      'source_type',
+      'language',
+      'artist_name',
+      'fake_song_count',
+      'fake_member_count',
       # candidate
       # 'fake_artist_count',
       # 'fake_source_screen_name_count',
@@ -64,25 +57,23 @@ on = [
       # 'fake_genre_type_count',
       # 'fake_top1',
 
-      # 'song_year', # int
+      'song_year', # int
       # 'song_country',
-      # 'fake_song_year_count', #00
-      # 'fake_song_country_count', # 00
-      # 'fake_top1_count', # 00
+      'fake_song_year_count', #00
+      'fake_song_country_count', # 00
+      'fake_top1_count', # 00
       ]
 df = df[on]
-
-fixed = [
-         # 'msno',
-         # 'song_id',
+fixed = ['msno',
+         'song_id',
          'target',
-         # 'source_system_tab',
-         # 'source_screen_name',
-         # 'source_type',
-         # 'language',
-         # 'artist_name',
-         # 'fake_song_count',
-         # 'fake_member_count',
+         'source_system_tab',
+         'source_screen_name',
+         'source_type',
+         'language',
+         'artist_name',
+         'fake_song_count',
+         'fake_member_count',
          ]
 
 for w in df.columns:
@@ -155,7 +146,6 @@ for w in df.columns:
         df = pd.read_csv(save_dir + load_name + ".csv", dtype=dt)
         del dt
         df = df[on]
-        # df.drop('gender', axis=1, inplace=True)
 
 print()
 time_elapsed = time.time() - since

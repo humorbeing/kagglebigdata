@@ -14,7 +14,7 @@ save_dir = '../saves/'
 
 load_name = 'custom_members_fixed.csv'
 load_name = 'custom_song_fixed.csv'
-load_name = 'train_set.csv'
+# load_name = 'train_set.csv'
 # load_name = 'test_set.csv'
 load_name = load_name[:-4]
 # print(load_name)

@@ -212,6 +212,13 @@ def isrc_to_rc(x):
     else:
         return x[2:5]
 
+
+def rest_rc(x):
+    if x == 'MISSING':
+        return 'MISSING'
+    else:
+        return x[-5:]
+
 # df['sn'] = df.index
 
 
@@ -232,8 +239,8 @@ df['composer'] = df['composer'].astype(object)
 df['composer'].fillna('MISSING', inplace=True)
 
 df['genre_ids'] = df['genre_ids'].astype(object)
-df['genre_ids'].fillna('unknown', inplace=True)
-df['genre_ids_fre_song'] = df['genre_ids'].apply(genre_ids_fre).astype('category')
+df['genre_ids'].fillna('MISSING', inplace=True)
+# df['genre_ids_fre_song'] = df['genre_ids'].apply(genre_ids_fre).astype('category')
 
 df['artist_name'] = df['artist_name'].astype(object)
 df['artist_name'].fillna('MISSING', inplace=True)
@@ -258,25 +265,176 @@ df['language'] = df['language'].astype('category')
 df['isrc'] = df['isrc'].astype(object)
 df['isrc'].fillna('MISSING', inplace=True)
 
-df['song_year_fre_song'] = df['isrc'].apply(isrc_to_year_fre).astype(np.int64)
-df['song_year_fre_song'] = df['song_year_fre_song'].astype('category')
+# df['song_year_fre_song'] = df['isrc'].apply(isrc_to_year_fre).astype(np.int64)
+# df['song_year_fre_song'] = df['song_year_fre_song'].astype('category')
 
 df['song_year'] = df['isrc'].apply(isrc_to_year).astype(np.int64)
 df['song_year'] = df['song_year'].astype('category')
 
 # df['song_year_bin_range'] = df['song_year'].apply(song_year_bin_range).astype(np.int64)
 # df['song_year_chunk_range'] = df['song_year'].apply(song_year_chunk_range).astype(np.int64)
-df['song_country_fre_song'] = df['isrc'].apply(isrc_to_c_fre).astype('category')
+# df['song_country_fre_song'] = df['isrc'].apply(isrc_to_c_fre).astype('category')
 df['song_country'] = df['isrc'].apply(isrc_to_c).astype('category')
 
 df['rc'] = df['isrc'].apply(isrc_to_rc).astype('category')
-
+df['isrc_rest'] = df['isrc'].apply(rest_rc).astype('category')
 
 
 # df['artist_composer'] = (df['artist_name'] == df['composer']).astype(np.int8)
 # df['artist_composer_lyricist'] = ((df['artist_name'] == df['composer']) &
 #                                   (df['artist_name'] == df['lyricist']) &
 #                                   (df['composer'] == df['lyricist'])).astype(np.int8)
+
+kinds = {'0': 0}
+
+
+def genre_id_count(x):
+    global kinds
+    if x == 'MISSING':
+        kinds['0'] += 1
+        return 0
+    else:
+        a = x.count('|') + 1
+        if a == 1:
+            if x in kinds:
+                pass
+            else:
+                kinds[x] = 0
+            kinds[x] += 1
+        else:
+            for i in x.split('|'):
+                if i in kinds:
+                    pass
+                else:
+                    kinds[i] = 0
+                kinds[i] += 1
+        return a
+
+
+df['fake_genre_type_count'] = df['genre_ids'].apply(genre_id_count).astype(np.int64)
+for k in kinds:
+    print(k, ':', kinds[k])
+
+
+def top1(x):
+    if x == 'MISSING':
+        return '0'
+    else:
+        a = x.count('|') + 1
+        if a == 1:
+            return x
+        else:
+            top_1 = '0'
+            best_1 = 0
+            top_2 = '0'
+            best_2 = 0
+            top_3 = '0'
+            best_3 = 0
+            for g in x.split('|'):
+                if g in kinds:
+                    if kinds[g] > best_1:
+                        top_3 = top_2
+                        best_3 = best_2
+                        top_2 = top_1
+                        best_2 = best_1
+
+                        top_1 = g
+                        best_1 = kinds[g]
+
+                    elif kinds[g] > best_2:
+                        top_3 = top_2
+                        best_3 = best_2
+                        top_2 = g
+                        best_2 = kinds[g]
+                    elif kinds[g] > best_3:
+                        top_3 = g
+                        best_3 = kinds[g]
+                    else:
+                        pass
+            return top_1
+
+
+def top2(x):
+    if x == 'MISSING':
+        return '0'
+    else:
+        a = x.count('|') + 1
+        if a == 1:
+            return x
+        else:
+            top_1 = '0'
+            best_1 = 0
+            top_2 = '0'
+            best_2 = 0
+            top_3 = '0'
+            best_3 = 0
+            for g in x.split('|'):
+                if g in kinds:
+                    if kinds[g] > best_1:
+                        top_3 = top_2
+                        best_3 = best_2
+                        top_2 = top_1
+                        best_2 = best_1
+
+                        top_1 = g
+                        best_1 = kinds[g]
+
+                    elif kinds[g] > best_2:
+                        top_3 = top_2
+                        best_3 = best_2
+                        top_2 = g
+                        best_2 = kinds[g]
+                    elif kinds[g] > best_3:
+                        top_3 = g
+                        best_3 = kinds[g]
+                    else:
+                        pass
+            return top_2
+
+
+def top3(x):
+    if x == 'MISSING':
+        return '0'
+    else:
+        a = x.count('|') + 1
+        if a == 1:
+            return x
+        else:
+            top_1 = '0'
+            best_1 = 0
+            top_2 = '0'
+            best_2 = 0
+            top_3 = '0'
+            best_3 = 0
+            for g in x.split('|'):
+                if g in kinds:
+                    if kinds[g] > best_1:
+                        top_3 = top_2
+                        best_3 = best_2
+                        top_2 = top_1
+                        best_2 = best_1
+
+                        top_1 = g
+                        best_1 = kinds[g]
+
+                    elif kinds[g] > best_2:
+                        top_3 = top_2
+                        best_3 = best_2
+                        top_2 = g
+                        best_2 = kinds[g]
+                    elif kinds[g] > best_3:
+                        top_3 = g
+                        best_3 = kinds[g]
+                    else:
+                        pass
+            return top_3
+
+
+df['top1_in_song'] = df['genre_ids'].apply(top1).astype('category')
+df['top2_in_song'] = df['genre_ids'].apply(top2).astype('category')
+df['top3_in_song'] = df['genre_ids'].apply(top3).astype('category')
+
+
 
 count = {}
 
@@ -336,8 +494,8 @@ print('<'*20)
 print('<'*20)
 print('<'*20)
 
-df.drop('isrc', axis=1, inplace=True)
-# df.drop(['isrc', 'name'], axis=1, inplace=True)
+df.drop('genre_ids', axis=1, inplace=True)
+df.drop(['isrc', 'fake_genre_type_count'], axis=1, inplace=True)
 # df.drop(['lyricist',
 #          'composer',
 #          # 'genre_ids',

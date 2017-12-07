@@ -158,42 +158,42 @@ def sex_fre(x):
 # df['expiration_year'] = df['expiration_time'].dt.year
 # df['expiration_month'] = df['expiration_time'].dt.month
 # df['expiration_date'] = df['expiration_time'].dt.day
-df['sex'] = df['gender'].apply(gender_fix).astype(np.int8)
+# df['sex'] = df['gender'].apply(gender_fix).astype(np.int8)
+#
+# df['sex_guess1'] = df['sex'].apply(sex_guess).astype(np.int8)
+# df['sex_guess2'] = df['sex'].apply(sex_guess).astype(np.int8)
+# df['sex_guess3'] = df['sex'].apply(sex_guess).astype(np.int8)
+# df['sex_guess4'] = df['sex'].apply(sex_guess).astype(np.int8)
+# df['sex_guess5'] = df['sex'].apply(sex_guess).astype(np.int8)
+#
+# df['sex_freq_member'] = df['sex'].apply(sex_fre).astype(np.int8)
+#
+# df['sex'] = df['sex'].astype('category')
+# df['sex_guess1'] = df['sex_guess1'].astype('category')
+# df['sex_guess2'] = df['sex_guess2'].astype('category')
+# df['sex_guess3'] = df['sex_guess3'].astype('category')
+# df['sex_guess4'] = df['sex_guess4'].astype('category')
+# df['sex_guess5'] = df['sex_guess5'].astype('category')
+#
+# df['sex_freq_member'] = df['sex_freq_member'].astype('category')
 
-df['sex_guess1'] = df['sex'].apply(sex_guess).astype(np.int8)
-df['sex_guess2'] = df['sex'].apply(sex_guess).astype(np.int8)
-df['sex_guess3'] = df['sex'].apply(sex_guess).astype(np.int8)
-df['sex_guess4'] = df['sex'].apply(sex_guess).astype(np.int8)
-df['sex_guess5'] = df['sex'].apply(sex_guess).astype(np.int8)
 
-df['sex_freq_member'] = df['sex'].apply(sex_fre).astype(np.int8)
-
-df['sex'] = df['sex'].astype('category')
-df['sex_guess1'] = df['sex_guess1'].astype('category')
-df['sex_guess2'] = df['sex_guess2'].astype('category')
-df['sex_guess3'] = df['sex_guess3'].astype('category')
-df['sex_guess4'] = df['sex_guess4'].astype('category')
-df['sex_guess5'] = df['sex_guess5'].astype('category')
-
-df['sex_freq_member'] = df['sex_freq_member'].astype('category')
-
-
-df['registration_year'] = df['registration_init_time'].dt.year
-df['registration_month'] = df['registration_init_time'].dt.month
-df['registration_date'] = df['registration_init_time'].dt.day
+# df['registration_year'] = df['registration_init_time'].dt.year
+# df['registration_month'] = df['registration_init_time'].dt.month
+# df['registration_date'] = df['registration_init_time'].dt.day
 df.rename(columns={'expiration_date': 'expiration_time'}, inplace=True)
-df['expiration_year'] = df['expiration_time'].dt.year
+# df['expiration_year'] = df['expiration_time'].dt.year
 df['expiration_month'] = df['expiration_time'].dt.month
-df['expiration_date'] = df['expiration_time'].dt.day
+# df['expiration_date'] = df['expiration_time'].dt.day
 
 
-df['registration_year'] = df['registration_year'].astype('category')
-df['registration_month'] = df['registration_month'].astype('category')
-df['registration_date'] = df['registration_date'].astype('category')
+# df['registration_year'] = df['registration_year'].astype('category')
+# df['registration_month'] = df['registration_month'].astype('category')
+# df['registration_date'] = df['registration_date'].astype('category')
 
-df['expiration_year'] = df['expiration_year'].astype('category')
+# df['expiration_year'] = df['expiration_year'].astype('category')
 df['expiration_month'] = df['expiration_month'].astype('category')
-df['expiration_date'] = df['expiration_date'].astype('category')
+# df['expiration_date'] = df['expiration_date'].astype('category')
 
 
 # df = df.drop(['gender'], axis=1)
@@ -254,10 +254,10 @@ print('<'*20)
 
 
 df.drop([
-         # 'city',
+         'city',
          # 'bd',
-         # 'gender',
-         # 'registered_via',
+         'gender',
+         'registered_via',
          'registration_init_time',
          'expiration_time'
          ],

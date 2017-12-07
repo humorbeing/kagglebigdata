@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 since = time.time()
 
 data_dir = '../data/'
-save_dir = '../saves01/'
+save_dir = '../saves/'
 load_name = 'train_set'
 dt = pickle.load(open(save_dir+load_name+'_dict.save', "rb"))
 df = pd.read_csv(save_dir+load_name+".csv", dtype=dt)
@@ -20,39 +20,37 @@ print('What we got:')
 print(df.dtypes)
 print('number of columns:', len(df.columns))
 num_boost_round = 500000
-early_stopping_rounds = 50
+early_stopping_rounds = 200
 verbose_eval = 10
 params = {
     'objective': 'binary',
     'metric': 'auc',
     'boosting': 'gbdt',
-    'learning_rate': 0.1,
+    'learning_rate': 0.01,
     'verbose': -1,
-    'num_leaves': 2**6-1,
+    'num_leaves': 2**10-1,
 
-    # 'bagging_fraction': 0.8,
-    # 'bagging_freq': 2,
-    # 'bagging_seed': 1,
-    # 'feature_fraction': 0.8,
-    # 'feature_fraction_seed': 1,
-    'max_bin': 15,
-    'max_depth': 5,
+    'bagging_fraction': 0.8,
+    'bagging_freq': 2,
+    'bagging_seed': 1,
+    'feature_fraction': 0.8,
+    'feature_fraction_seed': 1,
+    'max_bin': 511,
+    'max_depth': -1,
 }
-df = df[[
-         # 'msno',
-         # 'song_id',
-         'target',
-         'top1_in_song',
-         'top2_in_song',
-         'top3_in_song',
-         # 'genre_ids',
-         'song_id',
-         # 'language',
-         # 'artist_name',
-         # 'fake_song_count',
-         # 'fake_member_count',
-         # 'song_year',
-         ]]
+# df = df[[
+#          'msno',
+#          'song_id',
+#          'target',
+#          'source_system_tab',
+#          'source_screen_name',
+#          'source_type',
+#          'language',
+#          'artist_name',
+#          # 'fake_song_count',
+#          # 'fake_member_count',
+#          # 'song_year',
+#          ]]
 
 for col in df.columns:
     if df[col].dtype == object:
