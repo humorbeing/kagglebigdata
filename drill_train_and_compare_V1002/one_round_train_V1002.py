@@ -18,66 +18,73 @@ df = pd.read_csv(save_dir+load_name+".csv", dtype=dt)
 del dt
 print('What we got:')
 print(df.dtypes)
+print('number of rows:', len(df))
 print('number of columns:', len(df.columns))
-num_boost_round = 500000
+
+num_boost_round = 300
 early_stopping_rounds = 50
 verbose_eval = 10
 
-
 boosting = 'gbdt'
+
 learning_rate = 0.02
 num_leaves = 511
+max_depth = -1
+
+max_bin = 255
+lambda_l1 = 0
+lambda_l2 = 0.2
+
+
 bagging_fraction = 0.9
 bagging_freq = 2
 bagging_seed = 2
 feature_fraction = 0.9
 feature_fraction_seed = 2
-max_depth = -1
-lambda_l2 = 0.2
-lambda_l1 = 0
-max_bin = 255
 
 params = {
-      'boosting': boosting,
-      'learning_rate': learning_rate,
-      'num_leaves': num_leaves,
-      'bagging_fraction': bagging_fraction,
-      'bagging_freq': bagging_freq,
-      'bagging_seed': bagging_seed,
-      'feature_fraction': feature_fraction,
-      'feature_fraction_seed': feature_fraction_seed,
-      'max_bin': max_bin,
-      'max_depth': max_depth,
-      'lambda_l2': lambda_l2,
-      'lambda_l1': lambda_l1
-          }
+    'boosting': boosting,
 
-# df = df[[
-#          'msno',
-#          'song_id',
-#          'target',
-#          'source_system_tab',
-#          'source_screen_name',
-#          'source_type',
-#          'language',
-#          'artist_name',
-#          # 'fake_song_count',
-#          # 'fake_member_count',
-#          # 'song_year',
-#          ]]
+    'learning_rate': learning_rate,
+    'num_leaves': num_leaves,
+    'max_depth': max_depth,
+
+    'max_bin': max_bin,
+    'lambda_l1': lambda_l1,
+    'lambda_l2': lambda_l2,
+
+    'bagging_fraction': bagging_fraction,
+    'bagging_freq': bagging_freq,
+    'bagging_seed': bagging_seed,
+    'feature_fraction': feature_fraction,
+    'feature_fraction_seed': feature_fraction_seed,
+}
+on = [
+    'msno',
+    'song_id',
+    'target',
+    'source_system_tab',
+    'source_screen_name',
+    'source_type',
+    'language',
+    'artist_name',
+    'song_count',
+    'member_count',
+    'song_year',
+]
+df = df[on]
 
 for col in df.columns:
     if df[col].dtype == object:
         df[col] = df[col].astype('category')
 
-
 print()
-print('our guest:')
-print()
+print('Our guest selection:')
 print(df.dtypes)
 print('number of columns:', len(df.columns))
 print()
-print()
+
+
 length = len(df)
 train_size = 0.76
 train_set = df.head(int(length*train_size))
@@ -112,8 +119,8 @@ train_set.max_bin = max_bin
 val_set.max_bin = max_bin
 
 del X_tr, Y_tr, X_val, Y_val
+
 params['metric'] = 'auc'
-# params['max_bin'] = 255
 params['verbose'] = -1
 params['objective'] = 'binary'
 
