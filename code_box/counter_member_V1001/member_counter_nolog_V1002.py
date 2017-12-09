@@ -204,7 +204,7 @@ df['expiration_date'] = df['expiration_time'].dt.day
 # df['expiration_year'] = df['expiration_year'].astype('category')
 # df['expiration_month'] = df['expiration_month'].astype('category')
 # df['expiration_date'] = df['expiration_date'].astype('category')
-
+#
 
 # df = df.drop(['gender'], axis=1)
 # df = df.drop(['expiration_time'], axis=1)

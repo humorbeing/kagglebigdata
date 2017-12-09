@@ -1,8 +1,11 @@
 /data
 /saves
-/fake
 /saves01
 /saves02
+/fake/data
+/fake/saves
+/fake/saves01
+/fake/saves02
 *.csv
 *.save
 *.gz
