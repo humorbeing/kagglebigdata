@@ -14,35 +14,77 @@ data_dir = '../data/'
 save_dir = '../saves/'
 load_name = 'train_set'
 dt = pickle.load(open(save_dir+load_name+'_dict.save', "rb"))
-dff = pd.read_csv(save_dir+load_name+".csv", dtype=dt)
+df = pd.read_csv(save_dir+load_name+".csv", dtype=dt)
 del dt
 
 # barebone = True
 barebone = False
 if barebone:
-    ccc = [i for i in dff.columns]
+    ccc = [i for i in df.columns]
     ccc.remove('target')
-    dff.drop(ccc, axis=1, inplace=True)
+    df.drop(ccc, axis=1, inplace=True)
 
-# dff = dff[['target','membership_days', 'bd_log10']]
 # must be a fake feature
 inner = [
     'FAKE_[]_0.6788_Light_gbdt_1512883008.csv'
 ]
-inner = False
+# inner = False
 
 
 def insert_this(on):
-    global dff
+    global df
     on = on[:-4]
-    dff1 = pd.read_csv('../saves/feature/'+on+'.csv')
-    dff1.drop('id', axis=1, inplace=True)
+    df1 = pd.read_csv('../saves/feature/'+on+'.csv')
+    df1.drop('id', axis=1, inplace=True)
     on = on[-10:]
-    # print(on)
-    dff1.rename(columns={'target': 'FAKE_'+on}, inplace=True)
-    # print(dff1.head(10))
-    dff = dff.join(dff1)
-    del dff1
+    df1.rename(columns={'target': 'FAKE_'+on}, inplace=True)
+    df = df.join(df1)
+    del df1
+
+
+cc = df.drop('target', axis=1)
+# print(cc.dtypes)
+cols = cc.columns
+del cc
+
+counter = {}
+
+
+def get_count(x):
+    try:
+        return counter[x]
+    except KeyError:
+        return 0
+
+
+def add_this_counter_column(on_in):
+    global counter, df
+    read_from = '../fake/saves/'
+    counter = pickle.load(open(read_from+'counter/'+'ITC_'+on_in+'_dict.save', "rb"))
+    df['ITC_'+on_in] = df[on_in].apply(get_count).astype(np.int64)
+    counter = pickle.load(open(read_from + 'counter/' + 'CC11_' + on_in + '_dict.save', "rb"))
+    df['CC11_' + on_in] = df[on_in].apply(get_count).astype(np.int64)
+    df.drop(on_in, axis=1, inplace=True)
+
+
+for col in cols:
+    add_this_counter_column(col)
+
+
+def log10me(x):
+    return np.log10(x)
+
+
+def log10me1(x):
+    return np.log10(x+1)
+
+
+for col in cols:
+    colc = 'ITC_'+col
+    df[colc + '_log10'] = df[colc].apply(log10me).astype(np.float64)
+    df[colc + '_log10_1'] = df[colc].apply(log10me1).astype(np.float64)
+    col1 = 'CC11_'+col
+    df['OinC_'+col] = df[col1]/df[colc]
 
 
 if inner:
@@ -50,11 +92,11 @@ if inner:
         insert_this(i)
 
 print('What we got:')
-print(dff.dtypes)
-print('number of rows:', len(dff))
-print('number of columns:', len(dff.columns))
+print(df.dtypes)
+print('number of rows:', len(df))
+print('number of columns:', len(df.columns))
 
-num_boost_round = 5000
+num_boost_round = 1000
 early_stopping_rounds = 200
 verbose_eval = 10
 
@@ -109,30 +151,30 @@ fixed = [
     'FAKE_1512883008',
 ]
 result = {}
-for w in dff.columns:
+for w in df.columns:
     if w in fixed:
         pass
     else:
         print('working on:', w)
         toto = [i for i in fixed]
         toto.append(w)
-        df = dff[toto]
+        df_on = df[toto]
 
-        for col in df.columns:
-            if df[col].dtype == object:
-                df[col] = df[col].astype('category')
+        for col in df_on.columns:
+            if df_on[col].dtype == object:
+                df_on[col] = df_on[col].astype('category')
 
         print()
         print('Our guest selection:')
-        print(df.dtypes)
-        print('number of columns:', len(df.columns))
+        print(df_on.dtypes)
+        print('number of columns:', len(df_on.columns))
         print()
 
-        length = len(df)
+        length = len(df_on)
         train_size = 0.76
-        train_set = df.head(int(length*train_size))
-        val_set = df.drop(train_set.index)
-        del df
+        train_set = df_on.head(int(length*train_size))
+        val_set = df_on.drop(train_set.index)
+        del df_on
 
         train_set = train_set.sample(frac=1)
         X_tr = train_set.drop(['target'], axis=1)
