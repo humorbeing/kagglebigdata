@@ -1,13 +1,12 @@
-import numpy as np
 import pandas as pd
 import lightgbm as lgb
-import datetime
-import math
-import gc
 import time
 import pickle
-from sklearn.model_selection import train_test_split
 
+
+print()
+print('This is [no drill] training.')
+print()
 since = time.time()
 
 data_dir = '../data/'
@@ -18,57 +17,82 @@ df = pd.read_csv(save_dir+load_name+".csv", dtype=dt)
 del dt
 print('What we got:')
 print(df.dtypes)
+print('number of rows:', len(df))
 print('number of columns:', len(df.columns))
 
+num_boost_round = 427
+estimate = 0.6788  # make sure put in something here
 
-num_boost_round = 112
+boosting = 'gbdt'
+
+learning_rate = 0.02
+num_leaves = 511
+max_depth = -1
+
+max_bin = 255
+lambda_l1 = 0
+lambda_l2 = 0.2
+
+
+bagging_fraction = 0.9
+bagging_freq = 2
+bagging_seed = 2
+feature_fraction = 0.9
+feature_fraction_seed = 2
+
 params = {
-    'objective': 'binary',
-    'metric': 'auc',
-    'boosting': 'gbdt',
-    'learning_rate': 0.1,
-    'verbose': -1,
-    'num_leaves': 511,
+    'boosting': boosting,
 
-    'bagging_fraction': 0.8,
-    'bagging_freq': 5,
-    'bagging_seed': 1,
-    'feature_fraction': 0.9,
-    'feature_fraction_seed': 1,
-    'max_bin': 255,
-    'max_depth': -1,
+    'learning_rate': learning_rate,
+    'num_leaves': num_leaves,
+    'max_depth': max_depth,
+
+    'max_bin': max_bin,
+    'lambda_l1': lambda_l1,
+    'lambda_l2': lambda_l2,
+
+    'bagging_fraction': bagging_fraction,
+    'bagging_freq': bagging_freq,
+    'bagging_seed': bagging_seed,
+    'feature_fraction': feature_fraction,
+    'feature_fraction_seed': feature_fraction_seed,
 }
-df = df[['msno',
-         'song_id',
-         'target',
-         'source_system_tab',
-         'source_screen_name',
-         'source_type',
-         'language',
-         'artist_name',
-         'song_count',
-         'member_count',
-         ]]
+# on = [
+#     'msno',
+#     'song_id',
+#     'target',
+#     'source_system_tab',
+#     'source_screen_name',
+#     'source_type',
+#     'language',
+#     'artist_name',
+#     'song_count',
+#     'member_count',
+#     'song_year',
+# ]
+# df = df[on]
 
 for col in df.columns:
     if df[col].dtype == object:
         df[col] = df[col].astype('category')
 
 print()
-print()
-print('After selection:')
+print('Our guest selection:')
 print(df.dtypes)
 print('number of columns:', len(df.columns))
 print()
-print()
-
 
 X_tr = df.drop(['target'], axis=1)
 Y_tr = df['target'].values
 del df
 
 train_set = lgb.Dataset(X_tr, Y_tr)
+train_set.max_bin = max_bin
 del X_tr, Y_tr
+
+params['metric'] = 'auc'
+params['verbose'] = -1
+params['objective'] = 'binary'
 
 print('Training...')
 print()
@@ -76,13 +100,15 @@ model = lgb.train(params,
                   train_set,
                   num_boost_round=num_boost_round,
                   )
-model_name = 'model_V1001'
-pickle.dump(model, open(save_dir+model_name+'.save', "wb"))
-print('model saved as: ', save_dir, model_name)
+model_time = str(int(time.time()))
+model_name = '_Light_'+boosting
+model_name = '[]_'+str(estimate)+model_name
+model_name = model_name + '_' + model_time
+pickle.dump(model, open(save_dir+'model/'+model_name+'.model', "wb"))
+print('model saved as: ', save_dir+'model/'+model_name+'.model')
 print()
 time_elapsed = time.time() - since
 print('[timer]: complete in {:.0f}m {:.0f}s'.format(
     time_elapsed // 60, time_elapsed % 60))
 
 
-# 68641

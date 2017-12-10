@@ -1,12 +1,13 @@
+import numpy as np
 import pandas as pd
 import lightgbm as lgb
+import datetime
+import math
+import gc
 import time
 import pickle
+from sklearn.model_selection import train_test_split
 
-
-print()
-print('This is [no drill] training.')
-print()
 since = time.time()
 
 data_dir = '../data/'
@@ -20,8 +21,9 @@ print(df.dtypes)
 print('number of rows:', len(df))
 print('number of columns:', len(df.columns))
 
-num_boost_round = 2014
-estimate = 0.6246  # make sure put in something here
+num_boost_round = 5000
+early_stopping_rounds = 50
+verbose_eval = 10
 
 boosting = 'gbdt'
 
@@ -82,30 +84,59 @@ print(df.dtypes)
 print('number of columns:', len(df.columns))
 print()
 
-X_tr = df.drop(['target'], axis=1)
-Y_tr = df['target'].values
+
+length = len(df)
+train_size = 0.76
+train_set = df.head(int(length*train_size))
+val_set = df.drop(train_set.index)
 del df
 
+train_set = train_set.sample(frac=1)
+X_tr = train_set.drop(['target'], axis=1)
+Y_tr = train_set['target'].values
+
+X_val = val_set.drop(['target'], axis=1)
+Y_val = val_set['target'].values
+
+del train_set, val_set
+
+t = len(Y_tr)
+t1 = sum(Y_tr)
+t0 = t - t1
+print('train size:', t, 'number of 1:', t1, 'number of 0:', t0)
+print('train: 1 in all:', t1/t, '0 in all:', t0/t, '1/0:', t1/t0)
+t = len(Y_val)
+t1 = sum(Y_val)
+t0 = t - t1
+print('val size:', t, 'number of 1:', t1, 'number of 0:', t0)
+print('val: 1 in all:', t1/t, '0 in all:', t0/t, '1/0:', t1/t0)
+print()
+print()
+
 train_set = lgb.Dataset(X_tr, Y_tr)
+val_set = lgb.Dataset(X_val, Y_val)
 # train_set.max_bin = max_bin
-del X_tr, Y_tr
+# val_set.max_bin = max_bin
+
+del X_tr, Y_tr, X_val, Y_val
 
 params['metric'] = 'auc'
 params['verbose'] = -1
 params['objective'] = 'binary'
 
 print('Training...')
-print()
+
 model = lgb.train(params,
                   train_set,
                   num_boost_round=num_boost_round,
+                  early_stopping_rounds=early_stopping_rounds,
+                  valid_sets=val_set,
+                  verbose_eval=verbose_eval,
                   )
-model_time = str(int(time.time()))
-model_name = '_Light_'+boosting
-model_name = '[]_'+str(estimate)+model_name
-model_name = model_name + '_' + model_time
-pickle.dump(model, open(save_dir+'model/'+model_name+'.model', "wb"))
-print('model saved as: ', save_dir+'model/'+model_name+'.model')
+
+print('best score:', model.best_score['valid_0']['auc'])
+print('best iteration:', model.best_iteration)
+
 print()
 time_elapsed = time.time() - since
 print('[timer]: complete in {:.0f}m {:.0f}s'.format(

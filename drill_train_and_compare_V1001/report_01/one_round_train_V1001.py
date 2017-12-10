@@ -113,7 +113,7 @@ print('[timer]: complete in {:.0f}m {:.0f}s'.format(
     time_elapsed // 60, time_elapsed % 60))
 
 
-'''/usr/bin/python3.5 /media/ray/SSD/workspace/python/projects/kaggle_song_git/drill_train_and_compare_V1001/one_round_train_V1002.py
+'''/usr/bin/python3.5 /media/ray/SSD/workspace/python/projects/kaggle_song_git/drill_train_and_compare_V1001/0.6246_one_round_train_V1002.py
 What we got:
 msno                     object
 song_id                  object
