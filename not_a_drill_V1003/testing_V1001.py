@@ -18,12 +18,17 @@ save_dir = '../saves/'
 df = pd.DataFrame()
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-model_name = '[]_0.8148_Light_gbdt_1512868103.model'
+model_name = '[]_0.82_Light_gbdt_1512869647.model'
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-print('loading model...')
-
+print()
+print('!'*60)
+print()
+print('loading model:', model_name)
+print('check if its right.')
+print()
+print('!'*60)
+print()
 model_name = model_name[:-6]
 model = pickle.load(open(save_dir + 'model/' + model_name + '.model', "rb"))
 

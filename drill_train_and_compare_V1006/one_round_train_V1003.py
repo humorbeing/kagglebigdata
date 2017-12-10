@@ -61,12 +61,12 @@ verbose_eval = 10
 
 boosting = 'gbdt'
 
-learning_rate = 0.02
-num_leaves = 15
+learning_rate = 0.2
+num_leaves = 127
 max_depth = 10
 
-lambda_l1 = 0
-lambda_l2 = 0.3
+lambda_l1 = 5000
+lambda_l2 = 5000
 
 
 bagging_fraction = 0.8
@@ -145,8 +145,14 @@ print('val: 1 in all:', t1/t, '0 in all:', t0/t, '1/0:', t1/t0)
 print()
 print()
 
-train_set = lgb.Dataset(X_tr, Y_tr)
-val_set = lgb.Dataset(X_val, Y_val)
+train_set = lgb.Dataset(
+    X_tr, Y_tr,
+    # weight=[0.1, 1]
+)
+val_set = lgb.Dataset(
+    X_val, Y_val,
+    # weight=[0.1, 1]
+)
 # train_set.max_bin = max_bin
 # val_set.max_bin = max_bin
 
@@ -162,11 +168,11 @@ model = lgb.train(params,
                   train_set,
                   num_boost_round=num_boost_round,
                   early_stopping_rounds=early_stopping_rounds,
-                  valid_sets=val_set,
+                  valid_sets=[train_set, val_set],
                   verbose_eval=verbose_eval,
                   )
 
-print('best score:', model.best_score['valid_0']['auc'])
+print('best score:', model.best_score['valid_1']['auc'])
 print('best iteration:', model.best_iteration)
 
 print()
