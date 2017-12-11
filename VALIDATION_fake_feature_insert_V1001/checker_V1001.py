@@ -10,10 +10,10 @@ since = time.time()
 
 
 data_dir = '../data/'
-save_dir = '../saves/'
+save_dir = '../saves01/'
 
-# load_name = 'train_set.csv'
-load_name = 'test_set.csv'
+load_name = 'train_set.csv'
+# load_name = 'test_set.csv'
 load_name = load_name[:-4]
 # print(load_name)
 dt = pickle.load(open(save_dir+load_name+'_dict.save', "rb"))
@@ -35,8 +35,8 @@ def insert_this(on):
     del df1
 
 
-insert_this('[0.67982]_0.6788_Light_gbdt_1512750240.csv')
-insert_this('[0.62259]_0.6246_Light_gbdt_1512859793.csv')
+# insert_this('[0.67982]_0.6788_Light_gbdt_1512750240.csv')
+# insert_this('[0.62259]_0.6246_Light_gbdt_1512859793.csv')
 
 # print(df.head(10))
 print()
