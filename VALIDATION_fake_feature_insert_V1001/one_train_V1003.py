@@ -126,7 +126,7 @@ print(df.dtypes)
 print('number of rows:', len(df))
 print('number of columns:', len(df.columns))
 
-num_boost_round = 5
+num_boost_round = 5000
 early_stopping_rounds = 50
 verbose_eval = 10
 
@@ -234,8 +234,8 @@ for w in work_on:
         print('number of columns:', len(df_on.columns))
         print()
 
-        # save_me = True
-        save_me = False
+        save_me = True
+        # save_me = False
         if save_me:
             print(' SAVE ' * 5)
             print(' SAVE ' * 5)
@@ -243,7 +243,7 @@ for w in work_on:
 
             print('creating train set.')
             save_name = 'train'
-            vers = '_me2'
+            vers = '_me'
             d = df_on.dtypes.to_dict()
             # print(d)
             print('dtypes of df:')
