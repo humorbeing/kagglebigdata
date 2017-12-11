@@ -206,7 +206,7 @@ for w in df.columns:
     print("'{}',".format(w))
 
 work_on = [
-    'ITC_msno',
+    # 'ITC_msno',
     # 'CC11_msno',
     # 'ITC_name',
     # 'CC11_name',
@@ -214,8 +214,8 @@ work_on = [
     # 'ITC_song_id_log10_1',
     # 'ITC_song_id_x_1',
     # 'OinC_song_id',
-    'ITC_msno_log10',
-    'ITC_msno_log10_1',
+    # 'ITC_msno_log10',
+    # 'ITC_msno_log10_1',
     'ITC_msno_x_1',
     'OinC_msno',
     # 'ITC_name_log10',
