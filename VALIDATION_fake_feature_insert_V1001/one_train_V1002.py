@@ -95,22 +95,23 @@ def xxx(x):
 #     df.drop(colc, axis=1, inplace=True)
 
 
-load_name = 'train_set'
-read_from = '../saves01/'
-dt = pickle.load(open(read_from+load_name+'_dict.save', "rb"))
-train = pd.read_csv(read_from+load_name+".csv", dtype=dt)
-del dt
+# load_name = 'train_set'
+# read_from = '../saves01/'
+# dt = pickle.load(open(read_from+load_name+'_dict.save', "rb"))
+# train = pd.read_csv(read_from+load_name+".csv", dtype=dt)
+# del dt
+#
+# train.drop(
+#     [
+#         'target',
+#     ],
+#     axis=1,
+#     inplace=True
+# )
+#
+# df = df.join(train)
+# del train
 
-train.drop(
-    [
-        'target',
-    ],
-    axis=1,
-    inplace=True
-)
-
-df = df.join(train)
-del train
 if inner:
     for i in inner:
         insert_this(i)
@@ -183,10 +184,10 @@ fixed = [
     # 'composer',
     # 'lyricist',
     'song_year',
-    'language',
+    # 'language',
     # 'rc',
     'ITC_song_id_log10_1',
-
+    'top3_in_song',
     # 'ITC_source_system_tab_log10_1',
     # 'ITC_source_screen_name_log10_1',
     # 'ITC_source_type_log10_1',
@@ -308,6 +309,11 @@ for w in work_on:
         del train_set, val_set
         print('complete on:', w)
         result[w] = model.best_score['valid_1']['auc']
+        print()
+        ns = model.feature_name()
+        ims = model.feature_importance()
+        for i in range(len(ns)):
+            print(ns[i], ':', ims[i])
         print()
 
 
