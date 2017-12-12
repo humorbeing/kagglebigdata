@@ -62,16 +62,17 @@ def add_this_counter_column(on_in):
     read_from = '../fake/saves/'
     counter = pickle.load(open(read_from+'counter/'+'ITC_'+on_in+'_dict.save', "rb"))
     df['ITC_'+on_in] = df[on_in].apply(get_count).astype(np.int64)
-    # counter = pickle.load(open(read_from + 'counter/' + 'CC11_' + on_in + '_dict.save', "rb"))
-    # df['CC11_' + on_in] = df[on_in].apply(get_count).astype(np.int64)
+    counter = pickle.load(open(read_from + 'counter/' + 'CC11_' + on_in + '_dict.save', "rb"))
+    df['CC11_' + on_in] = df[on_in].apply(get_count).astype(np.int64)
     # df.drop(on_in, axis=1, inplace=True)
+    # df.drop('CC11_'+on_in, axis=1, inplace=True)
 
 
 for col in cols:
     print("'{}',".format(col))
     # add_this_counter_column(col)
 
-cols = ['song_id', 'msno']
+cols = ['song_id', 'msno', 'name']
 for col in cols:
     # print("'{}',".format(col))
     add_this_counter_column(col)
@@ -86,16 +87,16 @@ def log10me1(x):
 
 def xxx(x):
     d = x / (x + 1)
-    return x
+    return d
 
 
 for col in cols:
     colc = 'ITC_'+col
-    # df[colc + '_log10'] = df[colc].apply(log10me).astype(np.float64)
+    df[colc + '_log10'] = df[colc].apply(log10me).astype(np.float64)
     df[colc + '_log10_1'] = df[colc].apply(log10me1).astype(np.float64)
-    # df[colc + '_x_1'] = df[colc].apply(xxx).astype(np.float64)
-    # col1 = 'CC11_'+col
-    # df['OinC_'+col] = df[col1]/df[colc]
+    df[colc + '_x_1'] = df[colc].apply(xxx).astype(np.float64)
+    col1 = 'CC11_'+col
+    df['OinC_'+col] = df[col1]/df[colc]
     # df.drop(colc, axis=1, inplace=True)
 
 
@@ -126,7 +127,7 @@ print(df.dtypes)
 print('number of rows:', len(df))
 print('number of columns:', len(df.columns))
 
-num_boost_round = 5
+num_boost_round = 5000
 early_stopping_rounds = 50
 verbose_eval = 10
 
@@ -182,17 +183,17 @@ fixed = [
     'target',
     'msno',
     'song_id',
-    # 'source_system_tab',
-    # 'source_screen_name',
-    # 'source_type',
+    'source_system_tab',
+    'source_screen_name',
+    'source_type',
     'artist_name',
     # 'composer',
     # 'lyricist',
-    # 'song_year',
+    'song_year',
     # 'language',
-    # 'top3_in_song',
+    'top3_in_song',
     # 'rc',
-    # 'ITC_song_id_log10_1',
+    'ITC_song_id_log10_1',
     # 'ITC_msno_log10_1',
     # 'ITC_source_system_tab_log10_1',
     # 'ITC_source_screen_name_log10_1',
@@ -205,27 +206,22 @@ for w in df.columns:
     print("'{}',".format(w))
 
 work_on = [
-    'source_system_tab',
-    'source_screen_name',
-    'source_type',
-    # 'artist_name',
-    # 'composer',
-    # 'lyricist',
-    'song_year',
-    'language',
-    'top3_in_song',
-    # 'rc',
-    'ITC_song_id_log10_1',
+    'ITC_msno',
+    # 'CC11_msno',
+    # 'ITC_name',
+    # 'CC11_name',
+    # 'ITC_song_id_log10',
+    # 'ITC_song_id_log10_1',
+    # 'ITC_song_id_x_1',
+    # 'OinC_song_id',
+    'ITC_msno_log10',
     'ITC_msno_log10_1',
-    # 'top3_in_song',
-    # 'artist_name',
-    # 'ITC_composer_log10_1',
-    # 'ITC_lyricist_log10_1',
-    # 'ITC_language_log10_1',
-
-    # 'ITC_song_year_log10_1',
-    # 'ITC_song_country_log10_1',
-    # 'ITC_rc_log10_1',
+    'ITC_msno_x_1',
+    'OinC_msno',
+    # 'ITC_name_log10',
+    # 'ITC_name_log10_1',
+    # 'ITC_name_x_1',
+    # 'OinC_name',
 ]
 for w in work_on:
     if w in fixed:
