@@ -8,6 +8,7 @@ import time
 import pickle
 
 since = time.time()
+result = {}
 data_dir = '../data/'
 save_dir = '../saves/'
 load_name = 'train_set.csv'
@@ -16,16 +17,15 @@ df = read_df(load_name)
 cols = [
     'msno',
     'song_id',
-    'artist_name',
-    'top1_in_song',
-    'top2_in_song',
-    'top3_in_song',
-    'language',
-    'song_year',
+    # 'artist_name',
+    # 'top1_in_song',
+    # 'top2_in_song',
+    # 'top3_in_song',
+    # 'language',
+    # 'song_year',
 ]
 df = add_ITC(df, cols)
 show_df(df)
-
 
 num_boost_round = 2000
 early_stopping_rounds = 50
@@ -87,10 +87,6 @@ fixed = [
     # 'FAKE_1512883008',
 ]
 
-result = {}
-for w in df.columns:
-    print("'{}',".format(w))
-
 work_on = [
     # 'ITC_msno',
     # 'CC11_msno',
@@ -121,8 +117,8 @@ for w in work_on:
         toto.append(w)
         df_on = df[toto]
         show_df(df_on)
-        # save_me = True
-        save_me = False
+        save_me = True
+        # save_me = False
         if save_me:
             save_df(df_on)
 
@@ -132,7 +128,8 @@ for w in work_on:
             params, train, val,
             num_boost_round,
             early_stopping_rounds,
-            verbose_eval
+            verbose_eval,
+            learning_rate=False
         )
         del train, val
         print('complete on:', w)
