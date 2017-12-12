@@ -336,3 +336,163 @@ print('[timer]: complete in {:.0f}m {:.0f}s'.format(
     time_elapsed // 60, time_elapsed % 60))
 
 
+'''/usr/bin/python3.5 /home/vb/workspace/python/kagglebigdata/VALIDATION_fake_feature_insert_V1001/one_train_V1002BBBB.py
+What we got:
+target                    uint8
+msno                   category
+song_id                category
+source_system_tab      category
+source_screen_name     category
+source_type            category
+artist_name            category
+song_year              category
+language               category
+ITC_song_id_log10_1     float64
+ITC_msno_log10_1        float64
+expiration_month       category
+composer                 object
+lyricist                 object
+name                     object
+song_country           category
+rc                     category
+isrc_rest              category
+top1_in_song           category
+top2_in_song           category
+top3_in_song           category
+dtype: object
+number of rows: 7377418
+number of columns: 21
+'target',
+'msno',
+'song_id',
+'source_system_tab',
+'source_screen_name',
+'source_type',
+'artist_name',
+'song_year',
+'language',
+'ITC_song_id_log10_1',
+'ITC_msno_log10_1',
+'expiration_month',
+'composer',
+'lyricist',
+'name',
+'song_country',
+'rc',
+'isrc_rest',
+'top1_in_song',
+'top2_in_song',
+'top3_in_song',
+working on: top2_in_song
+
+Our guest selection:
+target                    uint8
+msno                   category
+song_id                category
+source_system_tab      category
+source_screen_name     category
+source_type            category
+artist_name            category
+song_year              category
+language               category
+ITC_song_id_log10_1     float64
+ITC_msno_log10_1        float64
+top3_in_song           category
+top2_in_song           category
+dtype: object
+number of columns: 13
+
+train size: 5606837 number of 1: 2994894 number of 0: 2611943
+train: 1 in all: 0.534150359641 0 in all: 0.465849640359 1/0: 1.14661537407
+val size: 1770581 number of 1: 719762 number of 0: 1050819
+val: 1 in all: 0.406511760829 0 in all: 0.593488239171 1/0: 0.68495335543
+
+
+Training...
+/usr/local/lib/python3.5/dist-packages/lightgbm/basic.py:642: UserWarning: max_bin keyword has been found in `params` and will be ignored. Please use max_bin argument of the Dataset constructor to pass this parameter.
+  'Please use {0} argument of the Dataset constructor to pass this parameter.'.format(key))
+/usr/local/lib/python3.5/dist-packages/lightgbm/basic.py:648: LGBMDeprecationWarning: The `max_bin` parameter is deprecated and will be removed in 2.0.12 version. Please use `params` to pass this parameter.
+  'Please use `params` to pass this parameter.', LGBMDeprecationWarning)
+/usr/local/lib/python3.5/dist-packages/lightgbm/basic.py:671: UserWarning: categorical_feature in param dict is overrided.
+  warnings.warn('categorical_feature in param dict is overrided.')
+Training until validation scores don't improve for 50 rounds.
+[10]	training's auc: 0.793898	valid_1's auc: 0.666413
+[20]	training's auc: 0.798164	valid_1's auc: 0.668645
+[30]	training's auc: 0.802559	valid_1's auc: 0.670505
+[40]	training's auc: 0.803991	valid_1's auc: 0.670942
+[50]	training's auc: 0.80734	valid_1's auc: 0.672264
+[60]	training's auc: 0.810585	valid_1's auc: 0.67355
+[70]	training's auc: 0.813412	valid_1's auc: 0.674832
+[80]	training's auc: 0.81607	valid_1's auc: 0.675762
+[90]	training's auc: 0.81823	valid_1's auc: 0.676531
+[100]	training's auc: 0.821105	valid_1's auc: 0.67773
+[110]	training's auc: 0.823222	valid_1's auc: 0.6786
+[120]	training's auc: 0.825718	valid_1's auc: 0.67952
+[130]	training's auc: 0.827944	valid_1's auc: 0.680413
+[140]	training's auc: 0.83041	valid_1's auc: 0.681451
+[150]	training's auc: 0.832294	valid_1's auc: 0.682151
+[160]	training's auc: 0.834013	valid_1's auc: 0.682669
+[170]	training's auc: 0.835861	valid_1's auc: 0.683328
+[180]	training's auc: 0.837544	valid_1's auc: 0.683895
+[190]	training's auc: 0.839031	valid_1's auc: 0.684369
+[200]	training's auc: 0.840737	valid_1's auc: 0.68494
+[210]	training's auc: 0.842006	valid_1's auc: 0.685254
+[220]	training's auc: 0.84341	valid_1's auc: 0.685752
+[230]	training's auc: 0.844366	valid_1's auc: 0.685965
+[240]	training's auc: 0.845553	valid_1's auc: 0.686304
+[250]	training's auc: 0.846621	valid_1's auc: 0.686523
+[260]	training's auc: 0.847661	valid_1's auc: 0.686778
+[270]	training's auc: 0.848453	valid_1's auc: 0.686893
+[280]	training's auc: 0.849246	valid_1's auc: 0.687023
+[290]	training's auc: 0.850078	valid_1's auc: 0.687127
+[300]	training's auc: 0.850792	valid_1's auc: 0.687181
+[310]	training's auc: 0.851518	valid_1's auc: 0.68724
+[320]	training's auc: 0.852376	valid_1's auc: 0.68736
+[330]	training's auc: 0.853043	valid_1's auc: 0.687379
+[340]	training's auc: 0.853668	valid_1's auc: 0.687418
+[350]	training's auc: 0.854302	valid_1's auc: 0.687432
+[360]	training's auc: 0.854996	valid_1's auc: 0.687514
+[370]	training's auc: 0.855661	valid_1's auc: 0.687551
+[380]	training's auc: 0.856298	valid_1's auc: 0.687587
+[390]	training's auc: 0.85692	valid_1's auc: 0.68761
+[400]	training's auc: 0.857477	valid_1's auc: 0.687669
+[410]	training's auc: 0.858054	valid_1's auc: 0.687699
+[420]	training's auc: 0.858606	valid_1's auc: 0.68767
+[430]	training's auc: 0.859114	valid_1's auc: 0.687668
+[440]	training's auc: 0.859614	valid_1's auc: 0.687688
+[450]	training's auc: 0.860087	valid_1's auc: 0.687712
+[460]	training's auc: 0.86061	valid_1's auc: 0.6877
+[470]	training's auc: 0.861085	valid_1's auc: 0.68772
+[480]	training's auc: 0.861578	valid_1's auc: 0.687715
+[490]	training's auc: 0.862015	valid_1's auc: 0.687725
+[500]	training's auc: 0.862487	valid_1's auc: 0.687708
+[510]	training's auc: 0.862974	valid_1's auc: 0.687703
+[520]	training's auc: 0.863452	valid_1's auc: 0.687734
+[530]	training's auc: 0.863888	valid_1's auc: 0.687729
+[540]	training's auc: 0.864382	valid_1's auc: 0.687741
+[550]	training's auc: 0.864799	valid_1's auc: 0.687729
+[560]	training's auc: 0.865215	valid_1's auc: 0.687721
+[570]	training's auc: 0.865634	valid_1's auc: 0.687708
+[580]	training's auc: 0.866088	valid_1's auc: 0.687744
+[590]	training's auc: 0.866569	valid_1's auc: 0.687755
+[600]	training's auc: 0.86699	valid_1's auc: 0.687751
+[610]	training's auc: 0.867366	valid_1's auc: 0.687751
+[620]	training's auc: 0.867742	valid_1's auc: 0.687752
+[630]	training's auc: 0.868163	valid_1's auc: 0.687776
+[640]	training's auc: 0.868551	valid_1's auc: 0.687776
+[650]	training's auc: 0.868936	valid_1's auc: 0.687731
+[660]	training's auc: 0.869298	valid_1's auc: 0.687737
+[670]	training's auc: 0.869655	valid_1's auc: 0.687737
+[680]	training's auc: 0.869983	valid_1's auc: 0.687762
+Early stopping, best iteration is:
+[632]	training's auc: 0.868248	valid_1's auc: 0.687781
+best score: 0.687781483962
+best iteration: 632
+complete on: top2_in_song
+
+                         top2_in_song:  0.687781483962
+
+[timer]: complete in 66m 16s
+
+Process finished with exit code 0
+'''
