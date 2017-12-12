@@ -10,6 +10,13 @@ from sklearn.model_selection import train_test_split
 
 since = time.time()
 
+
+print(np.log10(5+1).astype(np.float64))
+print(np.log10(5+1).astype(np.float32))
+print(np.log10(5+1).astype(np.float16))
+print(np.log10(5+1).astype(np.float128))
+print(np.log10(5+1).astype(np.float))
+# print(np.log10(5+1).astype(np.float80))
 data_dir = '../data/'
 save_dir = '../saves/'
 load_name = 'train_set'
@@ -72,7 +79,7 @@ for col in cols:
     print("'{}',".format(col))
     # add_this_counter_column(col)
 
-cols = ['song_id', 'msno', 'name']
+cols = ['song_id', 'msno', 'artist_name', 'composer', 'lyricist']
 for col in cols:
     # print("'{}',".format(col))
     add_this_counter_column(col)
@@ -82,7 +89,7 @@ def log10me(x):
 
 
 def log10me1(x):
-    return np.log10(x+1)
+    return np.round(np.log10(x+1), 5)
 
 
 def xxx(x):
@@ -93,7 +100,7 @@ def xxx(x):
 for col in cols:
     colc = 'ITC_'+col
     df[colc + '_log10'] = df[colc].apply(log10me).astype(np.float64)
-    df[colc + '_log10_1'] = df[colc].apply(log10me1).astype(np.float64)
+    df[colc + '_log10_1'] = df[colc].apply(log10me1).astype(np.float16)
     df[colc + '_x_1'] = df[colc].apply(xxx).astype(np.float64)
     col1 = 'CC11_'+col
     df['OinC_'+col] = df[col1]/df[colc]
@@ -212,13 +219,18 @@ work_on = [
     # 'CC11_name',
     # 'ITC_song_id_log10',
     # 'ITC_song_id_log10_1',
+    'ITC_artist_name_log10_1',
+    'ITC_composer_log10_1',
+    'ITC_lyricist_log10_1',
+    # 'ITC_song_id_log10_1',
+
     # 'ITC_song_id_x_1',
     # 'OinC_song_id',
     # 'ITC_msno_log10',
     # 'ITC_msno_log10_1',
-    'ITC_name_log10',
-    'ITC_name_log10_1',
-    'ITC_name',
+    # 'ITC_name_log10',
+    # 'ITC_name_log10_1',
+    # 'ITC_name',
     # 'ITC_name_log10',
     # 'ITC_name_log10_1',
     # 'ITC_name_x_1',
