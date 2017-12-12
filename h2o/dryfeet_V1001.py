@@ -15,7 +15,7 @@ load_name = 'custom_members_fixed.csv'
 load_name = 'custom_song_fixed.csv'
 load_name = 'train_set.csv'
 # load_name = 'test_set.csv'
-load_name = 'train_me.csv'
+load_name = 'train_best.csv'
 load_name = load_name[:-4]
 
 dt = pickle.load(open(read_from+load_name+'_dict.save', "rb"))
@@ -40,8 +40,8 @@ for on in df.columns:
     print('any null:'.ljust(15), df[on].isnull().values.any())
     print('null number:'.ljust(15), df[on].isnull().values.sum())
     print(on, 'dtype:', df[on].dtypes)
-    print('describing', on, ':')
-    print(df[on].describe())
+    # print('describing', on, ':')
+    # print(df[on].describe())
     print('-'*20)
     l = df[on]
     s = set(l)
@@ -76,7 +76,8 @@ del val_df
 features = list(train_hf.columns)
 features.remove('target')
 
-train_hf.head(5)
+print(train_hf.head(5))
+print(val_hf.shape)
 
 
 print()
