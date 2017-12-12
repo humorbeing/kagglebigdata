@@ -64,13 +64,17 @@ def add_this_counter_column(on_in):
     df['ITC_'+on_in] = df[on_in].apply(get_count).astype(np.int64)
     # counter = pickle.load(open(read_from + 'counter/' + 'CC11_' + on_in + '_dict.save', "rb"))
     # df['CC11_' + on_in] = df[on_in].apply(get_count).astype(np.int64)
-    df.drop(on_in, axis=1, inplace=True)
+    # df.drop(on_in, axis=1, inplace=True)
 
 
 for col in cols:
     print("'{}',".format(col))
     # add_this_counter_column(col)
 
+cols = ['song_id', 'msno']
+for col in cols:
+    # print("'{}',".format(col))
+    add_this_counter_column(col)
 
 def log10me(x):
     return np.log10(x)
@@ -85,32 +89,34 @@ def xxx(x):
     return x
 
 
-# for col in cols:
-#     colc = 'ITC_'+col
-#     # df[colc + '_log10'] = df[colc].apply(log10me).astype(np.float64)
-#     df[colc + '_log10_1'] = df[colc].apply(log10me1).astype(np.float64)
-#     # df[colc + '_x_1'] = df[colc].apply(xxx).astype(np.float64)
-#     # col1 = 'CC11_'+col
-#     # df['OinC_'+col] = df[col1]/df[colc]
-#     df.drop(colc, axis=1, inplace=True)
+for col in cols:
+    colc = 'ITC_'+col
+    # df[colc + '_log10'] = df[colc].apply(log10me).astype(np.float64)
+    df[colc + '_log10_1'] = df[colc].apply(log10me1).astype(np.float64)
+    # df[colc + '_x_1'] = df[colc].apply(xxx).astype(np.float64)
+    # col1 = 'CC11_'+col
+    # df['OinC_'+col] = df[col1]/df[colc]
+    # df.drop(colc, axis=1, inplace=True)
 
 
-load_name = 'train_set'
-read_from = '../saves01/'
-dt = pickle.load(open(read_from+load_name+'_dict.save', "rb"))
-train = pd.read_csv(read_from+load_name+".csv", dtype=dt)
-del dt
+# load_name = 'train_set'
+# read_from = '../saves01/'
+# dt = pickle.load(open(read_from+load_name+'_dict.save', "rb"))
+# train = pd.read_csv(read_from+load_name+".csv", dtype=dt)
+# del dt
+#
+# train.drop(
+#     [
+#         'target',
+#     ],
+#     axis=1,
+#     inplace=True
+# )
+#
+# df = df.join(train)
+# del train
 
-train.drop(
-    [
-        'target',
-    ],
-    axis=1,
-    inplace=True
-)
 
-df = df.join(train)
-del train
 if inner:
     for i in inner:
         insert_this(i)
@@ -120,7 +126,7 @@ print(df.dtypes)
 print('number of rows:', len(df))
 print('number of columns:', len(df.columns))
 
-num_boost_round = 2000
+num_boost_round = 5
 early_stopping_rounds = 50
 verbose_eval = 10
 
@@ -183,10 +189,11 @@ fixed = [
     # 'composer',
     # 'lyricist',
     'song_year',
-    'language',
+    # 'language',
+    # 'top3_in_song',
     # 'rc',
     'ITC_song_id_log10_1',
-
+    'ITC_msno_log10_1',
     # 'ITC_source_system_tab_log10_1',
     # 'ITC_source_screen_name_log10_1',
     # 'ITC_source_type_log10_1',
@@ -198,11 +205,11 @@ for w in df.columns:
     print("'{}',".format(w))
 
 work_on = [
-
+    'top3_in_song',
     # 'ITC_composer_log10_1',
     # 'ITC_lyricist_log10_1',
     # 'ITC_language_log10_1',
-    'ITC_msno_log10_1',
+
     # 'ITC_song_year_log10_1',
     # 'ITC_song_country_log10_1',
     # 'ITC_rc_log10_1',
@@ -227,9 +234,13 @@ for w in work_on:
         print('number of columns:', len(df_on.columns))
         print()
 
-        save_me = True
-        # save_me = False
+        # save_me = True
+        save_me = False
         if save_me:
+            print(' SAVE ' * 5)
+            print(' SAVE ' * 5)
+            print(' SAVE ' * 5)
+
             print('creating train set.')
             save_name = 'train'
             vers = '_me2'
@@ -309,6 +320,8 @@ for w in work_on:
         print('complete on:', w)
         result[w] = model.best_score['valid_1']['auc']
         print()
+        print(model.feature_name())
+        print(model.feature_importance())
 
 
 import operator
@@ -326,4 +339,4 @@ time_elapsed = time.time() - since
 print('[timer]: complete in {:.0f}m {:.0f}s'.format(
     time_elapsed // 60, time_elapsed % 60))
 
-
+'''1,2, artist name'''

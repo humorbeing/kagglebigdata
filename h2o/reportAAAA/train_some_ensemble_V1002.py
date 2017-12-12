@@ -121,3 +121,7 @@ print()
 time_elapsed = time.time() - since
 print('[timer]: complete in {:.0f}m {:.0f}s'.format(
     time_elapsed // 60, time_elapsed % 60))
+'''0.6477481772734077
+0.6477481772734077
+0.6477510858544782
+'''
