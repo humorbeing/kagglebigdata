@@ -10,47 +10,47 @@ import pickle
 since = time.time()
 data_dir = '../data/'
 save_dir = '../saves/'
-load_name = 'train_set.csv'
+load_name = 'train_me_play.csv'
 
 def intme(x):
     return int(x)
 
 df = read_df(load_name)
-df['song_year'] = df['song_year'].astype(object)
-df['song_year_int'] = df['song_year'].apply(intme).astype(np.int64)
-df['song_year'] = df['song_year'].astype('category')
+# df['song_year'] = df['song_year'].astype(object)
+# df['song_year_int'] = df['song_year'].apply(intme).astype(np.int64)
+# df['song_year'] = df['song_year'].astype('category')
+#
+# # show_df(df)
+# cols = [
+#     'msno',
+#     'song_id',
+#     # 'artist_name',
+#     'top1_in_song',
+#     # 'top2_in_song',
+#     'top3_in_song',
+#     # 'language',
+#     'song_year',
+#     # 'composer',
+#     # 'lyricist',
+#     'source_screen_name',
+#     'source_type',
+# ]
+# df = add_ITC(df, cols)
 
 show_df(df)
-cols = [
-    'msno',
-    'song_id',
-    'artist_name',
-    'top1_in_song',
-    'top2_in_song',
-    'top3_in_song',
-    'language',
-    'song_year',
-    'composer',
-    'lyricist',
-    'source_screen_name',
-    'source_type',
-]
-df = add_ITC(df, cols)
-
-show_df(df)
 
 
-num_boost_round = 2000
+num_boost_round = 500
 early_stopping_rounds = 50
 verbose_eval = 10
 
 boosting = 'gbdt'
 
-learning_rate = 0.022
-num_leaves = 511
-max_depth = 31
+learning_rate = 0.032
+num_leaves = 750
+max_depth = 50
 
-max_bin = 63
+max_bin = 172
 lambda_l1 = 0.2
 lambda_l2 = 0
 
@@ -82,7 +82,7 @@ fixed = [
     'target',
     'msno',
     'song_id',
-    'source_system_tab',
+    # 'source_system_tab',
     'source_screen_name',
     'source_type',
     'artist_name',
@@ -112,7 +112,18 @@ work_on = [
     # 'language',
 
     # 'CC11_name',
-    # 'ITC_song_id_log10',
+    'song_year_int',
+    'ITC_song_year_log10_1',
+    'ITC_source_screen_name_log10_1',
+    'ITC_source_type_log10_1',
+    # 'ITC_language_log10_1',
+    'ITC_top1_in_song_log10_1',
+    # 'ITC_top2_in_song_log10_1',
+    'ITC_top3_in_song_log10_1',
+    # 'ITC_composer_log10_1',
+    # 'ITC_lyricist_log10_1',
+    # 'ITC_artist_name_log10_1',
+
     # 'ITC_song_id_log10_1',
     # 'ITC_song_id_x_1',
     # 'OinC_song_id',
