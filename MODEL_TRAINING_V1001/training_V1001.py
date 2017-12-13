@@ -106,15 +106,15 @@ cols.append('id')
 df = df[cols]
 X_test = df.drop(['id'], axis=1)
 ids = df['id'].values
-p = model.predict(X_test)
-
+p = model.predict_proba(X_test)
+tt = np.array(p).T[1]
 print('prediction done.')
 print('creating submission')
 subm = pd.DataFrame()
 subm['id'] = ids
 del ids
-subm['target'] = p
-del p
+subm['target'] = tt
+del p, tt
 
 
 model_time = str(int(time.time()))
