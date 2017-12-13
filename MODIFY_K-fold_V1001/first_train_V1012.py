@@ -22,7 +22,7 @@ from h2o.estimators.random_forest import H2ORandomForestEstimator
 from h2o.estimators.gbm import H2OGradientBoostingEstimator
 from h2o.estimators.deeplearning import H2ODeepLearningEstimator
 from h2o.estimators.glm import H2OGeneralizedLinearEstimator
-
+from catboost import CatBoostClassifier
 since = time.time()
 
 
@@ -85,9 +85,9 @@ df = df[on]
 show_df(df)
 
 
-num_boost_round = 500
+num_boost_round = 5
 early_stopping_rounds = 100
-verbose_eval = 10
+verbose_eval = 1
 
 params = []
 
@@ -316,12 +316,8 @@ for w in work_on:
         print(vc.dtypes)
         print(vc.head())
         print(vc.describe())
-        model, cols = val_df(
-            params[3], new_t, vc,
-            num_boost_round=num_boost_round,
-            early_stopping_rounds=early_stopping_rounds,
-            verbose_eval=verbose_eval,
-        )
+        model, cols = cat(new_t, vc,
+                          iterations=5)
         # val = add_column(model, cols, val, 'from_model'+str(o))
 
 
