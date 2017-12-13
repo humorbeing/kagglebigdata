@@ -37,7 +37,7 @@ learning_rate = 0.032
 num_leaves = 750
 max_depth = 50
 
-max_bin = 127
+max_bin = 172
 lambda_l1 = 0.2
 lambda_l2 = 0
 
@@ -65,16 +65,16 @@ params = {
     'feature_fraction': feature_fraction,
     'feature_fraction_seed': feature_fraction_seed,
 }
-def intme(x):
-    return int(x)
-df['song_year'] = df['song_year'].astype(object)
-df['song_year'] = df['song_year'].apply(intme).astype(np.int16)
-print(set(df['song_year']))
+# def intme(x):
+#     return int(x)
+# df['song_year'] = df['song_year'].astype(object)
+# df['song_year'] = df['song_year'].apply(intme).astype(np.int16)
+# print(set(df['song_year']))
 fixed = [
     'target',
     'msno',
     'song_id',
-    # 'source_system_tab',
+    'source_system_tab',
     'source_screen_name',
     'source_type',
     'artist_name',
@@ -129,15 +129,25 @@ for w in work_on:
             save_df(df_on)
 
         train, val = fake_df(df_on)
+        train1, train2 = fake_df(train, size=0.5)
         del df_on
         model, cols = val_df(
-            params, train, val,
+            params, train1, val,
             num_boost_round,
             early_stopping_rounds,
             verbose_eval,
             learning_rate=False
         )
+        model, cols = val_df(
+            params, train2, val,
+            num_boost_round,
+            early_stopping_rounds,
+            verbose_eval,
+            learning_rate=False
+        )
+
         del train, val
+
         print('complete on:', w)
         result[w] = show_mo(model)
 

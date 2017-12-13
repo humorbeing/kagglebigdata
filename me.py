@@ -158,7 +158,6 @@ def show_df(df, detail=False):
     print('<' * 20)
     print('<' * 20)
 
-
 def add_ITC(df, cols, real=False):
     # df = df
     def add_this_counter_column(on_in, df, real=False):
@@ -206,7 +205,6 @@ def add_ITC(df, cols, real=False):
         df.drop(colc, axis=1, inplace=True)
 
     return df
-
 
 def add_11(df, cols, real=False):
     # df = df
@@ -256,7 +254,6 @@ def add_11(df, cols, real=False):
         df.drop(col1, axis=1, inplace=True)
 
     return df
-
 
 def add_column(model, cols, df, column_name):
     output = model.predict(df[cols])

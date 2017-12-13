@@ -392,23 +392,23 @@ model:
 best score: 0.656718968103
 best iteration: 0
 
-                msno : 99035
+                msno : 99035 1
              song_id : 31945
    source_system_tab : 2127
   source_screen_name : 18248
          source_type : 9926
            genre_ids : 5950
-         artist_name : 89284
+         artist_name : 89284 2
             composer : 18705
             lyricist : 11161
             language : 563
            song_year : 31452
         song_country : 3443
-                  rc : 44158
+                  rc : 44158 7
         top1_in_song : 2671
         top2_in_song : 4385
         top3_in_song : 1598
-     membership_days : 51948
+     membership_days : 51948 6
        song_year_int : 15981
     ISC_top1_in_song : 6374
     ISC_top2_in_song : 5216
@@ -417,25 +417,25 @@ best iteration: 0
              ISCZ_rc : 20254
       ISCZ_isrc_rest : 35440
        ISC_song_year : 12440
-   song_length_log10 : 41825
+   song_length_log10 : 41825 8
 ISCZ_genre_ids_log10 : 5845
 ISC_artist_name_log10 : 30331
  ISCZ_composer_log10 : 25172
   ISC_lyricist_log10 : 15389
  ISC_song_country_ln : 8131
- ITC_song_id_log10_1 : 59745
+ ITC_song_id_log10_1 : 59745 4
 ITC_source_system_tab_log10_1 : 13909
 ITC_source_screen_name_log10_1 : 24552
 ITC_source_type_log10_1 : 24428
-ITC_artist_name_log10_1 : 42444
+ITC_artist_name_log10_1 : 42444 8
 ITC_composer_log10_1 : 28302
 ITC_lyricist_log10_1 : 18197
 ITC_song_year_log10_1 : 4883
 ITC_top1_in_song_log10_1 : 5372
 ITC_top2_in_song_log10_1 : 4868
 ITC_top3_in_song_log10_1 : 4568
-    ITC_msno_log10_1 : 58848
-           OinC_msno : 60798
+    ITC_msno_log10_1 : 58848 5
+           OinC_msno : 60798 3
 ITC_language_log10_1 : 5800
        OinC_language : 3863
 

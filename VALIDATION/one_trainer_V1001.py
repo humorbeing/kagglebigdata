@@ -33,11 +33,11 @@ verbose_eval = 10
 
 boosting = 'gbdt'
 
-learning_rate = 0.022
-num_leaves = 511
-max_depth = 31
+learning_rate = 0.032
+num_leaves = 750
+max_depth = 50
 
-max_bin = 63
+max_bin = 172
 lambda_l1 = 0.2
 lambda_l2 = 0
 
@@ -69,14 +69,14 @@ fixed = [
     'target',
     'msno',
     'song_id',
-    'source_system_tab',
+    # 'source_system_tab',
     'source_screen_name',
     'source_type',
     'artist_name',
     'song_year',
     'ITC_song_id_log10_1',
     'ITC_msno_log10_1',
-
+    'top2_in_song',
     # 'top3_in_song',
     # 'rc',
 
@@ -88,11 +88,11 @@ fixed = [
 ]
 
 work_on = [
-    'top2_in_song',
+    # 'top2_in_song',
     # 'ITC_msno',
     # 'CC11_msno',
     # 'ITC_name',
-    # 'language',
+    'language',
     # 'language',
     # 'CC11_name',
     # 'ITC_song_id_log10',

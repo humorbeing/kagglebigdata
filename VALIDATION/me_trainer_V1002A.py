@@ -17,44 +17,44 @@ df = read_df(load_name)
 show_df(df)
 on = [
     'msno',
-    'song_id',
+    # 'song_id',
     # 'source_system_tab',
-    'source_screen_name',
-    'source_type',
+    # 'source_screen_name',
+    # 'source_type',
     'target',
     # 'genre_ids',
     'artist_name',
-    'composer',
-    'lyricist',
+    # 'composer',
+    # 'lyricist',
     # 'language',
-    'song_year',
+    # 'song_year',
     # 'song_country',
     'rc',
     # 'top1_in_song',
     # 'top2_in_song',
     # 'top3_in_song',
     'membership_days',
-    'song_year_int',
+    # 'song_year_int',
     # 'ISC_top1_in_song',
     # 'ISC_top2_in_song',
     # 'ISC_top3_in_song',
     # 'ISC_language',
-    'ISCZ_rc',
-    'ISCZ_isrc_rest',
-    'ISC_song_year',
+    # 'ISCZ_rc',
+    # 'ISCZ_isrc_rest',
+    # 'ISC_song_year',
     'song_length_log10',
     # 'ISCZ_genre_ids_log10',
-    'ISC_artist_name_log10',
-    'ISCZ_composer_log10',
-    'ISC_lyricist_log10',
+    # 'ISC_artist_name_log10',
+    # 'ISCZ_composer_log10',
+    # 'ISC_lyricist_log10',
     # 'ISC_song_country_ln',
     'ITC_song_id_log10_1',
-    'ITC_source_system_tab_log10_1',
-    'ITC_source_screen_name_log10_1',
-    'ITC_source_type_log10_1',
-    'ITC_artist_name_log10_1',
-    'ITC_composer_log10_1',
-    'ITC_lyricist_log10_1',
+    # 'ITC_source_system_tab_log10_1',
+    # 'ITC_source_screen_name_log10_1',
+    # 'ITC_source_type_log10_1',
+    # 'ITC_artist_name_log10_1',
+    # 'ITC_composer_log10_1',
+    # 'ITC_lyricist_log10_1',
     # 'ITC_song_year_log10_1',
     # 'ITC_top1_in_song_log10_1',
     # 'ITC_top2_in_song_log10_1',
@@ -73,11 +73,11 @@ verbose_eval = 10
 
 boosting = 'gbdt'
 
-learning_rate = 0.022
-num_leaves = 511
-max_depth = 31
+learning_rate = 0.032
+num_leaves = 750
+max_depth = 50
 
-max_bin = 63
+max_bin = 172
 lambda_l1 = 0.2
 lambda_l2 = 0
 
