@@ -24,6 +24,9 @@ from h2o.estimators.deeplearning import H2ODeepLearningEstimator
 from h2o.estimators.glm import H2OGeneralizedLinearEstimator
 from numpy import inf
 
+
+
+
 since = time.time()
 
 
@@ -49,20 +52,20 @@ on = [
     # 'song_country',
     # 'rc',
     # 'top1_in_song',
-    'top2_in_song',
+    # 'top2_in_song',
     # 'top3_in_song',
     # 'membership_days',
     # 'song_year_int',
     # 'ISC_top1_in_song',
-    # 'ISC_top2_in_song',
+    'ISC_top2_in_song',
     # 'ISC_top3_in_song',
     # 'ISC_language',
     # 'ISCZ_rc',
     # 'ISCZ_isrc_rest',
     # 'ISC_song_year',
-    'song_length_log10',
+    # 'song_length_log10',
     # 'ISCZ_genre_ids_log10',
-    'ISC_artist_name_log10',
+    # 'ISC_artist_name_log10',
     # 'ISCZ_composer_log10',
     # 'ISC_lyricist_log10',
     # 'ISC_song_country_ln',
@@ -70,9 +73,9 @@ on = [
     # 'ITC_source_system_tab_log10_1',
     # 'ITC_source_screen_name_log10_1',
     # 'ITC_source_type_log10_1',
-    'ITC_artist_name_log10_1',
-    'ITC_composer_log10_1',
-    'ITC_lyricist_log10_1',
+    # 'ITC_artist_name_log10_1',
+    # 'ITC_composer_log10_1',
+    # 'ITC_lyricist_log10_1',
     # 'ITC_song_year_log10_1',
     # 'ITC_top1_in_song_log10_1',
     # 'ITC_top2_in_song_log10_1',
@@ -83,20 +86,19 @@ on = [
     # 'OinC_language',
 ]
 df = df[on]
-def fix(x):
-    if x == -inf:
-        return 0
-    elif x > 999:
-        return 999
-    else:
-        return x
 
-for c in df.columns:
-    if df[c].dtype == 'float32' or df[c].dtype == 'float64':
-        df[c] = df[c].apply(fix).astype('float32')
 show_df(df)
 
+from catboost import CatBoostClassifier
+# Initialize data
+# cat_features = [0,1,2]
+train_data = df.drop('target', axis=1)
+train_labels = df['target']
+# test_data = [["a","b",2,4,6,8],["a","d",1,4,50,60]]
+# Initialize CatBoostClassifier
 
+# Get predicted RawFormulaVal
+# preds_raw = model.predict(train_data, prediction_type='RawFormulaVal')
 num_boost_round = 3000
 early_stopping_rounds = 100
 verbose_eval = 10
@@ -251,26 +253,62 @@ vc = pd.DataFrame()
 vc['target'] = val['target']
 v = np.zeros(shape=[len(val)])
 
-from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.linear_model import LogisticRegression
 
-clfs = [
-    # RandomForestClassifier(n_estimators=100, verbose=10, n_jobs=-1, criterion='gini'),
-    RandomForestClassifier(n_estimators=100, n_jobs=-1, criterion='entropy'),
-    ExtraTreesClassifier(n_estimators=100, n_jobs=-1, criterion='gini'),
-    ExtraTreesClassifier(n_estimators=100, n_jobs=-1, criterion='entropy'),
-    GradientBoostingClassifier(learning_rate=0.05, subsample=0.5, max_depth=6, n_estimators=50)
-]
-for clf in clfs:
-    since = time.time()
-    print(clf)
-    t = dfs[0][on1].drop('target', axis=1)
-    y = dfs[0]['target']
-    clf.fit(t, y)
-    print(roc_auc_score(val['target'], clf.predict(val[on1].drop('target', axis=1))))
-    print()
-    time_elapsed = time.time() - since
-    print('[timer]: complete in {:.0f}m {:.0f}s'.format(
-        time_elapsed // 60, time_elapsed % 60))
+
+
+train_data = dfs[0].drop('target', axis=1)
+print(dfs[0].dtypes)
+print(dfs[0].dtypes == 'category')
+print(np.where(dfs[0].dtypes == 'category'))
+print(np.where(dfs[0].dtypes == 'category')[0])
+cat_feature = np.where(train_data.dtypes == 'category')[0]
+train_labels = dfs[0]['target']
+model = CatBoostClassifier(
+    iterations=5, learning_rate=0.3,
+    depth=16, logging_level='Verbose',
+    loss_function='Logloss',
+    eval_metric='AUC',
+    od_type='Iter',
+    od_wait=40,
+)
+val_data = val.drop('target', axis=1)
+val_y = val['target']
+# Fit model
+model.fit(
+    train_data, train_labels,
+    cat_features=cat_feature,
+    eval_set=(val_data, val_y)
+)
+# Get predicted classes
+preds_class = model.predict(val.drop('target', axis=1))
+# Get predicted probabilities for each class
+preds_proba = model.predict_proba(val.drop('target', axis=1))
+
+# from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
+# from sklearn.ensemble import GradientBoostingClassifier
+# from sklearn.linear_model import LogisticRegression
+#
+# clfs = [
+#     # RandomForestClassifier(n_estimators=100, verbose=10, n_jobs=-1, criterion='gini'),
+#     RandomForestClassifier(n_estimators=100, n_jobs=-1, criterion='entropy'),
+#     ExtraTreesClassifier(n_estimators=100, n_jobs=-1, criterion='gini'),
+#     ExtraTreesClassifier(n_estimators=100, n_jobs=-1, criterion='entropy'),
+#     GradientBoostingClassifier(learning_rate=0.05, subsample=0.5, max_depth=6, n_estimators=50)
+# ]
+# for clf in clfs:
+#     since = time.time()
+#     print(clf)
+#     t = dfs[0][on1].drop('target', axis=1)
+#     y = dfs[0]['target']
+#     clf.fit(t, y)
+# print(preds_class)
+# print(preds_proba)
+tt = np.array(preds_proba).T
+
+# print(roc_auc_score(val['target'], tt[0]))
+print(roc_auc_score(val['target'], tt[1]))
+print()
+time_elapsed = time.time() - since
+print('[timer]: complete in {:.0f}m {:.0f}s'.format(
+    time_elapsed // 60, time_elapsed % 60))
 print('done')
