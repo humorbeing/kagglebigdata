@@ -264,7 +264,7 @@ for w in work_on:
 
         dfs, val = fake_df(df_on)
         del df_on
-        K = 3
+        K = 2
         dfs = divide_df(dfs, K)
         dcs = []
         for i in range(K):

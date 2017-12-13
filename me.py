@@ -7,6 +7,32 @@ import lightgbm as lgb
 import math
 import gc
 
+def train_light(
+    parameters, train_set,
+    num_boost_round=5000,
+):
+
+    cols = [i for i in train_set.columns]
+    params = parameters
+    train_set = train_set.sample(frac=1)
+    X_tr = train_set.drop(['target'], axis=1)
+    Y_tr = train_set['target'].values
+    del train_set
+    train_set = lgb.Dataset(X_tr, Y_tr)
+    del X_tr, Y_tr
+
+    params['metric'] = 'auc'
+    params['verbose'] = -1
+    params['objective'] = 'binary'
+
+    model = lgb.train(
+        params,
+        train_set,
+        num_boost_round=num_boost_round,
+    )
+    del train_set
+    return model, cols
+
 
 def show_mo(model):
     print('model:')
@@ -287,5 +313,30 @@ def cat(
         X, Y,
         cat_features=cat_feature,
         eval_set=(vX, vY)
+    )
+    return model, cols
+
+def train_cat(
+        train,
+        iterations,
+        learning_rate=0.3,
+        depth=16,
+):
+    from catboost import CatBoostClassifier
+    cols = [i for i in train.columns]
+    X = train.drop('target', axis=1)
+    Y = train['target']
+    cat_feature = np.where(X.dtypes == 'category')[0]
+    del train
+
+    model = CatBoostClassifier(
+        iterations=iterations, learning_rate=learning_rate,
+        depth=depth, logging_level='Verbose',
+        loss_function='Logloss',
+        eval_metric='AUC',
+    )
+    model.fit(
+        X, Y,
+        cat_features=cat_feature,
     )
     return model, cols
