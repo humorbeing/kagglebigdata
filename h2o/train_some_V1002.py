@@ -128,7 +128,7 @@ del gbm_default
 
 # dnn
 dnn_default = H2ODeepLearningEstimator(
-    model_id='dnn_default'
+    model_id='dnn_default',
 )
 
 dnn_default.train(x=features,

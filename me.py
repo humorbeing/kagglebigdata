@@ -182,6 +182,7 @@ def add_ITC(df, cols, real=False):
         # df.drop('CC11_'+on_in, axis=1, inplace=True)
         return df
 
+
     def log10me(x):
         return np.log10(x)
 
@@ -198,11 +199,61 @@ def add_ITC(df, cols, real=False):
     for col in cols:
         colc = 'ITC_' + col
         # df[colc + '_log10'] = df[colc].apply(log10me).astype(np.float64)
-        df[colc + '_log10_1'] = df[colc].apply(log10me1).astype(np.float16)
+        df[colc + '_log10_1'] = df[colc].apply(log10me1).astype(np.float32)
         # df[colc + '_x_1'] = df[colc].apply(xxx).astype(np.float64)
         # col1 = 'CC11_'+col
         # df['OinC_'+col] = df[col1]/df[colc]
-        # df.drop(colc, axis=1, inplace=True)
+        df.drop(colc, axis=1, inplace=True)
+
+    return df
+
+
+def add_11(df, cols, real=False):
+    # df = df
+    def add_this_counter_column(on_in, df, real=False):
+        # global df
+        if real:
+            read_from = '../saves/'
+        else:
+            read_from = '../fake/saves/'
+        counter = pickle.load(open(read_from + 'counter/' + 'ITC_' + on_in + '_dict.save', "rb"))
+
+        def get_count(x):
+            try:
+                return counter[x]
+            except KeyError:
+                return 0
+
+        df['ITC_' + on_in] = df[on_in].apply(get_count).astype(np.int64)
+        counter = pickle.load(open(read_from + 'counter/' + 'CC11_' + on_in + '_dict.save', "rb"))
+        df['CC11_' + on_in] = df[on_in].apply(get_count).astype(np.int64)
+        # df.drop(on_in, axis=1, inplace=True)
+        # df.drop('CC11_'+on_in, axis=1, inplace=True)
+        return df
+
+    def log10me(x):
+        return np.log10(x)
+
+    def log10me1(x):
+        return np.round(np.log10(x + 1), 5)
+
+    def xxx(x):
+        d = x / (x + 1)
+        return d
+
+    for col in cols:
+        df = add_this_counter_column(col, df, real=real)
+
+    for col in cols:
+        colc = 'ITC_' + col
+        # df[colc + '_log10'] = df[colc].apply(log10me).astype(np.float64)
+        df[colc + '_log10_1'] = df[colc].apply(log10me1).astype(np.float32)
+        # df[colc + '_x_1'] = df[colc].apply(xxx).astype(np.float64)
+        col1 = 'CC11_' + col
+        df['OinC_' + col] = df[col1] / df[colc]
+        df['OinC_' + col] = df['OinC_' + col].astype(np.float32)
+        df.drop(colc, axis=1, inplace=True)
+        df.drop(col1, axis=1, inplace=True)
 
     return df
 

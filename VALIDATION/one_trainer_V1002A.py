@@ -33,11 +33,11 @@ verbose_eval = 10
 
 boosting = 'gbdt'
 
-learning_rate = 0.022
-num_leaves = 511
-max_depth = 31
+learning_rate = 0.032
+num_leaves = 750
+max_depth = 50
 
-max_bin = 63
+max_bin = 127
 lambda_l1 = 0.2
 lambda_l2 = 0
 
@@ -65,11 +65,16 @@ params = {
     'feature_fraction': feature_fraction,
     'feature_fraction_seed': feature_fraction_seed,
 }
+def intme(x):
+    return int(x)
+df['song_year'] = df['song_year'].astype(object)
+df['song_year'] = df['song_year'].apply(intme).astype(np.int16)
+print(set(df['song_year']))
 fixed = [
     'target',
     'msno',
     'song_id',
-    'source_system_tab',
+    # 'source_system_tab',
     'source_screen_name',
     'source_type',
     'artist_name',
