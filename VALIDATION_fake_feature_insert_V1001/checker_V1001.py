@@ -4,6 +4,11 @@ import matplotlib.pyplot as plt
 import time
 import numpy as np
 import pickle
+import sys
+sys.path.insert(0, '../')
+from me import *
+
+
 
 
 since = time.time()
