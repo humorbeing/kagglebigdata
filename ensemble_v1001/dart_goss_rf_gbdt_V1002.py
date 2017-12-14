@@ -73,7 +73,7 @@ if save_me:
 
 dfs, val = fake_df(df)
 del df
-K = 5
+K = 2
 dfs = divide_df(dfs, K)
 dcs = []
 for i in range(K):
@@ -122,7 +122,7 @@ params = {
     'feature_fraction_seed': 2,
 }
 
-num_boost_round = 50
+num_boost_round = 30
 early_stopping_rounds = 50
 verbose_eval = 1
 
@@ -135,7 +135,7 @@ for i in range(K):
     c = [dfs[b[j]] for j in range(K - 1)]
     dt = pd.concat(c)
     model, cols = val_df(
-        params, dt, val,
+        params, dt, dfs[i],
         num_boost_round=num_boost_round,
         early_stopping_rounds=early_stopping_rounds,
         verbose_eval=verbose_eval,
@@ -176,7 +176,7 @@ params = {
     'feature_fraction_seed': 2,
 }
 
-num_boost_round = 50
+num_boost_round = 30
 early_stopping_rounds = 50
 verbose_eval = 1
 
@@ -189,7 +189,7 @@ for i in range(K):
     c = [dfs[b[j]] for j in range(K - 1)]
     dt = pd.concat(c)
     model, cols = val_df(
-        params, dt, val,
+        params, dt, dfs[i],
         num_boost_round=num_boost_round,
         early_stopping_rounds=early_stopping_rounds,
         verbose_eval=verbose_eval,
@@ -229,7 +229,7 @@ params = {
     'feature_fraction_seed': 2,
 }
 
-num_boost_round = 50
+num_boost_round = 30
 early_stopping_rounds = 50
 verbose_eval = 1
 
@@ -242,7 +242,7 @@ for i in range(K):
     c = [dfs[b[j]] for j in range(K - 1)]
     dt = pd.concat(c)
     model, cols = val_df(
-        params, dt, val,
+        params, dt, dfs[i],
         num_boost_round=num_boost_round,
         early_stopping_rounds=early_stopping_rounds,
         verbose_eval=verbose_eval,
@@ -283,7 +283,7 @@ params = {
     'feature_fraction_seed': 2,
 }
 
-num_boost_round = 50
+num_boost_round = 30
 early_stopping_rounds = 50
 verbose_eval = 1
 
@@ -296,7 +296,7 @@ for i in range(K):
     c = [dfs[b[j]] for j in range(K - 1)]
     dt = pd.concat(c)
     model, cols = val_df(
-        params, dt, val,
+        params, dt, dfs[i],
         num_boost_round=num_boost_round,
         early_stopping_rounds=early_stopping_rounds,
         verbose_eval=verbose_eval,
@@ -319,7 +319,7 @@ v = np.zeros(shape=[len(val)])
 
 
 v = np.zeros(shape=[len(val)])
-
+r = 'cat'
 for i in range(K):
     print()
     print('in model:', r, ' k-fold:', i)
@@ -329,12 +329,12 @@ for i in range(K):
     c = [dcs[b[j]] for j in range(K - 1)]
     dt = pd.concat(c)
     model, cols = cat(
-        dt, vc, 10, learning_rate=0.3,
+        dt, dcs[i], 100, learning_rate=0.3,
         depth=6
     )
     del dt
     # dcs[i][r] = model.predict(dfs[i])
-    p = model.predict_proba(vc)
+    p = model.predict_proba(vc.drop('target',axis=1))
     tt = np.array(p).T[1]
     v += tt
 

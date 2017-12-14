@@ -173,6 +173,9 @@ def show_df(df, detail=False):
             print('null number:'.ljust(15), df[on].isnull().values.sum())
             print(on, 'dtype:', df[on].dtypes)
             print('-' * 20)
+            print('describing', on, ':')
+            print(df[on].describe())
+            print('-' * 20)
             l = df[on]
             s = set(l)
             print('list len:'.ljust(20), len(l))
@@ -338,3 +341,8 @@ def train_cat(
         cat_features=cat_feature,
     )
     return model, cols
+
+def cat_predict(model, test):
+    p = model.predict_proba(test)
+    t = np.array(p).T[1]
+    return t

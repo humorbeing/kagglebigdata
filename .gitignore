@@ -10,3 +10,6 @@
 *.save
 *.gz
 *.tsv
+me.py
+*.pyc
+__pycache__/me.cpython-35.pyc
