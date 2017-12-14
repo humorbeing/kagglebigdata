@@ -29,8 +29,8 @@ cat_feature = np.where(X.dtypes == 'category')[0]
 del train, val
 
 model = CatBoostClassifier(
-    iterations=260, learning_rate=0.3,
-    depth=16, logging_level='Verbose',
+    iterations=200, learning_rate=0.3,
+    depth=12, logging_level='Verbose',
     loss_function='Logloss',
     eval_metric='AUC',
     od_type='Iter',
