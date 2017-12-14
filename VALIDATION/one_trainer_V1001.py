@@ -92,7 +92,7 @@ work_on = [
     # 'CC11_msno',
     # 'ITC_name',
     # 'language',
-    'top2_in_song',
+    'language',
     # 'CC11_name',
     # 'ITC_song_id_log10',
     # 'ITC_song_id_log10_1',
@@ -117,8 +117,8 @@ for w in work_on:
         toto.append(w)
         df_on = df[toto]
         show_df(df_on)
-        save_me = True
-        # save_me = False
+        # save_me = True
+        save_me = False
         if save_me:
             save_df(df_on)
 
