@@ -16,7 +16,7 @@ since = time.time()
 
 data_dir = '../data/'
 save_dir = '../saves/'
-load_name = 'train_set'
+load_name = 'train_set.csv'
 df = read_df(load_name)
 c = ['song_id', 'msno']
 df = add_ITC(df, c, real=True)
@@ -88,7 +88,7 @@ learning_rate = 0.3
 depth = 16
 estimate = 0.6887
 
-model, cols = train_cat(df, num_boost_round,
+model, cols = train_cat(df, iterations,
                         learning_rate=learning_rate,
                         depth=depth)
 
@@ -98,7 +98,7 @@ del df
 print('training complete.')
 print('Making prediction.')
 
-load_name = 'test_set'
+load_name = 'test_set.csv'
 df = read_df(load_name)
 df = add_ITC(df, c, real=True)
 cols.remove('target')
