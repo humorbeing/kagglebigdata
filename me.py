@@ -43,6 +43,7 @@ def val_df(parameters, train_set, val_set,
             num_boost_round=5000,
             early_stopping_rounds=50,
             verbose_eval=10,
+           learning_rate=False
             ):
 
     cols = [i for i in train_set.columns]
@@ -71,14 +72,31 @@ def val_df(parameters, train_set, val_set,
     params['verbose'] = -1
     params['objective'] = 'binary'
 
-    model = lgb.train(
-        params,
-        train_set,
-        num_boost_round=num_boost_round,
-        early_stopping_rounds=early_stopping_rounds,
-        valid_sets=[train_set, val_set],
-        verbose_eval=verbose_eval,
-    )
+    def lll(x):
+        print('set it yourself.')
+        return 5
+
+    if learning_rate:
+
+        model = lgb.train(
+            params,
+            train_set,
+            num_boost_round=num_boost_round,
+            early_stopping_rounds=early_stopping_rounds,
+            valid_sets=[train_set, val_set],
+            verbose_eval=verbose_eval,
+            learning_rate=lll,
+        )
+    else:
+        model = lgb.train(
+            params,
+            train_set,
+            num_boost_round=num_boost_round,
+            early_stopping_rounds=early_stopping_rounds,
+            valid_sets=[train_set, val_set],
+            verbose_eval=verbose_eval,
+        )
+
     del train_set, val_set
     return model, cols
 def fake_df(df, size=0.76):
@@ -109,6 +127,7 @@ def read_df(load_name, read_from='../saves/'):
     del dt
 
     return df
+
 def show_df(df, detail=False):
     print()
     print('>' * 20)
@@ -118,7 +137,10 @@ def show_df(df, detail=False):
     print(df.dtypes)
     print('number of rows:', len(df))
     print('number of columns:', len(df.columns))
-
+    print()
+    for w in df.columns:
+        print("'{}',".format(w))
+    print()
     if detail:
         for on in df.columns:
             print()
@@ -164,7 +186,7 @@ def add_ITC(df, cols, real=False):
         return np.log10(x)
 
     def log10me1(x):
-        return np.log10(x + 1)
+        return np.round(np.log10(x + 1), 5)
 
     def xxx(x):
         d = x / (x + 1)
@@ -176,7 +198,7 @@ def add_ITC(df, cols, real=False):
     for col in cols:
         colc = 'ITC_' + col
         # df[colc + '_log10'] = df[colc].apply(log10me).astype(np.float64)
-        df[colc + '_log10_1'] = df[colc].apply(log10me1).astype(np.float64)
+        df[colc + '_log10_1'] = df[colc].apply(log10me1).astype(np.float16)
         # df[colc + '_x_1'] = df[colc].apply(xxx).astype(np.float64)
         # col1 = 'CC11_'+col
         # df['OinC_'+col] = df[col1]/df[colc]
