@@ -89,7 +89,7 @@ df = df[on]
 
 show_df(df)
 
-from catboost import CatBoostClassifier
+
 # Initialize data
 # cat_features = [0,1,2]
 train_data = df.drop('target', axis=1)

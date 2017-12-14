@@ -14,12 +14,13 @@ save_dir = '../saves/'
 
 load_name = 'custom_members_fixed.csv'
 load_name = 'custom_song_fixed.csv'
-load_name = 'train_set.csv'
+load_name = 'TEST_dart_goss_rf_gbdt_.csv'
 # load_name = 'test_set.csv'
 load_name = load_name[:-4]
 # print(load_name)
-dt = pickle.load(open(save_dir+load_name+'_dict.save', "rb"))
-df = pd.read_csv(save_dir+load_name+".csv",
+read_from = '../fake/saves/feature/'
+dt = pickle.load(open(read_from+load_name+'_dict.save', "rb"))
+df = pd.read_csv(read_from+load_name+".csv",
                  dtype=dt)
 del dt
 
@@ -35,21 +36,21 @@ print('number of columns:', len(df.columns))
 # print('<'*20)
 
 
-# for on in df.columns:
-#     print()
-#     print('inspecting:'.ljust(20), on)
-#     # print('>'*20)
-#     print('any null:'.ljust(15), df[on].isnull().values.any())
-#     print('null number:'.ljust(15), df[on].isnull().values.sum())
-#     print(on, 'dtype:', df[on].dtypes)
-#     print('describing', on, ':')
-#     print(df[on].describe())
-#     print('-'*20)
-#     l = df[on]
-#     s = set(l)
-#     print('list len:'.ljust(20), len(l))
-#     print('set len:'.ljust(20), len(s))
-#     print()
+for on in df.columns:
+    print()
+    print('inspecting:'.ljust(20), on)
+    # print('>'*20)
+    print('any null:'.ljust(15), df[on].isnull().values.any())
+    print('null number:'.ljust(15), df[on].isnull().values.sum())
+    print(on, 'dtype:', df[on].dtypes)
+    print('describing', on, ':')
+    print(df[on].describe())
+    print('-'*20)
+    l = df[on]
+    s = set(l)
+    print('list len:'.ljust(20), len(l))
+    print('set len:'.ljust(20), len(s))
+    print()
 print('<'*20)
 print('<'*20)
 print('<'*20)
@@ -73,17 +74,17 @@ print('<'*20)
 # df3 = df3[df3['target'] == 1]
 # print('number of rows:', len(df3))
 
-K = 2
-dfs = []
-for i in range(K):
-    dfs.append(df[df.index % K == i])
-del df
-
-for i in dfs:
-    print('number of rows:', len(i))
-    i = i[i['target'] == 1]
-    print('number of 1 rows:', len(i))
-    print()
+# K = 2
+# dfs = []
+# for i in range(K):
+#     dfs.append(df[df.index % K == i])
+# del df
+#
+# for i in dfs:
+#     print('number of rows:', len(i))
+#     i = i[i['target'] == 1]
+#     print('number of 1 rows:', len(i))
+#     print()
 
 
 print()

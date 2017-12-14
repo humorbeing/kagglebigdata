@@ -46,14 +46,12 @@ def show_mo(model):
         print(ns[i].rjust(20), ':', ims[i])
     return b
 
-def save_df(df, save_to='../saves/'):
+def save_df(df, name='save_me', save_to='../saves/'):
     print(' SAVE ' * 5)
     print(' SAVE ' * 5)
     print(' SAVE ' * 5)
 
     print('saving df:')
-    save_name = 'train'
-    vers = '_me'
     d = df.dtypes.to_dict()
     print('dtypes of df:')
     print('>' * 20)
@@ -61,8 +59,8 @@ def save_df(df, save_to='../saves/'):
     print('number of columns:', len(df.columns))
     print('number of data:', len(df))
     print('<' * 20)
-    df.to_csv(save_to + save_name + vers + '.csv', index=False)
-    pickle.dump(d, open(save_to + save_name + vers + '_dict.save', "wb"))
+    df.to_csv(save_to + name + '.csv', index=False)
+    pickle.dump(d, open(save_to + name + '_dict.save', "wb"))
 
     print('saving DONE.')
 def val_df(parameters, train_set, val_set,
