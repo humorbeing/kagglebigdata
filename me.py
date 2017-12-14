@@ -205,6 +205,7 @@ def add_ITC(df, cols, real=False):
         # df.drop('CC11_'+on_in, axis=1, inplace=True)
         return df
 
+
     def log10me(x):
         return np.log10(x)
 
@@ -221,13 +222,10 @@ def add_ITC(df, cols, real=False):
     for col in cols:
         colc = 'ITC_' + col
         # df[colc + '_log10'] = df[colc].apply(log10me).astype(np.float64)
-        df[colc + '_log10_1'] = df[colc].apply(log10me1).astype(np.float16)
+        df[colc + '_log10_1'] = df[colc].apply(log10me1).astype(np.float32)
         # df[colc + '_x_1'] = df[colc].apply(xxx).astype(np.float64)
         # col1 = 'CC11_'+col
         # df['OinC_'+col] = df[col1]/df[colc]
-<<<<<<< HEAD
-        # df.drop(colc, axis=1, inplace=True)
-=======
         df.drop(colc, axis=1, inplace=True)
 
     return df
@@ -278,7 +276,6 @@ def add_11(df, cols, real=False):
         df['OinC_' + col] = df['OinC_' + col].astype(np.float32)
         df.drop(colc, axis=1, inplace=True)
         df.drop(col1, axis=1, inplace=True)
->>>>>>> 65cb496c950582c67129b63fdf2154a8f461fd26
 
     return df
 
