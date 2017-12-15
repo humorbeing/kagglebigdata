@@ -13,41 +13,39 @@ data_dir = '../data/'
 save_dir = '../saves/'
 read_from='../saves/submission/'
 model_name = 'stitch_up_'
-load_name = '0.68911.csv'
-model_name += load_name[:6]+'_'
-w1 = 0.68911
+# ------------------------------------
+load_name = '0.69411stitch_up_0.6904_[0.681_.csv'
+model_name += load_name[:7]+'_'
+w1 = 0.69411
 df1 = pd.read_csv(read_from + load_name)
-load_name = '0.68898.csv'
-w2 = 0.68898
-model_name += load_name[:6]+'_'
-df2 = pd.read_csv(read_from + load_name)
-load_name = '0.68775stitch_up_0.6869_0.6862_0.6875_.csv'
-w3 = 0.68775
-model_name += load_name[:6]+'_'
-df3 = pd.read_csv(read_from + load_name)
-# load_name = ''
-# df4 = read_df(load_name,read_from='../saves/submission/')
-# load_name = ''
-# df5 = read_df(load_name,read_from='../saves/submission/')
 
-# show_df(df1)
-show_df(df2)
-show_df(df3)
+# ------------------------------------
+load_name = '[0.68151]_0.6925_cat__1513283740.csv'
+w2 = 0.68151
+model_name += load_name[:7]+'_'
+df2 = pd.read_csv(read_from + load_name)
+
+# ------------------------------------
+# load_name = '[0.68402]_0.6887_cat__1513383800.csv'
+# w3 = 0.68402
+# model_name += load_name[:6]+'_'
+# df3 = pd.read_csv(read_from + load_name)
+
 # p = df1['target']
 p = np.zeros(shape=[len(df2)])
-# p += df1['target'] * w1
-# p += df2['target'] * w2
+p += df1['target'] * w1
+p += df2['target'] * w2
 # p += df3['target'] * w3
-# p = p / (w1 + w2 + w3)
+p = p / (w1 + w2)
 
-p += df1['target']
-p += df2['target']
-p += df3['target']
-p = p / 3
+# p += df1['target']
+# p += df2['target']
+# p += df3['target']
+# p = p / 3
 
 print(df1.head())
 print(df2.head())
-print(df3.head())
+# print(df3.head())
 df = pd.DataFrame()
 df['id'] = df2.id
 df['target'] = p
