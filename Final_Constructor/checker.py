@@ -18,8 +18,9 @@ save_dir = '../saves/'
 load_name = 'final_test_real.csv'
 # load_name = 'final_train_play.csv'
 # load_name = 'final_train_real.csv'
-
-df = read_df(load_name)
+load_name = '[]_6360_cat__1513344488.csv'
+df = read_df(load_name,
+             read_from='../saves/submission/')
 show_df(df, detail=True)
 
 print()
