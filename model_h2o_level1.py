@@ -8,12 +8,12 @@ import pickle
 import numpy as np
 from catboost import CatBoostClassifier
 from sklearn import linear_model
-# import h2o
-#
-# from h2o.estimators.random_forest import H2ORandomForestEstimator
-# from h2o.estimators.gbm import H2OGradientBoostingEstimator
-# from h2o.estimators.deeplearning import H2ODeepLearningEstimator
-# from h2o.estimators.glm import H2OGeneralizedLinearEstimator
+import h2o
+
+from h2o.estimators.random_forest import H2ORandomForestEstimator
+from h2o.estimators.gbm import H2OGradientBoostingEstimator
+from h2o.estimators.deeplearning import H2ODeepLearningEstimator
+from h2o.estimators.glm import H2OGeneralizedLinearEstimator
 
 on_top2 = [
     'msno',
@@ -183,23 +183,23 @@ def dart_on_top2_2(
     params = {
         'boosting': 'dart',
 
-        'learning_rate': 0.5,
+        'learning_rate': 0.15,
         'num_leaves': 50,
-        'max_depth': 5,
+        'max_depth': -1,
 
         'lambda_l1': 0.1,
         'lambda_l2': 0,
         'max_bin': 63,
 
-        'bagging_fraction': 0.5,
+        'bagging_fraction': 0.7,
         'bagging_freq': 2,
         'bagging_seed': 2,
-        'feature_fraction': 0.8,
+        'feature_fraction': 0.9,
         'feature_fraction_seed': 2,
     }
 
     num_boost_round = 2000
-    early_stopping_rounds = 50
+    early_stopping_rounds = 70
     verbose_eval = 10
     v = np.zeros(shape=[len(test)])
     for i in range(K):

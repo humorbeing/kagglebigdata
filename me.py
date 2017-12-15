@@ -12,7 +12,6 @@ def train_light(
     num_boost_round=5000,
 ):
 
-
     params = parameters
     train_set = train_set.sample(frac=1)
     X_tr = train_set.drop(['target'], axis=1)

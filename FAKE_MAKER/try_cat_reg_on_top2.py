@@ -49,7 +49,7 @@ vc['target'] = val['target']
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-dcs, vc, r = cat_reg_test(K, dfs, dcs, val, vc)
+dcs, vc, r = cat_reg_on_top2(K, dfs, dcs, val, vc)
 
 from sklearn.metrics import roc_auc_score
 print(roc_auc_score(val['target'], vc[r]))
