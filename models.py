@@ -300,7 +300,7 @@ def gbdt_optimal_on_top2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 5
+    num_boost_round = 2000
     early_stopping_rounds = 50
     verbose_eval = 10
     v = np.zeros(shape=[len(test)])
