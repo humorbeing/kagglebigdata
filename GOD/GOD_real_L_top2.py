@@ -175,7 +175,7 @@ def Lgos_top2_1(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 5
+    num_boost_round = (np.array([237, 191, 503])*1.15).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -188,7 +188,7 @@ def Lgos_top2_1(
         dt = pd.concat(c)
         model, cols = train_light(
             params, dt[on_top2],
-            num_boost_round=num_boost_round,
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)
@@ -233,7 +233,7 @@ def Lgos_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 5
+    num_boost_round = (np.array([2100, 1626, 1392])*1.15).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -246,7 +246,7 @@ def Lgos_top2_2(
         dt = pd.concat(c)
         model, cols = train_light(
             params, dt[on_top2],
-            num_boost_round=num_boost_round,
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)
@@ -291,7 +291,7 @@ def Lrf_top2_1(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 5
+    num_boost_round = (np.array([64, 64, 64])*1.15).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -304,7 +304,7 @@ def Lrf_top2_1(
         dt = pd.concat(c)
         model, cols = train_light(
             params, dt[on_top2],
-            num_boost_round=num_boost_round,
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)
@@ -349,7 +349,7 @@ def Lrf_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 5
+    num_boost_round = (np.array([66, 27, 65])*1.15).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -362,7 +362,7 @@ def Lrf_top2_2(
         dt = pd.concat(c)
         model, cols = train_light(
             params, dt[on_top2],
-            num_boost_round=num_boost_round,
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)
@@ -465,7 +465,7 @@ def Lgbt_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 5
+    num_boost_round = (np.array([67, 100, 62])*1.15).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -478,7 +478,7 @@ def Lgbt_top2_2(
         dt = pd.concat(c)
         model, cols = train_light(
             params, dt[on_top2],
-            num_boost_round=num_boost_round,
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)

@@ -183,13 +183,13 @@ def dart_on_top2_2(
     params = {
         'boosting': 'dart',
 
-        'learning_rate': 0.5,
+        'learning_rate': 0.9,
         'num_leaves': 50,
         'max_depth': 5,
 
         'lambda_l1': 0.1,
         'lambda_l2': 0,
-        'max_bin': 63,
+        'max_bin': 15,
 
         'bagging_fraction': 0.5,
         'bagging_freq': 2,
