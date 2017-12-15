@@ -240,22 +240,22 @@ def rf_on_top2(
         'boosting': 'rf',
 
         'learning_rate': 0.3,
-        'num_leaves': 511,
-        'max_depth': 10,
+        'num_leaves': 750,
+        'max_depth': 12,
 
-        'lambda_l1': 0.2,
-        'lambda_l2': 0,
+        'lambda_l1': 0.1,
+        'lambda_l2': 0.1,
         'max_bin': 63,
 
-        'bagging_fraction': 0.8,
+        'bagging_fraction': 0.5,
         'bagging_freq': 2,
         'bagging_seed': 2,
-        'feature_fraction': 0.8,
+        'feature_fraction': 0.5,
         'feature_fraction_seed': 2,
     }
 
     num_boost_round = 2000
-    early_stopping_rounds = 50
+    early_stopping_rounds = 200
     verbose_eval = 10
     v = np.zeros(shape=[len(test)])
     for i in range(K):
