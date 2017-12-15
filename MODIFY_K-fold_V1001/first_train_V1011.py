@@ -284,17 +284,17 @@ preds_class = model.predict(val.drop('target', axis=1))
 # Get predicted probabilities for each class
 preds_proba = model.predict_proba(val.drop('target', axis=1))
 
-# from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
-# from sklearn.ensemble import GradientBoostingClassifier
-# from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.linear_model import LogisticRegression
 #
-# clfs = [
-#     # RandomForestClassifier(n_estimators=100, verbose=10, n_jobs=-1, criterion='gini'),
-#     RandomForestClassifier(n_estimators=100, n_jobs=-1, criterion='entropy'),
-#     ExtraTreesClassifier(n_estimators=100, n_jobs=-1, criterion='gini'),
-#     ExtraTreesClassifier(n_estimators=100, n_jobs=-1, criterion='entropy'),
-#     GradientBoostingClassifier(learning_rate=0.05, subsample=0.5, max_depth=6, n_estimators=50)
-# ]
+clfs = [
+      RandomForestClassifier(n_estimators=100, verbose=10, n_jobs=-1, criterion='gini'),
+    RandomForestClassifier(n_estimators=100, n_jobs=-1, criterion='entropy'),
+    ExtraTreesClassifier(n_estimators=100, n_jobs=-1, criterion='gini'),
+    ExtraTreesClassifier(n_estimators=100, n_jobs=-1, criterion='entropy'),
+    GradientBoostingClassifier(learning_rate=0.05, subsample=0.5, max_depth=6, n_estimators=50)
+]
 # for clf in clfs:
 #     since = time.time()
 #     print(clf)

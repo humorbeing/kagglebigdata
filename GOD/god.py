@@ -12,10 +12,11 @@ def train_light(
     num_boost_round=5000,
 ):
 
-    cols = [i for i in train_set.columns]
+
     params = parameters
     train_set = train_set.sample(frac=1)
     X_tr = train_set.drop(['target'], axis=1)
+    cols = [i for i in X_tr.columns]
     Y_tr = train_set['target'].values
     del train_set
     train_set = lgb.Dataset(X_tr, Y_tr)
@@ -70,7 +71,7 @@ def val_df(parameters, train_set, val_set,
            learning_rate=False
             ):
 
-    cols = [i for i in train_set.columns]
+
     # for col in cols:
     #     if train_set[col].dtype == object:
     #         train_set[col] = train_set[col].astype('category')
@@ -81,9 +82,11 @@ def val_df(parameters, train_set, val_set,
     params = parameters
     train_set = train_set.sample(frac=1)
     X_tr = train_set.drop(['target'], axis=1)
+    cols = [i for i in X_tr.columns]
     Y_tr = train_set['target'].values
 
     X_val = val_set.drop(['target'], axis=1)
+    X_val = X_val[cols]
     Y_val = val_set['target'].values
 
     del train_set, val_set
@@ -294,10 +297,12 @@ def cat(
 
 ):
     from catboost import CatBoostClassifier
-    cols = [i for i in train.columns]
+
     X = train.drop('target', axis=1)
+    cols = [i for i in X.columns]
     Y = train['target']
     vX = val.drop('target', axis=1)
+    vX = vX[cols]
     vY = val['target']
     cat_feature = np.where(X.dtypes == 'category')[0]
     del train, val
