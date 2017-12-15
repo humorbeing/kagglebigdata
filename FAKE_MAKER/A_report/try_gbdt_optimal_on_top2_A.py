@@ -301,7 +301,7 @@ Early stopping, best iteration is:
 [1488]	training's auc: 0.895875	valid_1's auc: 0.686033
 Traceback (most recent call last):
   File "/media/ray/SSD/workspace/python/projects/kaggle_song_git/MAKER/try_v1001.py", line 77, in <module>
-  File "/media/ray/SSD/workspace/python/projects/kaggle_song_git/MAKER/models.py", line 221, in gbdt_optimal_on_top2
+  File "/media/ray/SSD/workspace/python/projects/kaggle_song_git/MAKER/G_models.py", line 221, in gbdt_optimal_on_top2
   File "/usr/local/lib/python3.5/dist-packages/lightgbm/basic.py", line 1766, in predict
     return predictor.predict(data, num_iteration, raw_score, pred_leaf, pred_contrib, data_has_header, is_reshape)
   File "/usr/local/lib/python3.5/dist-packages/lightgbm/basic.py", line 387, in predict
