@@ -131,7 +131,7 @@ def Ldrt_top2_2(
         dt = pd.concat(c)
         model, cols = train_light(
             params, dt[on_top2],
-            num_boost_round=num_boost_round,
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)
