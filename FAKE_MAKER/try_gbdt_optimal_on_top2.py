@@ -18,7 +18,7 @@ from models import *
 
 since = time.time()
 since = time.time()
-h2o.init(nthreads=-1)
+# h2o.init(nthreads=-1)
 data_dir = '../data/'
 save_dir = '../saves/'
 load_name = 'final_train_play.csv'
