@@ -407,7 +407,7 @@ def Lgbt_top2_1(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 5
+    num_boost_round = (np.array([911, 1394, 1229])*1.15).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -420,7 +420,7 @@ def Lgbt_top2_1(
         dt = pd.concat(c)
         model, cols = train_light(
             params, dt[on_top2],
-            num_boost_round=num_boost_round,
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)
