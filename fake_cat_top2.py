@@ -153,7 +153,7 @@ def CatC_top2_1(
     on = [
 
     ]
-    iterations = 150
+    iterations = 39
     learning_rate = 0.3
     depth = 6
     early_stop = 40
@@ -200,7 +200,7 @@ def CatC_top2_2(
     on = [
 
     ]
-    iterations = 100
+    iterations = 26
     learning_rate = 0.6
     depth = 4
     early_stop = 40
@@ -247,7 +247,7 @@ def CatR_top2_1(
     on = [
 
     ]
-    iterations = 110
+    iterations = 27
     learning_rate = 0.05
     depth = 9
     early_stop = 40
@@ -313,7 +313,7 @@ def CatR_top2_2(
     on = [
 
     ]
-    iterations = 50
+    iterations = 13
     learning_rate = 0.8
     depth = 16
     early_stop = 40
