@@ -186,16 +186,16 @@ def cat_on_top2(
     return dfs_collector, test_collector, r
 
 
-def cat_reg_test(
+def cat_reg_on_top2(
         K, dfs, dfs_collector, test,
         test_collector
 ):
-    r = 'cat_reg_test'
+    r = 'cat_reg_on_top2'
 
     on = [
 
     ]
-    iterations = 5
+    iterations = 300
     learning_rate = 0.3
     depth = 6
     early_stop = 40
