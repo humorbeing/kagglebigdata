@@ -8,12 +8,12 @@ import pickle
 import numpy as np
 from catboost import CatBoostClassifier
 from sklearn import linear_model
-import h2o
-
-from h2o.estimators.random_forest import H2ORandomForestEstimator
-from h2o.estimators.gbm import H2OGradientBoostingEstimator
-from h2o.estimators.deeplearning import H2ODeepLearningEstimator
-from h2o.estimators.glm import H2OGeneralizedLinearEstimator
+# import h2o
+#
+# from h2o.estimators.random_forest import H2ORandomForestEstimator
+# from h2o.estimators.gbm import H2OGradientBoostingEstimator
+# from h2o.estimators.deeplearning import H2ODeepLearningEstimator
+# from h2o.estimators.glm import H2OGeneralizedLinearEstimator
 
 on_top2 = [
     'msno',
