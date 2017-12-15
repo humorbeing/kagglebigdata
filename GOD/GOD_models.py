@@ -128,7 +128,7 @@ def dart_on_top2(
         'boosting': 'dart',
 
         'learning_rate': 0.3,
-        'num_leaves': 31,
+        'num_leaves': 100,
         'max_depth': 10,
 
         'lambda_l1': 0,
@@ -161,6 +161,10 @@ def dart_on_top2(
             verbose_eval=verbose_eval,
         )
         del dt
+        print('- ' * 10)
+        for c in cols:
+            print("'{}',".format(c))
+        print('- ' * 10)
         dfs_collector[i][r] = model.predict(dfs[i][cols])
         print(dfs_collector[i].head())
         v += model.predict(test[cols])
@@ -212,6 +216,10 @@ def goss_on_top2(
             verbose_eval=verbose_eval,
         )
         del dt
+        print('- ' * 10)
+        for c in cols:
+            print("'{}',".format(c))
+        print('- ' * 10)
         dfs_collector[i][r] = model.predict(dfs[i][cols])
         print(dfs_collector[i].head())
         # dfs_collector[i][r+'a'] = model.predict(dfs[i][cols])
@@ -265,6 +273,10 @@ def rf_on_top2(
             verbose_eval=verbose_eval,
         )
         del dt
+        print('- ' * 10)
+        for c in cols:
+            print("'{}',".format(c))
+        print('- ' * 10)
         dfs_collector[i][r] = model.predict(dfs[i][cols])
         print(dfs_collector[i].head())
         # dfs_collector[i][r+'a'] = model.predict(dfs[i][cols])
@@ -319,6 +331,10 @@ def gbdt_optimal_on_top2(
             verbose_eval=verbose_eval,
         )
         del dt
+        print('- ' * 10)
+        for c in cols:
+            print("'{}',".format(c))
+        print('- ' * 10)
         dfs_collector[i][r] = model.predict(dfs[i][cols])
         print(dfs_collector[i].head())
         # dfs_collector[i][r+'a'] = model.predict(dfs[i][cols])
