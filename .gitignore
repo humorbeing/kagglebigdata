@@ -13,3 +13,4 @@
 me.py
 *.pyc
 __pycache__/me.cpython-35.pyc
+__pycache__/
