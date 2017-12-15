@@ -183,23 +183,23 @@ def dart_on_top2_2(
     params = {
         'boosting': 'dart',
 
-        'learning_rate': 0.15,
+        'learning_rate': 0.5,
         'num_leaves': 50,
-        'max_depth': -1,
+        'max_depth': 5,
 
         'lambda_l1': 0.1,
         'lambda_l2': 0,
         'max_bin': 63,
 
-        'bagging_fraction': 0.7,
+        'bagging_fraction': 0.5,
         'bagging_freq': 2,
         'bagging_seed': 2,
-        'feature_fraction': 0.9,
+        'feature_fraction': 0.8,
         'feature_fraction_seed': 2,
     }
 
     num_boost_round = 2000
-    early_stopping_rounds = 70
+    early_stopping_rounds = 50
     verbose_eval = 10
     v = np.zeros(shape=[len(test)])
     for i in range(K):
