@@ -8,6 +8,7 @@ import pickle
 import numpy as np
 from sklearn import linear_model
 
+alpha = 1.15
 on_top2 = [
     'msno',
     'song_id',
@@ -59,7 +60,7 @@ def Ldrt_top2_1(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([443, 838, 503])*1.15).astype(int)
+    num_boost_round = (np.array([443, 838, 503])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -102,22 +103,22 @@ def Ldrt_top2_2(
     params = {
         'boosting': 'dart',
 
-        'learning_rate': 0.15,
+        'learning_rate': 0.9,
         'num_leaves': 50,
-        'max_depth': -1,
+        'max_depth': 5,
 
         'lambda_l1': 0.1,
         'lambda_l2': 0,
-        'max_bin': 63,
+        'max_bin': 15,
 
-        'bagging_fraction': 0.7,
+        'bagging_fraction': 0.5,
         'bagging_freq': 2,
         'bagging_seed': 2,
-        'feature_fraction': 0.9,
+        'feature_fraction': 0.8,
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 5
+    num_boost_round = (np.array([252, 334, 229])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -162,7 +163,7 @@ def Lgos_top2_1(
 
         'learning_rate': 0.3,
         'num_leaves': 31,
-        'max_depth': 8,
+        'max_depth': 9,
 
         'lambda_l1': 0.2,
         'lambda_l2': 0,
@@ -175,7 +176,7 @@ def Lgos_top2_1(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([237, 191, 503])*1.15).astype(int)
+    num_boost_round = (np.array([237, 191, 503])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -233,7 +234,7 @@ def Lgos_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([2100, 1626, 1392])*1.15).astype(int)
+    num_boost_round = (np.array([2100, 1626, 1392])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -291,7 +292,7 @@ def Lrf_top2_1(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([64, 64, 64])*1.15).astype(int)
+    num_boost_round = (np.array([64, 64, 64])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -349,7 +350,7 @@ def Lrf_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([66, 27, 65])*1.15).astype(int)
+    num_boost_round = (np.array([66, 27, 65])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -407,7 +408,7 @@ def Lgbt_top2_1(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([911, 1394, 1229])*1.15).astype(int)
+    num_boost_round = (np.array([911, 1394, 1229])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -465,7 +466,7 @@ def Lgbt_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([67, 100, 62])*1.15).astype(int)
+    num_boost_round = (np.array([67, 100, 62])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
