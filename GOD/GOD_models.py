@@ -344,7 +344,6 @@ def rf_on_top2_2(
     return dfs_collector, test_collector, r
 
 
-
 def gbdt_optimal_on_top2(
         K, dfs, dfs_collector, test,
         test_collector
@@ -371,6 +370,64 @@ def gbdt_optimal_on_top2(
     }
 
     num_boost_round = 2000
+    early_stopping_rounds = 50
+    verbose_eval = 10
+    v = np.zeros(shape=[len(test)])
+    for i in range(K):
+        print()
+        print('in model:', r, ' k-fold:', i+1, '/', K)
+        print()
+        b = [i for i in range(K)]
+        b.remove(i)
+        c = [dfs[b[j]] for j in range(K - 1)]
+        dt = pd.concat(c)
+        model, cols = val_df(
+            params, dt[on_top2], test,
+            num_boost_round=num_boost_round,
+            early_stopping_rounds=early_stopping_rounds,
+            verbose_eval=verbose_eval,
+        )
+        del dt
+        print('- ' * 10)
+        for c in cols:
+            print("'{}',".format(c))
+        print('- ' * 10)
+        dfs_collector[i][r] = model.predict(dfs[i][cols])
+        print(dfs_collector[i].head())
+        # dfs_collector[i][r+'a'] = model.predict(dfs[i][cols])
+        # print(dfs_collector[i].head())
+        v += model.predict(test[cols])
+
+    test_collector[r] = v / K
+    return dfs_collector, test_collector, r
+
+
+def gbdt_on_top2(
+        K, dfs, dfs_collector, test,
+        test_collector
+):
+
+    r = 'gbdt_on_top2'
+
+    params = {
+        'boosting': 'gbdt',
+
+        'learning_rate': 0.32,
+        'num_leaves': 127,
+        'max_depth': -1,
+
+        'lambda_l1': 0,
+        'lambda_l2': 0.2,
+        'max_bin': 63,
+
+        'bagging_fraction': 0.9,
+        'bagging_freq': 2,
+        'bagging_seed': 2,
+        'feature_fraction': 0.9,
+        'feature_fraction_seed': 2,
+    }
+
+    num_boost_round = 5
     early_stopping_rounds = 50
     verbose_eval = 10
     v = np.zeros(shape=[len(test)])
