@@ -344,7 +344,6 @@ def rf_on_top2_2(
     return dfs_collector, test_collector, r
 
 
-
 def gbdt_optimal_on_top2(
         K, dfs, dfs_collector, test,
         test_collector
