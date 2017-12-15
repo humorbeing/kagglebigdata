@@ -329,8 +329,9 @@ def train_cat(
         depth=16,
 ):
     from catboost import CatBoostClassifier
-    cols = [i for i in train.columns]
+
     X = train.drop('target', axis=1)
+    cols = [i for i in X.columns]
     Y = train['target']
     cat_feature = np.where(X.dtypes == 'category')[0]
     del train
