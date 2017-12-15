@@ -44,13 +44,13 @@ test_collector['id'] = test['id']
 #     K, dfs, dfs_collector, test, test_collector
 # )
 #
-# dfs_collector, test_collector, r = Lgos_top2_1(
-#     K, dfs, dfs_collector, test, test_collector
-# )
-#
-# dfs_collector, test_collector, r = Lrf_top2_1(
-#     K, dfs, dfs_collector, test, test_collector
-# )
+dfs_collector, test_collector, r = Lgos_top2_1(
+    K, dfs, dfs_collector, test, test_collector
+)
+
+dfs_collector, test_collector, r = Lrf_top2_1(
+    K, dfs, dfs_collector, test, test_collector
+)
 #
 # dfs_collector, test_collector, r = Lgbt_top2_1(
 #     K, dfs, dfs_collector, test, test_collector
@@ -58,21 +58,21 @@ test_collector['id'] = test['id']
 #
 # #-----------------------------
 #
-# dfs_collector, test_collector, r = Ldrt_top2_2(
-#     K, dfs, dfs_collector, test, test_collector
-# )
+dfs_collector, test_collector, r = Ldrt_top2_2(
+    K, dfs, dfs_collector, test, test_collector
+)
 #
 dfs_collector, test_collector, r = Lgos_top2_2(
     K, dfs, dfs_collector, test, test_collector
 )
 #
-# dfs_collector, test_collector, r = Lrf_top2_2(
-#     K, dfs, dfs_collector, test, test_collector
-# )
-#
-# dfs_collector, test_collector, r = Lgbt_top2_2(
-#     K, dfs, dfs_collector, test, test_collector
-# )
+dfs_collector, test_collector, r = Lrf_top2_2(
+    K, dfs, dfs_collector, test, test_collector
+)
+
+dfs_collector, test_collector, r = Lgbt_top2_2(
+    K, dfs, dfs_collector, test, test_collector
+)
 
 
 

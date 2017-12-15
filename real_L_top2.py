@@ -118,7 +118,7 @@ def Ldrt_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([252, 334, 229])*alpha).astype(int)
+    num_boost_round = (np.array([260, 334, 239])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -176,7 +176,7 @@ def Lgos_top2_1(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([237, 191, 503])*alpha).astype(int)
+    num_boost_round = (np.array([220, 180, 180])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -234,7 +234,7 @@ def Lgos_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([2100, 1626, 1392])*alpha).astype(int)
+    num_boost_round = (np.array([1500, 1500, 1500])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -350,7 +350,7 @@ def Lrf_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([66, 27, 65])*alpha).astype(int)
+    num_boost_round = (np.array([50, 27, 50])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -466,7 +466,7 @@ def Lgbt_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([67, 100, 62])*alpha).astype(int)
+    num_boost_round = (np.array([67, 80, 55])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
