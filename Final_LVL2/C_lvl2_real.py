@@ -19,22 +19,9 @@ data_dir = '../data/'
 save_dir = '../saves/'
 read_from = '../saves/feature/level1/'
 file_name = 'L_rest.csv'
-K = 3
-dfs = []
-for i in range(K):
-    read_here = read_from + 'train' + str(i+1) + '/'
-    df = read_df(file_name, read_here)
-    dfs.append(df)
 
-for i in dfs:
-    print(i.head())
-
-
-test = read_df(file_name, read_from+'test/')
+dfs, test = read_lvl1(file_name)
 print(test.head())
-show_df(test)
-
-
 K = 3
 # dfs = divide_df(train, K)
 # del train
