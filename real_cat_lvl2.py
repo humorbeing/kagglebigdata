@@ -18,29 +18,13 @@ from catboost import CatBoostRegressor
 from catboost import CatBoostClassifier
 
 on_top2 = [
-    'msno',
-    'song_id',
-    'source_screen_name',
-    'source_type',
     'target',
-    'artist_name',
-    'song_year',
-    'ITC_song_id_log10_1',
-    'ITC_msno_log10_1',
-    # ------------------
-    'top2_in_song',
-    # 'language',
-    # 'top3_in_song',
-
-    # ------------------
-    'source_system_tab',
-    # 'ITC_source_system_tab_log10_1',
-    # 'ISC_song_country_ln',
-
-    # ------------------
-    # 'membership_days',
-    # 'ISC_song_year',
-    # 'OinC_language',
+    'Lgos_top2_1',
+    'Lrf_top2_1',
+    'Ldrt_top2_2',
+    'Lgos_top2_2',
+    'Lrf_top2_2',
+    'Lgbt_top2_2',
 ]
 on_language = [
     'msno',

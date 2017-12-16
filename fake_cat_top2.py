@@ -153,7 +153,7 @@ def CatC_top2_1(
     on = [
 
     ]
-    iterations = 150
+    iterations = 39
     learning_rate = 0.3
     depth = 6
     early_stop = 40
@@ -166,9 +166,10 @@ def CatC_top2_1(
         b.remove(i)
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        model, cols = train_cat(
-            dt[on_top2], iterations=iterations,
+        model, cols = cat(
+            dt[on_top2], test, iterations=iterations,
             learning_rate=learning_rate, depth=depth,
+            early_stop=early_stop,
         )
         del dt
         print('- ' * 10)
@@ -199,7 +200,7 @@ def CatC_top2_2(
     on = [
 
     ]
-    iterations = 100
+    iterations = 26
     learning_rate = 0.6
     depth = 4
     early_stop = 40
@@ -212,9 +213,10 @@ def CatC_top2_2(
         b.remove(i)
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        model, cols = train_cat(
-            dt[on_top2], iterations=iterations,
+        model, cols = cat(
+            dt[on_top2], test, iterations=iterations,
             learning_rate=learning_rate, depth=depth,
+            early_stop=early_stop,
         )
         del dt
         print('- ' * 10)
@@ -245,7 +247,7 @@ def CatR_top2_1(
     on = [
 
     ]
-    iterations = 110
+    iterations = 27
     learning_rate = 0.05
     depth = 9
     early_stop = 40
@@ -262,6 +264,9 @@ def CatR_top2_1(
         X = dt.drop('target', axis=1)
         cols = [i for i in X.columns]
         Y = dt['target']
+        vX = test.drop('target', axis=1)
+        vX = vX[cols]
+        vY = test['target']
         cat_feature = np.where(X.dtypes == 'category')[0]
         del dt
 
@@ -270,13 +275,13 @@ def CatR_top2_1(
             depth=depth, logging_level='Verbose',
             # loss_function='Logloss',
             eval_metric='AUC',
-            # od_type='Iter',
-            # od_wait=early_stop,
+            od_type='Iter',
+            od_wait=early_stop,
         )
         model.fit(
             X, Y,
             cat_features=cat_feature,
-            # eval_set=(vX, vY)
+            eval_set=(vX, vY)
         )
         print('- ' * 10)
         for c in cols:
@@ -297,6 +302,8 @@ def CatR_top2_1(
     return dfs_collector, test_collector, r
 
 
+
+
 def CatR_top2_2(
         K, dfs, dfs_collector, test,
         test_collector
@@ -306,7 +313,7 @@ def CatR_top2_2(
     on = [
 
     ]
-    iterations = 50
+    iterations = 13
     learning_rate = 0.8
     depth = 16
     early_stop = 40
@@ -323,7 +330,9 @@ def CatR_top2_2(
         X = dt.drop('target', axis=1)
         cols = [i for i in X.columns]
         Y = dt['target']
-
+        vX = test.drop('target', axis=1)
+        vX = vX[cols]
+        vY = test['target']
         cat_feature = np.where(X.dtypes == 'category')[0]
         del dt
 
@@ -332,13 +341,13 @@ def CatR_top2_2(
             depth=depth, logging_level='Verbose',
             # loss_function='Logloss',
             eval_metric='AUC',
-            # od_type='Iter',
-            # od_wait=early_stop,
+            od_type='Iter',
+            od_wait=early_stop,
         )
         model.fit(
             X, Y,
             cat_features=cat_feature,
-            # eval_set=(vX, vY)
+            eval_set=(vX, vY)
         )
         print('- ' * 10)
         for c in cols:
@@ -357,4 +366,3 @@ def CatR_top2_2(
     test_collector[r] = v / K
     print(test_collector.head())
     return dfs_collector, test_collector, r
-

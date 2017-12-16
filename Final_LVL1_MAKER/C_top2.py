@@ -1,7 +1,7 @@
 import sys
 sys.path.insert(0, '../')
 from me import *
-from real_L_top2 import *
+from real_cat_top2 import *
 import pandas as pd
 import lightgbm as lgb
 import time
@@ -40,47 +40,33 @@ test_collector['id'] = test['id']
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!
 
-# dfs_collector, test_collector, r = Ldrt_top2_1(
-#     K, dfs, dfs_collector, test, test_collector
-# )
-#
-dfs_collector, test_collector, r = Lgos_top2_1(
+dfs_collector, test_collector, r = CatC_top2_1(
     K, dfs, dfs_collector, test, test_collector
 )
 
-dfs_collector, test_collector, r = Lrf_top2_1(
-    K, dfs, dfs_collector, test, test_collector
-)
-#
-# dfs_collector, test_collector, r = Lgbt_top2_1(
-#     K, dfs, dfs_collector, test, test_collector
-# )
-#
-# #-----------------------------
-#
-dfs_collector, test_collector, r = Ldrt_top2_2(
-    K, dfs, dfs_collector, test, test_collector
-)
-#
-dfs_collector, test_collector, r = Lgos_top2_2(
-    K, dfs, dfs_collector, test, test_collector
-)
-#
-dfs_collector, test_collector, r = Lrf_top2_2(
+dfs_collector, test_collector, r = CatR_top2_1(
     K, dfs, dfs_collector, test, test_collector
 )
 
-dfs_collector, test_collector, r = Lgbt_top2_2(
+
+
+#-----------------------------
+
+dfs_collector, test_collector, r = CatC_top2_2(
     K, dfs, dfs_collector, test, test_collector
 )
 
+dfs_collector, test_collector, r = CatR_top2_2(
+    K, dfs, dfs_collector, test, test_collector
+)
+#
 
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!
 
 print(test_collector.head())
 print(test_collector.tail())
-save_name = 'L_rest'
+save_name = 'Cat'
 save_here = '../saves/feature/level1/'
 for i in range(K):
     save_train = save_here + 'train' + str(i+1) + '/'

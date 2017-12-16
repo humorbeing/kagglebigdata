@@ -20,8 +20,8 @@ w1 = 0.69411
 df1 = pd.read_csv(read_from + load_name)
 
 # ------------------------------------
-load_name = '[0.68151]_0.6925_cat__1513283740.csv'
-w2 = 0.68151
+load_name = '0.68993[]_6360_cat__1513461458.csv'
+w2 = 0.68993
 model_name += load_name[:7]+'_'
 df2 = pd.read_csv(read_from + load_name)
 
