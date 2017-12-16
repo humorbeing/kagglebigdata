@@ -60,7 +60,7 @@ def Ldrt_top2_1(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([443, 838, 503])*alpha).astype(int)
+    num_boost_round = (np.array([600, 700, 450])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -408,7 +408,7 @@ def Lgbt_top2_1(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = (np.array([911, 1394, 1229])*alpha).astype(int)
+    num_boost_round = (np.array([950, 950, 1200])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()

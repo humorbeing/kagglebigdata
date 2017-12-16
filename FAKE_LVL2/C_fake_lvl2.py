@@ -79,7 +79,7 @@ print(roc_auc_score(test['target'], test_collector[r]))
 print(test_collector.head())
 print(test_collector.tail())
 save_name = 'Cat'
-save_here = '../saves/feature/level1/'
+save_here = '../fake/saves/feature/level2/'
 for i in range(K):
     save_train = save_here + 'train' + str(i+1) + '/'
     save_df(dfs_collector[i], name=save_name,
