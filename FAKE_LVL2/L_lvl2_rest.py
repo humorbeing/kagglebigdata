@@ -12,6 +12,7 @@ from catboost import CatBoostClassifier
 
 
 since = time.time()
+K = 3
 print()
 print('This is [no drill] training.')
 print()
@@ -19,11 +20,10 @@ data_dir = '../data/'
 save_dir = '../saves/'
 load_name = 'final_train_play.csv'
 read_from = '../fake/saves/feature/level1/'
-file_name = 'L_rest.csv'
-K = 3
-dfs, test = read_fake_lvl1(file_name)
-print(test.head())
 
+dfs, test = merge_fake()
+
+show_df(test)
 
 dfs_collector = []
 for i in range(K):

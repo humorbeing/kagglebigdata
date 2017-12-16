@@ -25,6 +25,17 @@ on_top2 = [
     'Lgos_top2_2',
     'Lrf_top2_2',
     'Lgbt_top2_2',
+    'Lgos_XX_1',
+    'Lrf_XX_1',
+    'Ldrt_XX_2',
+    'Lgos_XX_2',
+    'Lrf_XX_2',
+    'Lgbt_XX_2',
+    'CatC_top2_1',
+    'CatR_top2_1',
+    'CatC_top2_2',
+    'CatR_top2_2',
+    'Lgbt_top2_1',
 ]
 on_language = [
     'msno',

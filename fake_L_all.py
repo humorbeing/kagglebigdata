@@ -9,25 +9,29 @@ import numpy as np
 from sklearn import linear_model
 
 on_top2 = [
+    'msno',
+    'song_id',
+    'source_screen_name',
+    'source_type',
     'target',
-    'Lgos_top2_1',
-    'Lrf_top2_1',
-    'Ldrt_top2_2',
-    'Lgos_top2_2',
-    'Lrf_top2_2',
-    'Lgbt_top2_2',
-    'Lgos_XX_1',
-    'Lrf_XX_1',
-    'Ldrt_XX_2',
-    'Lgos_XX_2',
-    'Lrf_XX_2',
-    'Lgbt_XX_2',
-    'CatC_top2_1',
-    'CatR_top2_1',
-    'CatC_top2_2',
-    'CatR_top2_2',
-    'Lgbt_top2_1',
+    'artist_name',
+    'song_year',
+    'ITC_song_id_log10_1',
+    'ITC_msno_log10_1',
+    # ------------------
+    'top2_in_song',
+    'language',
+    'top3_in_song',
 
+    # ------------------
+    'source_system_tab',
+    'ITC_source_system_tab_log10_1',
+    'ISC_song_country_ln',
+
+    # ------------------
+    'membership_days',
+    'ISC_song_year',
+    'OinC_language',
 ]
 
 def Ldrt_top2_1(
@@ -35,7 +39,7 @@ def Ldrt_top2_1(
         test_collector
 ):
 
-    r = 'Ldrt_lvl2_1'
+    r = 'Ldrt_all_1'
 
     params = {
         'boosting': 'dart',
@@ -97,7 +101,7 @@ def Ldrt_top2_2(
         test_collector
 ):
 
-    r = 'Ldrt_lvl_2'
+    r = 'Ldrt_all_2'
 
     params = {
         'boosting': 'dart',
@@ -158,7 +162,7 @@ def Lgos_top2_1(
         test_collector
 ):
 
-    r = 'Lgos_lvl2_1'
+    r = 'Lgos_all_1'
 
     params = {
         'boosting': 'goss',
@@ -219,7 +223,7 @@ def Lgos_top2_2(
         test_collector
 ):
 
-    r = 'Lgos_lvl2_2'
+    r = 'Lgos_all_2'
 
     params = {
         'boosting': 'goss',
@@ -280,7 +284,7 @@ def Lrf_top2_1(
         test_collector
 ):
 
-    r = 'Lrf_lvl2_1'
+    r = 'Lrf_all_1'
 
     params = {
         'boosting': 'rf',
@@ -341,7 +345,7 @@ def Lrf_top2_2(
         test_collector
 ):
 
-    r = 'Lrf_lvl2_2'
+    r = 'Lrf_all_2'
 
     params = {
         'boosting': 'rf',
@@ -402,7 +406,7 @@ def Lgbt_top2_1(
         test_collector
 ):
 
-    r = 'Lgbt_lvl2_1'
+    r = 'Lgbt_all_1'
 
     params = {
         'boosting': 'gbdt',
@@ -463,7 +467,7 @@ def Lgbt_top2_2(
         test_collector
 ):
 
-    r = 'Lgbt_lvl2_2'
+    r = 'Lgbt_all_2'
 
     params = {
         'boosting': 'gbdt',

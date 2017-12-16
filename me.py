@@ -374,3 +374,60 @@ def read_fake_lvl1(load_name):
         dfs.append(df)
     test = read_df(load_name, read_from + 'test/')
     return dfs, test
+
+
+def merge_target(df1, df2):
+    df2.drop('target', axis=1, inplace=True)
+    df = pd.merge(df1, df2, left_index=True, right_index=True)
+    return df
+
+def merge_id(df1, df2):
+    df2.drop('id', axis=1, inplace=True)
+    df = pd.merge(df1, df2, left_index=True, right_index=True)
+    return df
+
+
+def merge_fake():
+    K = 3
+    read_from = '../fake/saves/feature/level1/'
+    file_name = 'L_rest.csv'
+
+    dfs1, test1 = read_fake_lvl1(file_name)
+
+    file_name = 'L_XX_rest.csv'
+    dfs2, test2 = read_fake_lvl1(file_name)
+
+    t1 = merge_target(test1, test2)
+    del test1, test2
+
+    d1 = []
+    for i in range(K):
+        df = merge_target(dfs1[i], dfs2[i])
+        d1.append(df)
+    del dfs1, dfs2
+
+    file_name = 'Cat.csv'
+    dfs3, test3 = read_fake_lvl1(file_name)
+
+    file_name = 'Lgbt_top2_1.csv'
+    dfs4, test4 = read_fake_lvl1(file_name)
+
+    t2 = merge_target(test3, test4)
+    del test3, test4
+
+    d2 = []
+    for i in range(K):
+        df = merge_target(dfs3[i], dfs4[i])
+        d2.append(df)
+    del dfs3, dfs4
+
+    test = merge_target(t1, t2)
+    del t1, t2
+
+    dfs = []
+    for i in range(K):
+        df = merge_target(d1[i], d2[i])
+        dfs.append(df)
+    del d1, d2
+
+    return dfs, test
