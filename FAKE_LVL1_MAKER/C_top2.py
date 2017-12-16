@@ -74,7 +74,7 @@ for i in range(K):
     save_df(dfs_collector[i], name=save_name,
             save_to=save_train)
 
-save_df(dfs_collector[i], name=save_name,
+save_df(test_collector, name=save_name,
             save_to=save_here+'test/')
 
 

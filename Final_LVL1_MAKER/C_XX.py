@@ -1,7 +1,7 @@
 import sys
 sys.path.insert(0, '../')
 from me import *
-from real_cat_top2 import *
+from real_cat_XX import *
 import pandas as pd
 import lightgbm as lgb
 import time
@@ -66,7 +66,7 @@ dfs_collector, test_collector, r = CatR_top2_2(
 
 print(test_collector.head())
 print(test_collector.tail())
-save_name = 'Cat'
+save_name = 'Cat_XX'
 save_here = '../saves/feature/level1/'
 for i in range(K):
     save_train = save_here + 'train' + str(i+1) + '/'

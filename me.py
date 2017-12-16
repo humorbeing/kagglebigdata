@@ -351,3 +351,15 @@ def cat_predict(model, test):
     p = model.predict_proba(test)
     t = np.array(p).T[1]
     return t
+
+
+def read_lvl1(load_name):
+    read_from = '../saves/feature/level1/'
+    K = 3
+    dfs = []
+    for i in range(K):
+        read_here = read_from + 'train' + str(i + 1) + '/'
+        df = read_df(load_name, read_here)
+        dfs.append(df)
+    test = read_df(load_name, read_from + 'test/')
+    return dfs, test
