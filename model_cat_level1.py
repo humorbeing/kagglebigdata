@@ -254,9 +254,9 @@ def cat_on_top2_real(
     on = [
 
     ]
-    iterations = 350
-    learning_rate = 0.3
-    depth = 6
+    iterations = 250
+    learning_rate = 0.8
+    depth = 16
     early_stop = 40
     v = np.zeros(shape=[len(test)])
     for i in range(K):

@@ -363,3 +363,14 @@ def read_lvl1(load_name):
         dfs.append(df)
     test = read_df(load_name, read_from + 'test/')
     return dfs, test
+
+def read_fake_lvl1(load_name):
+    read_from = '../fake/saves/feature/level1/'
+    K = 3
+    dfs = []
+    for i in range(K):
+        read_here = read_from + 'train' + str(i + 1) + '/'
+        df = read_df(load_name, read_here)
+        dfs.append(df)
+    test = read_df(load_name, read_from + 'test/')
+    return dfs, test
