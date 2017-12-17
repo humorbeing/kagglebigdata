@@ -40,56 +40,71 @@ fake = False
 dfs_collector, test_collector, r = Ldrt_top2_1(
     K, dfs, dfs_collector, test, test_collector
 )
+for j in range(K):
+    print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
 if fake:
-    print(roc_auc_score(test['target'], test_collector[r]))
+    print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
 
 
 dfs_collector, test_collector, r = Lgos_top2_1(
     K, dfs, dfs_collector, test, test_collector
 )
+for j in range(K):
+    print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
 if fake:
-    print(roc_auc_score(test['target'], test_collector[r]))
+    print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
 
 
 dfs_collector, test_collector, r = Lrf_top2_1(
     K, dfs, dfs_collector, test, test_collector
 )
+for j in range(K):
+    print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
 if fake:
-    print(roc_auc_score(test['target'], test_collector[r]))
+    print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
 
 dfs_collector, test_collector, r = Lgbt_top2_1(
     K, dfs, dfs_collector, test, test_collector
 )
+for j in range(K):
+    print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
 if fake:
-    print(roc_auc_score(test['target'], test_collector[r]))
+    print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
 
 # #-----------------------------
-#
 dfs_collector, test_collector, r = Ldrt_top2_2(
     K, dfs, dfs_collector, test, test_collector
 )
+for j in range(K):
+    print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
 if fake:
-    print(roc_auc_score(test['target'], test_collector[r]))
+    print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
 
 dfs_collector, test_collector, r = Lgos_top2_2(
     K, dfs, dfs_collector, test, test_collector
 )
+for j in range(K):
+    print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
 if fake:
-    print(roc_auc_score(test['target'], test_collector[r]))
+    print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
 
 dfs_collector, test_collector, r = Lrf_top2_2(
     K, dfs, dfs_collector, test, test_collector
 )
+for j in range(K):
+    print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
 if fake:
-    print(roc_auc_score(test['target'], test_collector[r]))
+    print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
 
 
 dfs_collector, test_collector, r = Lgbt_top2_2(
     K, dfs, dfs_collector, test, test_collector
 )
 
+for j in range(K):
+    print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
 if fake:
-    print(roc_auc_score(test['target'], test_collector[r]))
+    print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!
 
