@@ -452,7 +452,7 @@ def RF_LIGHT_NODE(
     params = {
         'boosting': 'rf',
 
-        'learning_rate': 0.09,
+        'learning_rate': 0.3,
         'num_leaves': 511,
         'max_depth': 30,
 
