@@ -1,7 +1,7 @@
 import sys
 sys.path.insert(0, '../')
 from me import *
-from deep_lvl2 import *
+from LVL2_MORE import *
 import pandas as pd
 import lightgbm as lgb
 import time
@@ -12,7 +12,6 @@ from sklearn.metrics import roc_auc_score
 
 
 since = time.time()
-# h2o.init(nthreads=-1)
 K = 3
 print()
 print('This is [no drill] training.')
@@ -22,7 +21,7 @@ save_dir = '../saves/'
 load_name = 'final_train_play.csv'
 read_from = '../fake/saves/feature/level1/'
 
-dfs, test = read_fake_lvl1('lvl1.csv')
+dfs, test = read_lvl1('lvl1.csv')
 show_df(dfs[0])
 show_df(test)
 
@@ -33,23 +32,12 @@ for i in range(K):
     dfs_collector.append(dc)
 
 test_collector = pd.DataFrame()
-test_collector['target'] = test['target']
+test_collector['id'] = test['id']
 
-fake = True
+fake = False
 # !!!!!!!!!!!!!!!!!!!!!!!!!
 
-dfs_collector, test_collector, r = logi_3(
-    K, dfs, dfs_collector, test, test_collector
-)
-
-for j in range(K):
-    print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
-
-if fake:
-    print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
-
-
-dfs_collector, test_collector, r = Lgos_top2_1(
+dfs_collector, test_collector, r = logi_1(
     K, dfs, dfs_collector, test, test_collector
 )
 for j in range(K):
@@ -57,8 +45,7 @@ for j in range(K):
 if fake:
     print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
 
-
-dfs_collector, test_collector, r = Lrf_top2_1(
+dfs_collector, test_collector, r = sgd(
     K, dfs, dfs_collector, test, test_collector
 )
 for j in range(K):
@@ -66,32 +53,7 @@ for j in range(K):
 if fake:
     print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
 
-dfs_collector, test_collector, r = Lgbt_top2_1(
-    K, dfs, dfs_collector, test, test_collector
-)
-for j in range(K):
-    print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
-if fake:
-    print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
-# #-----------------------------
-#
-dfs_collector, test_collector, r = Ldrt_top2_2(
-    K, dfs, dfs_collector, test, test_collector
-)
-for j in range(K):
-    print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
-if fake:
-    print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
-
-dfs_collector, test_collector, r = Lgos_top2_2(
-    K, dfs, dfs_collector, test, test_collector
-)
-for j in range(K):
-    print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
-if fake:
-    print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
-
-dfs_collector, test_collector, r = Lrf_top2_2(
+dfs_collector, test_collector, r = GaussianNB(
     K, dfs, dfs_collector, test, test_collector
 )
 for j in range(K):
@@ -100,10 +62,18 @@ if fake:
     print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
 
 
-dfs_collector, test_collector, r = Lgbt_top2_2(
+dfs_collector, test_collector, r = CV(
     K, dfs, dfs_collector, test, test_collector
 )
+for j in range(K):
+    print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
+if fake:
+    print('AUC  test', roc_auc_score(test_collector['target'], test_collector[r]))
 
+
+dfs_collector, test_collector, r = RF(
+    K, dfs, dfs_collector, test, test_collector
+)
 for j in range(K):
     print('AUC train', roc_auc_score(dfs_collector[j]['target'], dfs_collector[j][r]))
 if fake:
@@ -113,8 +83,8 @@ if fake:
 
 print(test_collector.head())
 print(test_collector.tail())
-save_name = 'L_lvl2'
-save_here = '../fake/saves/feature/level2/'
+save_name = 'sci_lvl2'
+save_here = '../saves/feature/level2/'
 for i in range(K):
     save_train = save_here + 'train' + str(i+1) + '/'
     save_df(dfs_collector[i], name=save_name,

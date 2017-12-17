@@ -6,22 +6,7 @@ import lightgbm as lgb
 import time
 import pickle
 import numpy as np
-from catboost import CatBoostClassifier
 from sklearn import linear_model
-<<<<<<< HEAD
-# import h2o
-#
-# from h2o.estimators.random_forest import H2ORandomForestEstimator
-# from h2o.estimators.gbm import H2OGradientBoostingEstimator
-# from h2o.estimators.deeplearning import H2ODeepLearningEstimator
-# from h2o.estimators.glm import H2OGeneralizedLinearEstimator
-=======
-import h2o
-
-from h2o.estimators.random_forest import H2ORandomForestEstimator
-from h2o.estimators.gbm import H2OGradientBoostingEstimator
-from h2o.estimators.deeplearning import H2ODeepLearningEstimator
-from h2o.estimators.glm import H2OGeneralizedLinearEstimator
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import LinearSVC
@@ -33,45 +18,19 @@ from sklearn.cross_decomposition import PLSRegression
 
 from sklearn.kernel_ridge import KernelRidge
 
-
->>>>>>> 99c3ac2fe98440ca40cfb3df8a0deea5e5bdee92
-
-on_top2 = [
-    'target',
-    'CatC_top2_1',
-    'CatR_top2_1',
-    'CatC_top2_2',
-    'CatR_top2_2',
-    'CatC_XX_1',
-    'CatR_XX_1',
-    'CatC_XX_2',
-    'CatR_XX_2',
-    'Lgos_all_1',
-    'Ldrt_all_2',
-    'Lrf_all_2',
-    'Lgbt_all_2',
-    'Lgos_top2_1',
-    'Lrf_top2_1',
-    'Ldrt_top2_2',
-    'Lgos_top2_2',
-    'Lrf_top2_2',
-    'Lgbt_top2_2',
-    'Lgos_XX_1',
-    'Lrf_XX_1',
-    'Ldrt_XX_2',
-    'Lgos_XX_2',
-    'Lrf_XX_2',
-    'Lgbt_XX_2',
-    'Ldrt_top2_1',
-    'Lgbt_top2_1',
-]
+from sklearn.naive_bayes import GaussianNB
+from sklearn.calibration import CalibratedClassifierCV
+from sklearn.neural_network import MLPClassifier
 
 
-def logi_1(
+
+
+
+def LogisticRegression_NODE(
         K, dfs, dfs_collector, test,
         test_collector
 ):
-    r = 'rogi_lvl2_1'
+    r = 'LogisticRegression'
 
     on = [
 
@@ -86,7 +45,7 @@ def logi_1(
         b.remove(i)
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        dt = dt[on_top2]
+
         X = dt.drop('target', axis=1)
         cols = [c for c in X.columns]
         print('- ' * 10)
@@ -96,10 +55,6 @@ def logi_1(
         Y = dt['target']
         del dt
         model = linear_model.LogisticRegression(C=1e5)
-        # model = linear_model.LogisticRegression(C=1e5)
-        # model = linear_model.LogisticRegression(C=1e5)
-        # model = linear_model.LogisticRegression(C=1e5)
-        # model = linear_model.SGDClassifier()
 
         model.fit(X, Y)
         dfs_collector[i][r] = model.predict_proba(dfs[i][cols])[:, 1]
@@ -113,13 +68,11 @@ def logi_1(
     test_collector[r] = v / K
     print(test_collector.head())
     return dfs_collector, test_collector, r
-
-
-def sgd(
+def SGDClassifier_NODE(
         K, dfs, dfs_collector, test,
         test_collector
 ):
-    r = 'sgd_lvl2'
+    r = 'SGDClassifier'
 
     on = [
 
@@ -134,7 +87,7 @@ def sgd(
         b.remove(i)
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        dt = dt[on_top2]
+
         X = dt.drop('target', axis=1)
         cols = [c for c in X.columns]
         print('- ' * 10)
@@ -161,18 +114,11 @@ def sgd(
     test_collector[r] = v / K
     print(test_collector.head())
     return dfs_collector, test_collector, r
-
-
-from sklearn.naive_bayes import GaussianNB
-from sklearn.calibration import CalibratedClassifierCV
-
-
-
-def GaussianNB(
+def GaussianNB_NODE(
         K, dfs, dfs_collector, test,
         test_collector
 ):
-    r = 'GaussianNB_lvl2'
+    r = 'GaussianNB'
 
     on = [
 
@@ -187,7 +133,7 @@ def GaussianNB(
         b.remove(i)
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        dt = dt[on_top2]
+        # dt = dt[on_top2]
         X = dt.drop('target', axis=1)
         cols = [c for c in X.columns]
         print('- ' * 10)
@@ -200,7 +146,7 @@ def GaussianNB(
         # model = linear_model.LogisticRegression(C=1e5)
         # model = linear_model.Perceptron()
         # model = KNeighborsClassifier(n_neighbors=3)
-        from sklearn.naive_bayes import GaussianNB
+
         model = GaussianNB()
         # model = MLPClassifier(solver='lbfgs', alpha=1e-5,
         #                       hidden_layer_sizes = (5, 2), random_state = 1)
@@ -220,14 +166,11 @@ def GaussianNB(
     test_collector[r] = v / K
     print(test_collector.head())
     return dfs_collector, test_collector, r
-
-from sklearn.ensemble import RandomForestClassifier
-
-def CV(
+def CV_NODE(
         K, dfs, dfs_collector, test,
         test_collector
 ):
-    r = 'CV_lvl2'
+    r = 'CV'
 
     on = [
 
@@ -242,7 +185,7 @@ def CV(
         b.remove(i)
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        dt = dt[on_top2]
+        # dt = dt[on_top2]
         X = dt.drop('target', axis=1)
         cols = [c for c in X.columns]
         print('- ' * 10)
@@ -255,8 +198,6 @@ def CV(
         # model = linear_model.LogisticRegression(C=1e5)
         # model = linear_model.Perceptron()
         # model = KNeighborsClassifier(n_neighbors=3)
-        from sklearn.naive_bayes import GaussianNB
-        from sklearn.calibration import CalibratedClassifierCV
         clf = GaussianNB()
         clf.fit(X, Y)  # GaussianNB itself does not support sample-weights
 
@@ -281,15 +222,11 @@ def CV(
     test_collector[r] = v / K
     print(test_collector.head())
     return dfs_collector, test_collector, r
-
-
-
-
-def RF(
+def RF_NODE(
         K, dfs, dfs_collector, test,
         test_collector
 ):
-    r = 'RF_lvl2'
+    r = 'RandomForest'
 
     on = [
 
@@ -304,7 +241,7 @@ def RF(
         b.remove(i)
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        dt = dt[on_top2]
+        # dt = dt[on_top2]
         X = dt.drop('target', axis=1)
         cols = [c for c in X.columns]
         print('- ' * 10)
@@ -336,20 +273,11 @@ def RF(
     test_collector[r] = v / K
     print(test_collector.head())
     return dfs_collector, test_collector, r
-
-
-
-
-
-#  NN
-from sklearn.neural_network import MLPClassifier
-
-
-def nn_1(
+def Neural_net_NODE(
         K, dfs, dfs_collector, test,
         test_collector
 ):
-    r = 'nn_lvl2_1'
+    r = 'Neural_net'
 
     on = [
 
@@ -364,7 +292,7 @@ def nn_1(
         b.remove(i)
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        dt = dt[on_top2]
+        # dt = dt[on_top2]
         X = dt.drop('target', axis=1)
         cols = [c for c in X.columns]
         print('- ' * 10)
@@ -379,7 +307,7 @@ def nn_1(
         # model = KNeighborsClassifier(n_neighbors=3)
 
         model = MLPClassifier(solver='lbfgs', alpha=1e-5,
-                              hidden_layer_sizes=(5, 2), random_state=1)
+                              hidden_layer_sizes=(5, 5), random_state=1)
         # model = linear_model.Lasso()
 
         # model = linear_model.SGDClassifier(loss='log')
@@ -396,17 +324,34 @@ def nn_1(
     test_collector[r] = v / K
     print(test_collector.head())
     return dfs_collector, test_collector, r
-
-def nn_2(
+def Dart_NODE(
         K, dfs, dfs_collector, test,
         test_collector
 ):
-    r = 'nn_lvl2_2'
 
-    on = [
+    r = 'DART'
 
-    ]
+    params = {
+        'boosting': 'dart',
 
+        'learning_rate': 0.9,
+        'num_leaves': 50,
+        'max_depth': 5,
+
+        'lambda_l1': 0.1,
+        'lambda_l2': 0,
+        'max_bin': 15,
+
+        'bagging_fraction': 0.5,
+        'bagging_freq': 2,
+        'bagging_seed': 2,
+        'feature_fraction': 0.8,
+        'feature_fraction_seed': 2,
+    }
+
+    num_boost_round = 1500
+    early_stopping_rounds = 50
+    verbose_eval = 10
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -416,50 +361,56 @@ def nn_2(
         b.remove(i)
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        dt = dt[on_top2]
-        X = dt.drop('target', axis=1)
-        cols = [c for c in X.columns]
+        model, cols = val_df(
+            params, dt, dfs[i],
+            num_boost_round=num_boost_round,
+            early_stopping_rounds=early_stopping_rounds,
+            verbose_eval=verbose_eval,
+        )
+        del dt
         print('- ' * 10)
         for c in cols:
             print("'{}',".format(c))
         print('- ' * 10)
-        Y = dt['target']
-        del dt
-        # model = linear_model.LogisticRegression(C=1e5)
-        # model = linear_model.LogisticRegression(C=1e5)
-        # model = linear_model.Perceptron()
-        # model = KNeighborsClassifier(n_neighbors=3)
-
-        model = MLPClassifier(solver='lbfgs', alpha=1e-5,
-                              hidden_layer_sizes=(10, 20, 30), random_state=1)
-        # model = linear_model.Lasso()
-
-        # model = linear_model.SGDClassifier(loss='log')
-
-        model.fit(X, Y)
-        dfs_collector[i][r] = model.predict_proba(dfs[i][cols])[:, 1]
+        dfs_collector[i][r] = model.predict(dfs[i][cols])
         print(dfs_collector[i].head())
-        print(dfs_collector[i].head().dtypes)
-        v += model.predict_proba(test[cols])[:, 1]
+        v += model.predict(test[cols])
         print('# ' * 10)
         for show_v in range(5):
             print(v[show_v])
         print('# ' * 10)
+
     test_collector[r] = v / K
     print(test_collector.head())
     return dfs_collector, test_collector, r
-
-
-def nn_3(
+def GOSS_NODE(
         K, dfs, dfs_collector, test,
         test_collector
 ):
-    r = 'nn_lvl2_3'
 
-    on = [
+    r = 'GOSS'
 
-    ]
+    params = {
+        'boosting': 'goss',
 
+        'learning_rate': 0.3,
+        'num_leaves': 31,
+        'max_depth': 9,
+
+        'lambda_l1': 0.2,
+        'lambda_l2': 0,
+        'max_bin': 255,
+
+        'bagging_fraction': 1,
+        'bagging_freq': 0,
+        'bagging_seed': 2,
+        'feature_fraction': 0.8,
+        'feature_fraction_seed': 2,
+    }
+
+    num_boost_round = 1500
+    early_stopping_rounds = 50
+    verbose_eval = 10
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -469,35 +420,143 @@ def nn_3(
         b.remove(i)
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        dt = dt[on_top2]
-        X = dt.drop('target', axis=1)
-        cols = [c for c in X.columns]
+        model, cols = val_df(
+            params, dt, dfs[i],
+            num_boost_round=num_boost_round,
+            early_stopping_rounds=early_stopping_rounds,
+            verbose_eval=verbose_eval,
+        )
+        del dt
         print('- ' * 10)
         for c in cols:
             print("'{}',".format(c))
         print('- ' * 10)
-        Y = dt['target']
-        del dt
-        # model = linear_model.LogisticRegression(C=1e5)
-        # model = linear_model.LogisticRegression(C=1e5)
-        # model = linear_model.Perceptron()
-        # model = KNeighborsClassifier(n_neighbors=3)
-
-        model = MLPClassifier(solver='lbfgs', alpha=1e-5,
-                              hidden_layer_sizes=(100, 50, 20, 5, 20), random_state=1)
-        # model = linear_model.Lasso()
-
-        # model = linear_model.SGDClassifier(loss='log')
-
-        model.fit(X, Y)
-        dfs_collector[i][r] = model.predict_proba(dfs[i][cols])[:, 1]
+        dfs_collector[i][r] = model.predict(dfs[i][cols])
         print(dfs_collector[i].head())
-        print(dfs_collector[i].head().dtypes)
-        v += model.predict_proba(test[cols])[:, 1]
+        v += model.predict(test[cols])
         print('# ' * 10)
         for show_v in range(5):
             print(v[show_v])
         print('# ' * 10)
+
+    test_collector[r] = v / K
+    print(test_collector.head())
+    return dfs_collector, test_collector, r
+def RF_LIGHT_NODE(
+        K, dfs, dfs_collector, test,
+        test_collector
+):
+
+    r = 'LIGHT_RF'
+
+    params = {
+        'boosting': 'rf',
+
+        'learning_rate': 0.09,
+        'num_leaves': 511,
+        'max_depth': 30,
+
+        'lambda_l1': 0.1,
+        'lambda_l2': 0,
+        'max_bin': 127,
+
+        'bagging_fraction': 0.8,
+        'bagging_freq': 2,
+        'bagging_seed': 2,
+        'feature_fraction': 0.8,
+        'feature_fraction_seed': 2,
+    }
+
+    num_boost_round = 1500
+    early_stopping_rounds = 50
+    verbose_eval = 10
+    v = np.zeros(shape=[len(test)])
+    for i in range(K):
+        print()
+        print('in model:', r, ' k-fold:', i + 1, '/', K)
+        print()
+        b = [i for i in range(K)]
+        b.remove(i)
+        c = [dfs[b[j]] for j in range(K - 1)]
+        dt = pd.concat(c)
+        model, cols = val_df(
+            params, dt, dfs[i],
+            num_boost_round=num_boost_round,
+            early_stopping_rounds=early_stopping_rounds,
+            verbose_eval=verbose_eval,
+        )
+        del dt
+        print('- ' * 10)
+        for c in cols:
+            print("'{}',".format(c))
+        print('- ' * 10)
+        dfs_collector[i][r] = model.predict(dfs[i][cols])
+        print(dfs_collector[i].head())
+        v += model.predict(test[cols])
+        print('# ' * 10)
+        for show_v in range(5):
+            print(v[show_v])
+        print('# ' * 10)
+
+    test_collector[r] = v / K
+    print(test_collector.head())
+    return dfs_collector, test_collector, r
+def LGBT_NODE(
+        K, dfs, dfs_collector, test,
+        test_collector
+):
+
+    r = 'LIGHTgbm'
+
+    params = {
+        'boosting': 'gbdt',
+
+        'learning_rate': 0.32,
+        'num_leaves': 127,
+        'max_depth': -1,
+
+        'lambda_l1': 0,
+        'lambda_l2': 0.2,
+        'max_bin': 63,
+
+        'bagging_fraction': 0.9,
+        'bagging_freq': 2,
+        'bagging_seed': 2,
+        'feature_fraction': 0.9,
+        'feature_fraction_seed': 2,
+    }
+
+    num_boost_round = 1500
+    early_stopping_rounds = 50
+    verbose_eval = 10
+    v = np.zeros(shape=[len(test)])
+    for i in range(K):
+        print()
+        print('in model:', r, ' k-fold:', i + 1, '/', K)
+        print()
+        b = [i for i in range(K)]
+        b.remove(i)
+        c = [dfs[b[j]] for j in range(K - 1)]
+        dt = pd.concat(c)
+        model, cols = val_df(
+            params, dt, dfs[i],
+            num_boost_round=num_boost_round,
+            early_stopping_rounds=early_stopping_rounds,
+            verbose_eval=verbose_eval,
+        )
+        del dt
+        print('- ' * 10)
+        for c in cols:
+            print("'{}',".format(c))
+        print('- ' * 10)
+        dfs_collector[i][r] = model.predict(dfs[i][cols])
+        print(dfs_collector[i].head())
+        v += model.predict(test[cols])
+        print('# ' * 10)
+        for show_v in range(5):
+            print(v[show_v])
+        print('# ' * 10)
+
     test_collector[r] = v / K
     print(test_collector.head())
     return dfs_collector, test_collector, r
