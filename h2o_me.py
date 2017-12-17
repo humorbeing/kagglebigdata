@@ -8,12 +8,12 @@ import pickle
 import numpy as np
 from catboost import CatBoostClassifier
 from sklearn import linear_model
-# import h2o
-#
-# from h2o.estimators.random_forest import H2ORandomForestEstimator
-# from h2o.estimators.gbm import H2OGradientBoostingEstimator
-# from h2o.estimators.deeplearning import H2ODeepLearningEstimator
-# from h2o.estimators.glm import H2OGeneralizedLinearEstimator
+import h2o
+
+from h2o.estimators.random_forest import H2ORandomForestEstimator
+from h2o.estimators.gbm import H2OGradientBoostingEstimator
+from h2o.estimators.deeplearning import H2ODeepLearningEstimator
+from h2o.estimators.glm import H2OGeneralizedLinearEstimator
 
 on_top2 = [
     'msno',
@@ -183,23 +183,23 @@ def dart_on_top2_2(
     params = {
         'boosting': 'dart',
 
-        'learning_rate': 0.9,
+        'learning_rate': 0.15,
         'num_leaves': 50,
-        'max_depth': 5,
+        'max_depth': -1,
 
         'lambda_l1': 0.1,
         'lambda_l2': 0,
-        'max_bin': 15,
+        'max_bin': 63,
 
-        'bagging_fraction': 0.5,
+        'bagging_fraction': 0.7,
         'bagging_freq': 2,
         'bagging_seed': 2,
-        'feature_fraction': 0.8,
+        'feature_fraction': 0.9,
         'feature_fraction_seed': 2,
     }
 
     num_boost_round = 2000
-    early_stopping_rounds = 50
+    early_stopping_rounds = 70
     verbose_eval = 10
     v = np.zeros(shape=[len(test)])
     for i in range(K):
@@ -241,7 +241,7 @@ def goss_on_top2(
 
         'learning_rate': 0.3,
         'num_leaves': 31,
-        'max_depth': 9,
+        'max_depth': 8,
 
         'lambda_l1': 0.2,
         'lambda_l2': 0,
@@ -631,7 +631,6 @@ def logi_1(
         b.remove(i)
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        dt = dt[on_top2]
         X = dt.drop('target', axis=1)
         cols = [c for c in X.columns]
         Y = dt['target']
@@ -751,6 +750,68 @@ def glm_1_C(
         # print(type(a))
         # print(a.shape)
         v += a
+
+    test_collector[r] = v / K
+    print(test_collector.head())
+    return dfs_collector, test_collector, r
+
+
+from h2o.estimators.deeplearning import H2OAutoEncoderEstimator, H2ODeepLearningEstimator
+from h2o.estimators.gbm import H2OGradientBoostingEstimator
+from h2o.estimators.glm import H2OGeneralizedLinearEstimator
+from h2o.estimators.random_forest import H2ORandomForestEstimator
+
+
+def deep_1(
+        K, dfs, dfs_collector, test,
+        test_collector
+):
+    r = 'deep_1'
+
+    features = on_top2
+    val_hf = h2o.H2OFrame(test)
+    ntrees = 100
+    seed = 1155
+    v = np.zeros(shape=[len(test)])
+    for i in range(K):
+        print()
+        print('in model:', r, ' k-fold:', i + 1, '/', K)
+        print()
+        b = [i for i in range(K)]
+        b.remove(i)
+        c = [dfs[b[j]] for j in range(K - 1)]
+        dt = pd.concat(c)
+        train_hf = h2o.H2OFrame(dt)
+        del dt
+        dfs_i = h2o.H2OFrame(dfs[i])
+
+        # features = list(train_hf.columns)
+        features.remove('target')
+        print('- ' * 10)
+        for c in features:
+            print("'{}',".format(c))
+        print('- ' * 10)
+        model = H2ODeepLearningEstimator(hidden=[200,200], epochs=500)
+        model.train(x=features,
+                         y='target',
+                         training_frame=train_hf)
+        del train_hf
+        p = model.predict(dfs_i)
+        dfs_collector[i][r] = h2o.as_list(p, use_pandas=True).values
+        print(dfs_collector[i].head())
+        print(dfs_collector[i].head().dtypes)
+        q = model.predict(val_hf)
+
+        dd = h2o.as_list(q, use_pandas=True)
+        a = dd['predict']
+        a = np.array(a, dtype=pd.Series).tolist()
+        # print(type(a))
+        # print(a.shape)
+        v += a
+        print('# ' * 10)
+        for show_v in range(5):
+            print(v[show_v])
+        print('# ' * 10)
 
     test_collector[r] = v / K
     print(test_collector.head())

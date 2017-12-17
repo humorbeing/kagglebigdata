@@ -18,24 +18,29 @@ from catboost import CatBoostRegressor
 from catboost import CatBoostClassifier
 
 on_top2 = [
+    'msno',
+    'song_id',
+    # 'source_screen_name',
+    # 'source_type',
     'target',
-    'Lgos_top2_1',
-    'Lrf_top2_1',
-    # 'Ldrt_top2_2',
-    # 'Lgos_top2_2',
-    # 'Lrf_top2_2',
-    # 'Lgbt_top2_2',
-    # 'Lgos_XX_1',
-    # 'Lrf_XX_1',
-    # 'Ldrt_XX_2',
-    # 'Lgos_XX_2',
-    # 'Lrf_XX_2',
-    # 'Lgbt_XX_2',
-    # 'CatC_top2_1',
-    # 'CatR_top2_1',
-    # 'CatC_top2_2',
-    'CatR_top2_2',
-    'Lgbt_top2_1',
+    # 'artist_name',
+    # 'song_year',
+    # 'ITC_song_id_log10_1',
+    # 'ITC_msno_log10_1',
+    # ------------------
+    # 'top2_in_song',
+    'language',
+    'top3_in_song',
+
+    # ------------------
+    # 'source_system_tab',
+    'ITC_source_system_tab_log10_1',
+    'ISC_song_country_ln',
+
+    # ------------------
+    'membership_days',
+    'ISC_song_year',
+    'OinC_language',
 ]
 on_language = [
     'msno',
@@ -143,7 +148,7 @@ def CatC_top2_1(
         K, dfs, dfs_collector, test,
         test_collector
 ):
-    r = 'CatC_top2_1'
+    r = 'CatC_XX_1'
 
     on = [
 
@@ -190,7 +195,7 @@ def CatC_top2_2(
         K, dfs, dfs_collector, test,
         test_collector
 ):
-    r = 'CatC_top2_2'
+    r = 'CatC_XX_2'
 
     on = [
 
@@ -237,7 +242,7 @@ def CatR_top2_1(
         K, dfs, dfs_collector, test,
         test_collector
 ):
-    r = 'CatR_top2_1'
+    r = 'CatR_XX_1'
 
     on = [
 
@@ -303,7 +308,7 @@ def CatR_top2_2(
         K, dfs, dfs_collector, test,
         test_collector
 ):
-    r = 'CatR_top2_2'
+    r = 'CatR_XX_2'
 
     on = [
 
