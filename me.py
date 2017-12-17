@@ -376,6 +376,29 @@ def read_fake_lvl1(load_name):
     return dfs, test
 
 
+def read_lvl2(load_name):
+    read_from = '../saves/feature/level2/'
+    K = 3
+    dfs = []
+    for i in range(K):
+        read_here = read_from + 'train' + str(i + 1) + '/'
+        df = read_df(load_name, read_here)
+        dfs.append(df)
+    test = read_df(load_name, read_from + 'test/')
+    return dfs, test
+
+def read_fake_lvl2(load_name):
+    read_from = '../fake/saves/feature/level2/'
+    K = 3
+    dfs = []
+    for i in range(K):
+        read_here = read_from + 'train' + str(i + 1) + '/'
+        df = read_df(load_name, read_here)
+        dfs.append(df)
+    test = read_df(load_name, read_from + 'test/')
+    return dfs, test
+
+
 def merge_target(df1, df2):
     df2.drop('target', axis=1, inplace=True)
     df = pd.merge(df1, df2, left_index=True, right_index=True)
@@ -389,45 +412,279 @@ def merge_id(df1, df2):
 
 def merge_fake():
     K = 3
-    read_from = '../fake/saves/feature/level1/'
-    file_name = 'L_rest.csv'
+    load_name = 'Cat.csv'
+    dfs1, test1 = read_fake_lvl1(load_name)
 
-    dfs1, test1 = read_fake_lvl1(file_name)
+    load_name = 'Cat_XX.csv'
+    dfs2, test2 = read_fake_lvl1(load_name)
 
-    file_name = 'L_XX_rest.csv'
-    dfs2, test2 = read_fake_lvl1(file_name)
+    print(test1.head())
+    print('-' * 20)
+    print(test2.head())
+    test1 = merge_target(test1, test2)
+    print('-' * 20)
+    print(test1.head())
 
-    t1 = merge_target(test1, test2)
-    del test1, test2
-
-    d1 = []
+    print(dfs1[0].head())
+    print('-' * 20)
+    print(dfs2[0].head())
+    print('-' * 20)
+    dfs_temp = []
     for i in range(K):
         df = merge_target(dfs1[i], dfs2[i])
-        d1.append(df)
-    del dfs1, dfs2
+        dfs_temp.append(df)
+    dfs1 = dfs_temp
+    print(dfs1[0].head())
+    print('-' * 20)
 
-    file_name = 'Cat.csv'
-    dfs3, test3 = read_fake_lvl1(file_name)
+    load_name = 'L_all.csv'
+    dfs2, test2 = read_fake_lvl1(load_name)
 
-    file_name = 'Lgbt_top2_1.csv'
-    dfs4, test4 = read_fake_lvl1(file_name)
+    print(test1.head())
+    print('-' * 20)
+    print(test2.head())
+    test1 = merge_target(test1, test2)
+    print('-' * 20)
+    print(test1.head())
 
-    t2 = merge_target(test3, test4)
-    del test3, test4
-
-    d2 = []
+    print(dfs1[0].head())
+    print('-' * 20)
+    print(dfs2[0].head())
+    print('-' * 20)
+    dfs_temp = []
     for i in range(K):
-        df = merge_target(dfs3[i], dfs4[i])
-        d2.append(df)
-    del dfs3, dfs4
+        df = merge_target(dfs1[i], dfs2[i])
+        dfs_temp.append(df)
+    dfs1 = dfs_temp
+    print(dfs1[0].head())
+    print('-' * 20)
 
-    test = merge_target(t1, t2)
-    del t1, t2
+    load_name = 'L_rest.csv'
+    dfs2, test2 = read_fake_lvl1(load_name)
 
-    dfs = []
+    print(test1.head())
+    print('-' * 20)
+    print(test2.head())
+    test1 = merge_target(test1, test2)
+    print('-' * 20)
+    print(test1.head())
+
+    print(dfs1[0].head())
+    print('-' * 20)
+    print(dfs2[0].head())
+    print('-' * 20)
+    dfs_temp = []
     for i in range(K):
-        df = merge_target(d1[i], d2[i])
-        dfs.append(df)
-    del d1, d2
+        df = merge_target(dfs1[i], dfs2[i])
+        dfs_temp.append(df)
+    dfs1 = dfs_temp
+    print(dfs1[0].head())
+    print('-' * 20)
 
-    return dfs, test
+    load_name = 'L_XX_rest.csv'
+    dfs2, test2 = read_fake_lvl1(load_name)
+
+    print(test1.head())
+    print('-' * 20)
+    print(test2.head())
+    test1 = merge_target(test1, test2)
+    print('-' * 20)
+    print(test1.head())
+
+    print(dfs1[0].head())
+    print('-' * 20)
+    print(dfs2[0].head())
+    print('-' * 20)
+    dfs_temp = []
+    for i in range(K):
+        df = merge_target(dfs1[i], dfs2[i])
+        dfs_temp.append(df)
+    dfs1 = dfs_temp
+    print(dfs1[0].head())
+    print('-' * 20)
+
+    load_name = 'Ldrt_top2_1.csv'
+    dfs2, test2 = read_fake_lvl1(load_name)
+
+    print(test1.head())
+    print('-' * 20)
+    print(test2.head())
+    test1 = merge_target(test1, test2)
+    print('-' * 20)
+    print(test1.head())
+
+    print(dfs1[0].head())
+    print('-' * 20)
+    print(dfs2[0].head())
+    print('-' * 20)
+    dfs_temp = []
+    for i in range(K):
+        df = merge_target(dfs1[i], dfs2[i])
+        dfs_temp.append(df)
+    dfs1 = dfs_temp
+    print(dfs1[0].head())
+    print('-' * 20)
+
+    load_name = 'Lgbt_top2_1.csv'
+    dfs2, test2 = read_fake_lvl1(load_name)
+
+    print(test1.head())
+    print('-' * 20)
+    print(test2.head())
+    test1 = merge_target(test1, test2)
+    print('-' * 20)
+    print(test1.head())
+
+    print(dfs1[0].head())
+    print('-' * 20)
+    print(dfs2[0].head())
+    print('-' * 20)
+    dfs_temp = []
+    for i in range(K):
+        df = merge_target(dfs1[i], dfs2[i])
+        dfs_temp.append(df)
+    dfs1 = dfs_temp
+    print(dfs1[0].head())
+    print('-' * 20)
+
+    return dfs1, test1
+
+
+def merge_real():
+    K = 3
+    load_name = 'Cat.csv'
+    dfs1, test1 = read_lvl1(load_name)
+
+    load_name = 'Cat_XX.csv'
+    dfs2, test2 = read_lvl1(load_name)
+
+    print(test1.head())
+    print('-' * 20)
+    print(test2.head())
+    test1 = merge_id(test1, test2)
+    print('-' * 20)
+    print(test1.head())
+
+    print(dfs1[0].head())
+    print('-' * 20)
+    print(dfs2[0].head())
+    print('-' * 20)
+    dfs_temp = []
+    for i in range(K):
+        df = merge_target(dfs1[i], dfs2[i])
+        dfs_temp.append(df)
+    dfs1 = dfs_temp
+    print(dfs1[0].head())
+    print('-' * 20)
+
+    load_name = 'L_all.csv'
+    dfs2, test2 = read_lvl1(load_name)
+
+    print(test1.head())
+    print('-' * 20)
+    print(test2.head())
+    test1 = merge_id(test1, test2)
+    print('-' * 20)
+    print(test1.head())
+
+    print(dfs1[0].head())
+    print('-' * 20)
+    print(dfs2[0].head())
+    print('-' * 20)
+    dfs_temp = []
+    for i in range(K):
+        df = merge_target(dfs1[i], dfs2[i])
+        dfs_temp.append(df)
+    dfs1 = dfs_temp
+    print(dfs1[0].head())
+    print('-' * 20)
+
+    load_name = 'L_rest.csv'
+    dfs2, test2 = read_lvl1(load_name)
+
+    print(test1.head())
+    print('-' * 20)
+    print(test2.head())
+    test1 = merge_id(test1, test2)
+    print('-' * 20)
+    print(test1.head())
+
+    print(dfs1[0].head())
+    print('-' * 20)
+    print(dfs2[0].head())
+    print('-' * 20)
+    dfs_temp = []
+    for i in range(K):
+        df = merge_target(dfs1[i], dfs2[i])
+        dfs_temp.append(df)
+    dfs1 = dfs_temp
+    print(dfs1[0].head())
+    print('-' * 20)
+
+    load_name = 'L_XX_rest.csv'
+    dfs2, test2 = read_lvl1(load_name)
+
+    print(test1.head())
+    print('-' * 20)
+    print(test2.head())
+    test1 = merge_id(test1, test2)
+    print('-' * 20)
+    print(test1.head())
+
+    print(dfs1[0].head())
+    print('-' * 20)
+    print(dfs2[0].head())
+    print('-' * 20)
+    dfs_temp = []
+    for i in range(K):
+        df = merge_target(dfs1[i], dfs2[i])
+        dfs_temp.append(df)
+    dfs1 = dfs_temp
+    print(dfs1[0].head())
+    print('-' * 20)
+
+    load_name = 'Ldrt_top2_1.csv'
+    dfs2, test2 = read_lvl1(load_name)
+
+    print(test1.head())
+    print('-' * 20)
+    print(test2.head())
+    test1 = merge_id(test1, test2)
+    print('-' * 20)
+    print(test1.head())
+
+    print(dfs1[0].head())
+    print('-' * 20)
+    print(dfs2[0].head())
+    print('-' * 20)
+    dfs_temp = []
+    for i in range(K):
+        df = merge_target(dfs1[i], dfs2[i])
+        dfs_temp.append(df)
+    dfs1 = dfs_temp
+    print(dfs1[0].head())
+    print('-' * 20)
+
+    load_name = 'Lgbt_top2_1.csv'
+    dfs2, test2 = read_lvl1(load_name)
+
+    print(test1.head())
+    print('-' * 20)
+    print(test2.head())
+    test1 = merge_id(test1, test2)
+    print('-' * 20)
+    print(test1.head())
+
+    print(dfs1[0].head())
+    print('-' * 20)
+    print(dfs2[0].head())
+    print('-' * 20)
+    dfs_temp = []
+    for i in range(K):
+        df = merge_target(dfs1[i], dfs2[i])
+        dfs_temp.append(df)
+    dfs1 = dfs_temp
+    print(dfs1[0].head())
+    print('-' * 20)
+
+    return dfs1, test1

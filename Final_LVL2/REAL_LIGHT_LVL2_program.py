@@ -1,14 +1,14 @@
 import sys
 sys.path.insert(0, '../')
 from me import *
-from fake_L_lvl2 import *
+from LIGHT_lvl2 import *
 import pandas as pd
 import lightgbm as lgb
 import time
 import pickle
 import numpy as np
 from catboost import CatBoostClassifier
-
+from sklearn.metrics import roc_auc_score
 
 
 since = time.time()
@@ -21,8 +21,8 @@ save_dir = '../saves/'
 load_name = 'final_train_play.csv'
 read_from = '../fake/saves/feature/level1/'
 
-dfs, test = merge_fake()
-
+dfs, test = read_lvl1('lvl1.csv')
+show_df(dfs[0])
 show_df(test)
 
 dfs_collector = []
@@ -32,21 +32,18 @@ for i in range(K):
     dfs_collector.append(dc)
 
 test_collector = pd.DataFrame()
-test_collector['target'] = test['target']
+test_collector['id'] = test['id']
 
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!
 
-# dfs_collector, test_collector, r = Ldrt_top2_1(
-#     K, dfs, dfs_collector, test, test_collector
-# )
-#
-from sklearn.metrics import roc_auc_score
-
-dfs_collector, test_collector, r = Lgbt_top2_1(
+dfs_collector, test_collector, r = Ldrt_top2_1(
     K, dfs, dfs_collector, test, test_collector
 )
+
 print(roc_auc_score(test['target'], test_collector[r]))
+
+
 dfs_collector, test_collector, r = Lgos_top2_1(
     K, dfs, dfs_collector, test, test_collector
 )
@@ -59,10 +56,12 @@ dfs_collector, test_collector, r = Lrf_top2_1(
 )
 print(roc_auc_score(test['target'], test_collector[r]))
 #
-# dfs_collector, test_collector, r = Lgbt_top2_1(
-#     K, dfs, dfs_collector, test, test_collector
-# )
-#
+
+dfs_collector, test_collector, r = Lgbt_top2_1(
+    K, dfs, dfs_collector, test, test_collector
+)
+print(roc_auc_score(test['target'], test_collector[r]))
+
 # #-----------------------------
 #
 dfs_collector, test_collector, r = Ldrt_top2_2(
@@ -77,12 +76,10 @@ dfs_collector, test_collector, r = Lgos_top2_2(
 print(roc_auc_score(test['target'], test_collector[r]))
 
 
-
 dfs_collector, test_collector, r = Lrf_top2_2(
     K, dfs, dfs_collector, test, test_collector
 )
 print(roc_auc_score(test['target'], test_collector[r]))
-
 
 
 dfs_collector, test_collector, r = Lgbt_top2_2(

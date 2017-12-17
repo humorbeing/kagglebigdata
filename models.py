@@ -631,6 +631,7 @@ def logi_1(
         b.remove(i)
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
+        dt = dt[on_top2]
         X = dt.drop('target', axis=1)
         cols = [c for c in X.columns]
         Y = dt['target']

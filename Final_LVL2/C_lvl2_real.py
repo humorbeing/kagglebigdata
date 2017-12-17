@@ -65,14 +65,14 @@ dfs_collector, test_collector, r = CatR_top2_2(
 
 print(test_collector.head())
 print(test_collector.tail())
-save_name = 'Cat'
+save_name = 'L_lvl2'
 save_here = '../saves/feature/level2/'
 for i in range(K):
     save_train = save_here + 'train' + str(i+1) + '/'
     save_df(dfs_collector[i], name=save_name,
             save_to=save_train)
 
-save_df(dfs_collector[i], name=save_name,
+save_df(test_collector[i], name=save_name,
             save_to=save_here+'test/')
 
 

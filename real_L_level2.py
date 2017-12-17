@@ -8,6 +8,7 @@ import pickle
 import numpy as np
 from sklearn import linear_model
 
+alpha = 1.05
 on_top2 = [
     'target',
     'CatC_top2_1',
@@ -18,24 +19,20 @@ on_top2 = [
     'CatR_XX_1',
     'CatC_XX_2',
     'CatR_XX_2',
-    'Lgos_all_1',
-    'Ldrt_all_2',
-    'Lrf_all_2',
-    'Lgbt_all_2',
-    'Lgos_top2_1',
-    'Lrf_top2_1',
-    'Ldrt_top2_2',
-    'Lgos_top2_2',
-    'Lrf_top2_2',
-    'Lgbt_top2_2',
-    'Lgos_XX_1',
-    'Lrf_XX_1',
-    'Ldrt_XX_2',
-    'Lgos_XX_2',
-    'Lrf_XX_2',
-    'Lgbt_XX_2',
-    'Ldrt_top2_1',
-    'Lgbt_top2_1',
+    # 'Lgos_top2_1',
+    # 'Lrf_top2_1',
+    # 'Ldrt_top2_2',
+    # 'Lgos_top2_2',
+    # 'Lrf_top2_2',
+    # 'Lgbt_top2_2',
+    # 'Lgos_XX_1',
+    # 'Lrf_XX_1',
+    # 'Ldrt_XX_2',
+    # 'Lgos_XX_2',
+    # 'Lrf_XX_2',
+    # 'Lgbt_XX_2',
+    # # 'Ldrt_top2_1',
+    # 'Lgbt_top2_1',
 ]
 
 def Ldrt_top2_1(
@@ -43,7 +40,7 @@ def Ldrt_top2_1(
         test_collector
 ):
 
-    r = 'Ldrt_lvl2_1'
+    r = 'Ldrt_all_1'
 
     params = {
         'boosting': 'dart',
@@ -63,9 +60,7 @@ def Ldrt_top2_1(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 1500
-    early_stopping_rounds = 50
-    verbose_eval = 10
+    num_boost_round = (np.array([600, 700, 450])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
@@ -76,11 +71,9 @@ def Ldrt_top2_1(
 
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        model, cols = val_df(
-            params, dt[on_top2], dfs[i],
-            num_boost_round=num_boost_round,
-            early_stopping_rounds=early_stopping_rounds,
-            verbose_eval=verbose_eval,
+        model, cols = train_light(
+            params, dt[on_top2],
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)
@@ -105,7 +98,7 @@ def Ldrt_top2_2(
         test_collector
 ):
 
-    r = 'Ldrt_lvl_2'
+    r = 'Ldrt_all_2'
 
     params = {
         'boosting': 'dart',
@@ -125,23 +118,20 @@ def Ldrt_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 1500
-    early_stopping_rounds = 50
-    verbose_eval = 10
+    num_boost_round = (np.array([260, 334, 239])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
-        print('in model:', r, ' k-fold:', i + 1, '/', K)
+        print('in model:', r, ' k-fold:', i+1, '/', K)
         print()
         b = [i for i in range(K)]
         b.remove(i)
+
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        model, cols = val_df(
-            params, dt[on_top2], dfs[i],
-            num_boost_round=num_boost_round,
-            early_stopping_rounds=early_stopping_rounds,
-            verbose_eval=verbose_eval,
+        model, cols = train_light(
+            params, dt[on_top2],
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)
@@ -166,7 +156,7 @@ def Lgos_top2_1(
         test_collector
 ):
 
-    r = 'Lgos_lvl2_1'
+    r = 'Lgos_all_1'
 
     params = {
         'boosting': 'goss',
@@ -186,23 +176,20 @@ def Lgos_top2_1(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 1500
-    early_stopping_rounds = 50
-    verbose_eval = 10
+    num_boost_round = (np.array([220, 180, 180])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
-        print('in model:', r, ' k-fold:', i + 1, '/', K)
+        print('in model:', r, ' k-fold:', i+1, '/', K)
         print()
         b = [i for i in range(K)]
         b.remove(i)
+
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        model, cols = val_df(
-            params, dt[on_top2], dfs[i],
-            num_boost_round=num_boost_round,
-            early_stopping_rounds=early_stopping_rounds,
-            verbose_eval=verbose_eval,
+        model, cols = train_light(
+            params, dt[on_top2],
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)
@@ -227,7 +214,7 @@ def Lgos_top2_2(
         test_collector
 ):
 
-    r = 'Lgos_lvl2_2'
+    r = 'Lgos_all_2'
 
     params = {
         'boosting': 'goss',
@@ -247,23 +234,20 @@ def Lgos_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 1500
-    early_stopping_rounds = 50
-    verbose_eval = 10
+    num_boost_round = (np.array([1500, 1500, 1500])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
-        print('in model:', r, ' k-fold:', i + 1, '/', K)
+        print('in model:', r, ' k-fold:', i+1, '/', K)
         print()
         b = [i for i in range(K)]
         b.remove(i)
+
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        model, cols = val_df(
-            params, dt[on_top2], dfs[i],
-            num_boost_round=num_boost_round,
-            early_stopping_rounds=early_stopping_rounds,
-            verbose_eval=verbose_eval,
+        model, cols = train_light(
+            params, dt[on_top2],
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)
@@ -288,7 +272,7 @@ def Lrf_top2_1(
         test_collector
 ):
 
-    r = 'Lrf_lvl2_1'
+    r = 'Lrf_all_1'
 
     params = {
         'boosting': 'rf',
@@ -308,23 +292,20 @@ def Lrf_top2_1(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 1500
-    early_stopping_rounds = 50
-    verbose_eval = 10
+    num_boost_round = (np.array([64, 64, 64])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
-        print('in model:', r, ' k-fold:', i + 1, '/', K)
+        print('in model:', r, ' k-fold:', i+1, '/', K)
         print()
         b = [i for i in range(K)]
         b.remove(i)
+
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        model, cols = val_df(
-            params, dt[on_top2], dfs[i],
-            num_boost_round=num_boost_round,
-            early_stopping_rounds=early_stopping_rounds,
-            verbose_eval=verbose_eval,
+        model, cols = train_light(
+            params, dt[on_top2],
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)
@@ -349,17 +330,17 @@ def Lrf_top2_2(
         test_collector
 ):
 
-    r = 'Lrf_lvl2_2'
+    r = 'predict'
 
     params = {
         'boosting': 'rf',
 
-        'learning_rate': 0.09,
+        'learning_rate': 0.02,
         'num_leaves': 511,
-        'max_depth': 30,
+        'max_depth': 31,
 
-        'lambda_l1': 0.1,
-        'lambda_l2': 0,
+        'lambda_l1': 0.002,
+        'lambda_l2': 0.002,
         'max_bin': 127,
 
         'bagging_fraction': 0.8,
@@ -369,23 +350,20 @@ def Lrf_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 1500
-    early_stopping_rounds = 50
-    verbose_eval = 10
+    num_boost_round = (np.array([15, 15, 15])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
-        print('in model:', r, ' k-fold:', i + 1, '/', K)
+        print('in model:', r, ' k-fold:', i+1, '/', K)
         print()
         b = [i for i in range(K)]
         b.remove(i)
+
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        model, cols = val_df(
-            params, dt[on_top2], dfs[i],
-            num_boost_round=num_boost_round,
-            early_stopping_rounds=early_stopping_rounds,
-            verbose_eval=verbose_eval,
+        model, cols = train_light(
+            params, dt[on_top2],
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)
@@ -410,29 +388,12 @@ def Lgbt_top2_1(
         test_collector
 ):
 
-    r = 'Lgbt_lvl2_1'
+    r = 'predict'
 
-    # params = {
-    #     'boosting': 'gbdt',
-    #
-    #     'learning_rate': 0.032,
-    #     'num_leaves': 750,
-    #     'max_depth': 50,
-    #
-    #     'lambda_l1': 0.2,
-    #     'lambda_l2': 0,
-    #     'max_bin': 172,
-    #
-    #     'bagging_fraction': 0.9,
-    #     'bagging_freq': 2,
-    #     'bagging_seed': 2,
-    #     'feature_fraction': 0.9,
-    #     'feature_fraction_seed': 2,
-    # }
     params = {
         'boosting': 'gbdt',
 
-        'learning_rate': 0.5,
+        'learning_rate': 0.02,
         'num_leaves': 511,
         'max_depth': 31,
 
@@ -440,30 +401,28 @@ def Lgbt_top2_1(
         'lambda_l2': 0.002,
         'max_bin': 127,
 
-        'bagging_fraction': 0.9,
+        'bagging_fraction': 1,
         'bagging_freq': 2,
         'bagging_seed': 2,
-        'feature_fraction': 0.9,
+        'feature_fraction': 1,
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 1500
-    early_stopping_rounds = 50
-    verbose_eval = 1
+    num_boost_round = (np.array([100, 100, 100])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
-        print('in model:', r, ' k-fold:', i + 1, '/', K)
+        print('in model:', r, ' k-fold:', i+1, '/', K)
         print()
         b = [i for i in range(K)]
         b.remove(i)
+
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        model, cols = val_df(
-            params, dt[on_top2], dfs[i],
-            num_boost_round=num_boost_round,
-            early_stopping_rounds=early_stopping_rounds,
-            verbose_eval=verbose_eval,
+        model, cols = train_light(
+            params, dt[on_top2],
+            num_boost_round=num_boost_round[i],
+            # verbose_eval=1,
         )
         del dt
         print('- ' * 10)
@@ -488,7 +447,7 @@ def Lgbt_top2_2(
         test_collector
 ):
 
-    r = 'Lgbt_lvl2_2'
+    r = 'Lgbt_all_2'
 
     params = {
         'boosting': 'gbdt',
@@ -508,23 +467,20 @@ def Lgbt_top2_2(
         'feature_fraction_seed': 2,
     }
 
-    num_boost_round = 1500
-    early_stopping_rounds = 50
-    verbose_eval = 10
+    num_boost_round = (np.array([67, 80, 55])*alpha).astype(int)
     v = np.zeros(shape=[len(test)])
     for i in range(K):
         print()
-        print('in model:', r, ' k-fold:', i + 1, '/', K)
+        print('in model:', r, ' k-fold:', i+1, '/', K)
         print()
         b = [i for i in range(K)]
         b.remove(i)
+
         c = [dfs[b[j]] for j in range(K - 1)]
         dt = pd.concat(c)
-        model, cols = val_df(
-            params, dt[on_top2], dfs[i],
-            num_boost_round=num_boost_round,
-            early_stopping_rounds=early_stopping_rounds,
-            verbose_eval=verbose_eval,
+        model, cols = train_light(
+            params, dt[on_top2],
+            num_boost_round=num_boost_round[i],
         )
         del dt
         print('- ' * 10)
