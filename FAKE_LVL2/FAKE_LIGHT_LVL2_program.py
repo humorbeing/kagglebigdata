@@ -1,7 +1,7 @@
 import sys
 sys.path.insert(0, '../')
 from me import *
-from LIGHT_lvl2 import *
+from LVL2_LIGHT import *
 import pandas as pd
 import lightgbm as lgb
 import time
@@ -34,59 +34,62 @@ for i in range(K):
 test_collector = pd.DataFrame()
 test_collector['target'] = test['target']
 
-
+fake = True
 # !!!!!!!!!!!!!!!!!!!!!!!!!
 
 dfs_collector, test_collector, r = Ldrt_top2_1(
     K, dfs, dfs_collector, test, test_collector
 )
-
-print(roc_auc_score(test['target'], test_collector[r]))
+if fake:
+    print(roc_auc_score(test['target'], test_collector[r]))
 
 
 dfs_collector, test_collector, r = Lgos_top2_1(
     K, dfs, dfs_collector, test, test_collector
 )
-
-print(roc_auc_score(test['target'], test_collector[r]))
+if fake:
+    print(roc_auc_score(test['target'], test_collector[r]))
 
 
 dfs_collector, test_collector, r = Lrf_top2_1(
     K, dfs, dfs_collector, test, test_collector
 )
-print(roc_auc_score(test['target'], test_collector[r]))
-#
+if fake:
+    print(roc_auc_score(test['target'], test_collector[r]))
 
 dfs_collector, test_collector, r = Lgbt_top2_1(
     K, dfs, dfs_collector, test, test_collector
 )
-print(roc_auc_score(test['target'], test_collector[r]))
+if fake:
+    print(roc_auc_score(test['target'], test_collector[r]))
 
 # #-----------------------------
 #
 dfs_collector, test_collector, r = Ldrt_top2_2(
     K, dfs, dfs_collector, test, test_collector
 )
-print(roc_auc_score(test['target'], test_collector[r]))
-
+if fake:
+    print(roc_auc_score(test['target'], test_collector[r]))
 
 dfs_collector, test_collector, r = Lgos_top2_2(
     K, dfs, dfs_collector, test, test_collector
 )
-print(roc_auc_score(test['target'], test_collector[r]))
-
+if fake:
+    print(roc_auc_score(test['target'], test_collector[r]))
 
 dfs_collector, test_collector, r = Lrf_top2_2(
     K, dfs, dfs_collector, test, test_collector
 )
-print(roc_auc_score(test['target'], test_collector[r]))
+if fake:
+    print(roc_auc_score(test['target'], test_collector[r]))
 
 
 dfs_collector, test_collector, r = Lgbt_top2_2(
     K, dfs, dfs_collector, test, test_collector
 )
 
-print(roc_auc_score(test['target'], test_collector[r]))
+if fake:
+    print(roc_auc_score(test['target'], test_collector[r]))
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!
 
