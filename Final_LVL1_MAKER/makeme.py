@@ -24,8 +24,8 @@ dfs_collector, test_collector = merge_real()
 
 print(test_collector.head())
 print(test_collector.tail())
-save_name = 'lvl1'
-save_here = '../saves/feature/level1/'
+save_name = 'lvl2'
+save_here = '../saves/feature/level/'
 for i in range(K):
     save_train = save_here + 'train' + str(i+1) + '/'
     save_df(dfs_collector[i], name=save_name,

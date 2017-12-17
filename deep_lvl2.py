@@ -19,30 +19,30 @@ on_top2 = [
     'target',
     'CatC_top2_1',
     'CatR_top2_1',
-    'CatC_top2_2',
-    'CatR_top2_2',
-    'CatC_XX_1',
-    'CatR_XX_1',
-    'CatC_XX_2',
-    'CatR_XX_2',
-    'Lgos_all_1',
-    'Ldrt_all_2',
-    'Lrf_all_2',
-    'Lgbt_all_2',
-    'Lgos_top2_1',
-    'Lrf_top2_1',
-    'Ldrt_top2_2',
-    'Lgos_top2_2',
-    'Lrf_top2_2',
-    'Lgbt_top2_2',
-    'Lgos_XX_1',
-    'Lrf_XX_1',
-    'Ldrt_XX_2',
-    'Lgos_XX_2',
-    'Lrf_XX_2',
-    'Lgbt_XX_2',
-    'Ldrt_top2_1',
-    'Lgbt_top2_1',
+    # 'CatC_top2_2',
+    # 'CatR_top2_2',
+    # 'CatC_XX_1',
+    # 'CatR_XX_1',
+    # 'CatC_XX_2',
+    # 'CatR_XX_2',
+    # 'Lgos_all_1',
+    # 'Ldrt_all_2',
+    # 'Lrf_all_2',
+    # 'Lgbt_all_2',
+    # 'Lgos_top2_1',
+    # 'Lrf_top2_1',
+    # 'Ldrt_top2_2',
+    # 'Lgos_top2_2',
+    # 'Lrf_top2_2',
+    # 'Lgbt_top2_2',
+    # 'Lgos_XX_1',
+    # 'Lrf_XX_1',
+    # 'Ldrt_XX_2',
+    # 'Lgos_XX_2',
+    # 'Lrf_XX_2',
+    # 'Lgbt_XX_2',
+    # 'Ldrt_top2_1',
+    # 'Lgbt_top2_1',
 ]
 
 from sklearn import svm
@@ -89,6 +89,9 @@ def logi_3(
     test_collector[r] = v / K
     print(test_collector.head())
     return dfs_collector, test_collector, r
+from sklearn.cross_decomposition import PLSRegression
+
+from sklearn.kernel_ridge import KernelRidge
 def logi_1(
         K, dfs, dfs_collector, test,
         test_collector
@@ -117,10 +120,11 @@ def logi_1(
         print('- ' * 10)
         Y = dt['target']
         del dt
+        from sklearn.gaussian_process import GaussianProcessRegressor
         # model = linear_model.LogisticRegression(C=1e5)
         # model = linear_model.LogisticRegression(C=1e5)
         # model = linear_model.LogisticRegression(C=1e5)
-        model = linear_model.Perceptron()
+        model = KernelRidge(alpha=1.0)
         # model = linear_model.Lasso()
         # model = linear_model.SGDClassifier(loss='log')
 
@@ -141,6 +145,13 @@ def logi_1(
 
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.neural_network import MLPClassifier
+from sklearn.svm import LinearSVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import PassiveAggressiveClassifier
+from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.gaussian_process.kernels import RBF
+
+
 def logi_2(
         K, dfs, dfs_collector, test,
         test_collector
@@ -173,9 +184,10 @@ def logi_2(
         # model = linear_model.LogisticRegression(C=1e5)
         # model = linear_model.Perceptron()
         # model = KNeighborsClassifier(n_neighbors=3)
-
-        model = MLPClassifier(solver='lbfgs', alpha=1e-5,
-                              hidden_layer_sizes = (5, 2), random_state = 1)
+        # kernel = 1.0 * RBF([1.0, 1.0])  # for GPC
+        model = PassiveAggressiveClassifier(random_state=0)
+        # model = MLPClassifier(solver='lbfgs', alpha=1e-5,
+        #                       hidden_layer_sizes = (5, 2), random_state = 1)
         # model = linear_model.Lasso()
 
         # model = linear_model.SGDClassifier(loss='log')
