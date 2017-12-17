@@ -306,8 +306,8 @@ def Neural_net_NODE(
         # model = linear_model.Perceptron()
         # model = KNeighborsClassifier(n_neighbors=3)
 
-        model = MLPClassifier(solver='lbfgs', alpha=1e-5,
-                              hidden_layer_sizes=(5, 5), random_state=1)
+        model = MLPClassifier(solver='lbfgs', alpha=0.01,
+                              hidden_layer_sizes=(4, 4), random_state=1)
         # model = linear_model.Lasso()
 
         # model = linear_model.SGDClassifier(loss='log')
@@ -350,7 +350,7 @@ def Dart_NODE(
     }
 
     num_boost_round = 1500
-    early_stopping_rounds = 50
+    early_stopping_rounds = 20
     verbose_eval = 10
     v = np.zeros(shape=[len(test)])
     for i in range(K):
@@ -409,7 +409,7 @@ def GOSS_NODE(
     }
 
     num_boost_round = 1500
-    early_stopping_rounds = 50
+    early_stopping_rounds = 20
     verbose_eval = 10
     v = np.zeros(shape=[len(test)])
     for i in range(K):
@@ -468,7 +468,7 @@ def RF_LIGHT_NODE(
     }
 
     num_boost_round = 1500
-    early_stopping_rounds = 50
+    early_stopping_rounds = 15
     verbose_eval = 10
     v = np.zeros(shape=[len(test)])
     for i in range(K):
@@ -527,7 +527,7 @@ def LGBT_NODE(
     }
 
     num_boost_round = 1500
-    early_stopping_rounds = 50
+    early_stopping_rounds = 20
     verbose_eval = 10
     v = np.zeros(shape=[len(test)])
     for i in range(K):
